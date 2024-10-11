@@ -4,6 +4,8 @@ require("dotenv").config();
 
 const database=require("./config/database");
 
+const systemConfig=require("./config/system");
+
 const routeAdmin=require("./routers/admin/index-route");
 
 const route=require("./routers/client/index-router");
@@ -21,6 +23,10 @@ const port = process.env.PORT;
 
 app.set("views", "./views");
 app.set("view engine", "pug");
+
+//  App Local Variables
+app.locals.prefixAdmin=systemConfig.prefixAdmin;
+
 
 app.use(express.static('public'));
 
