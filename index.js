@@ -4,15 +4,14 @@ require("dotenv").config();
 
 const database=require("./config/database");
 
-<<<<<<< HEAD
+const routeAdmin=require("./routers/admin/index-route");
+
 const route=require("./routers/client/index-router");
 
-// mongoose.connect(process.env.MONGODB_URL);
- database.connect();
 
-=======
-const route=require("./routers/client/index-router")
->>>>>>> de05dfcf7a10d0795c5389a4388f7d91e08c9f92
+// mongoose.connect(process.env.MONGODB_URL);
+//  database.connect();
+
 
 database.connect();
 
@@ -28,6 +27,9 @@ app.use(express.static('public'));
 
 // Router
 route(app);
+
+// Route Admin
+routeAdmin(app);
 
 app.listen(port, () => {
   console.log(`Example app Ongoing on port ${port}`);
