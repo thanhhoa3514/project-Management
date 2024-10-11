@@ -1,3 +1,5 @@
+// [GET] /products
+
 const Product = require("../../models/product-model");
 // console.log(Product);
 
