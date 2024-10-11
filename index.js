@@ -1,8 +1,14 @@
 const express = require("express");
-
+// const mongoose = require("mongoose");
 require("dotenv").config();
 
-const route=require("./routers/client/index-router")
+const database=require("./config/database");
+
+const route=require("./routers/client/index-router");
+
+// mongoose.connect(process.env.MONGODB_URL);
+ database.connect();
+
 
 const app = express();
 
@@ -11,11 +17,11 @@ const port = process.env.PORT;
 app.set("views", "./views");
 app.set("view engine", "pug");
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 
 // Router
-route(app)
+route(app);
 
 app.listen(port, () => {
   console.log(`Example app Ongoing on port ${port}`);
