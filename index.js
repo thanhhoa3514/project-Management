@@ -4,11 +4,17 @@ require("dotenv").config();
 
 const database=require("./config/database");
 
+<<<<<<< HEAD
 const route=require("./routers/client/index-router");
 
 // mongoose.connect(process.env.MONGODB_URL);
  database.connect();
 
+=======
+const route=require("./routers/client/index-router")
+>>>>>>> de05dfcf7a10d0795c5389a4388f7d91e08c9f92
+
+database.connect();
 
 const app = express();
 
