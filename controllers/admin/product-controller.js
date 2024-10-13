@@ -1,11 +1,14 @@
 const Product=require("../../models/product-model");
 const filterStatusHelpers=require("../../helpers/filterStatus");
+const searchHelpers=require("../../helpers/search");
+
 
 // [GET] admin/products
 
 module.exports.index= async(req, res) => {
     // console.log(req.query.status);
 
+    // Filter status from request query string
     const filterStatus = filterStatusHelpers(req.query);
 
 
@@ -22,14 +25,12 @@ module.exports.index= async(req, res) => {
         find.status=req.query.status;
     }
 
-    let keyword="";
+    const objectSearch=searchHelpers(req.query);
 
-    if(req.query.keyword){
-        keyword=req.query.keyword;
-        
-        // Append keyword to query
-        const regex=new RegExp(keyword,"i");// i is no special character is lower or upper case
-        find.title=regex;
+
+    if(objectSearch.regex){
+    
+        find.title=objectSearch.regex;
     }
 
     // Query products
@@ -43,6 +44,6 @@ module.exports.index= async(req, res) => {
         pageTitle:"Product page",
         products: products,
         filterStatus: filterStatus,
-        keyword: keyword
+        keyword: objectSearch.keyword
     });
 };
