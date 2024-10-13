@@ -1,45 +1,13 @@
 const Product=require("../../models/product-model");
+const filterStatusHelpers=require("../../helpers/filterStatus");
 
 // [GET] admin/products
 
 module.exports.index= async(req, res) => {
     // console.log(req.query.status);
 
-    let filterStatus=[
-        {
-            name:"All",
-            status:"",
-            class:""
-        },
-        {
-            name:"Active",
-            status:"active",
-            class:""
-        },
-        {
-            name:"Inactive",
-            status:"inactive",
-            class:""
-        }
-    ];
+    const filterStatus = filterStatusHelpers(req.query);
 
-
-    // Check if status is active and finding where the element is active 
-    if(req.query.status){
-        const index=filterStatus.findIndex(item=>item.status==req.query.status);
-
-        if(index!=-1){
-            // Make the current status active by adding the class
-            filterStatus[index].class="active";
-        }
-
-    }else {
-
-        const index=filterStatus.findIndex(item=>item.status=="");
-        filterStatus[index].class="active";
-    }
-
- 
 
     // Filter products by status deleted
     let find={
