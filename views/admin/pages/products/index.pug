@@ -3,53 +3,51 @@ extends ../../layouts/default.pug
 block main
     h1 Products Page
 
-
-    table.table.table-hover.table-sm 
-        thead
-            tr
-                th Order 
-                th Image
-                th Title 
-                th Price
-                th Status
-                th Action
-
-        tbody 
-            each item,index in products
-                tr 
-                    td #{index+1}
-                    td  
-                        img(src="https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
-                            alt=item.title
-                            width="80px"
-                            height="auto"
-                        )
-                    td #{item.title}          
-                    td #{item.price}$
-                    td 
-                        if(item.status=="active")
-                            a(href="#" class="badge badge-success") Available
-                        else 
-                            a(href="#" class="badge badge-danger") Unavailable
-                    td 
-                        button(class="btn btn-warning btn-sm") Modify
-                        button(class="btn btn-danger btn-sm ml-1") Remove
+    .card.mb-3
+        .card-header Filter and  Search
+        .card-body 
+            each item in filterStatus
+                button(
+                    class=`btn btn-sm ml-1 btn-outline-success ${item.class}`
+                    button-status=item.status
+                ) #{item.name}
 
 
-            //- tr 
-            //-     td 2
-            //-     td  
-            //-         img(src="https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
-            //-             alt="Perfume"
-            //-             width="80px"
-            //-             height="auto"
-            //-         )
-            //-     td Product two         
-            //-     td $199
-            //-     td 
-            //-         a(href="#" class="badge badge-danger") Unavailable
-            //-     td 
-            //-         button(class="btn btn-warning btn-sm") Modify
-            //-         button(class="btn btn-danger btn-sm ml-1") Remove       
 
-                
+
+    .card.mb-3 
+        .card-header List
+        .card-body
+            table.table.table-hover.table-sm 
+                thead
+                    tr
+                        th Order 
+                        th Image
+                        th Title 
+                        th Price
+                        th Status
+                        th Action
+
+                tbody 
+                    each item,index in products
+                        tr 
+                            td #{index+1}
+                            td  
+                                img(src="https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
+                                    alt=item.title
+                                    width="80px"
+                                    height="auto"
+                                )
+                            td #{item.title}          
+                            td #{item.price}$
+                            td 
+                                if(item.status=="active")
+                                    a(href="#" class="badge badge-success") Available
+                                else 
+                                    a(href="#" class="badge badge-danger") Unavailable
+                            td 
+                                button(class="btn btn-warning btn-sm") Modify
+                                button(class="btn btn-danger btn-sm ml-1") Remove
+
+
+            
