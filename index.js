@@ -1,4 +1,5 @@
 const express = require("express");
+const methodOverride = require("method-override");
 // const mongoose = require("mongoose");
 require("dotenv").config();
 
@@ -18,6 +19,7 @@ const route=require("./routers/client/index-router");
 database.connect();
 
 const app = express();
+app.use(methodOverride("_method"));
 
 const port = process.env.PORT;
 

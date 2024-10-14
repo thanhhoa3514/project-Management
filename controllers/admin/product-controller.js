@@ -3,12 +3,9 @@ const filterStatusHelpers = require("../../helpers/filterStatus");
 const searchHelpers = require("../../helpers/search");
 const paginationHelpers = require("../../helpers/pagination");
 
-
 // [GET] admin/products
 
 module.exports.index = async (req, res) => {
-
-
   // Filter status from request query string
   const filterStatus = filterStatusHelpers(req.query);
 
@@ -36,17 +33,19 @@ module.exports.index = async (req, res) => {
 
   let objectPagination = paginationHelpers(
     {
-    currentPage: 1,
-    limitItems: 4,
+      currentPage: 1,
+      limitItems: 4,
     },
     req.query,
     countTotalItems
-);
+  );
 
   // End pagination
-  
+
   // Query products
-  const products = await Product.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip);
+  const products = await Product.find(find)
+    .limit(objectPagination.limitItems)
+    .skip(objectPagination.skip);
 
   // Render view with products and filter status
   res.render("admin/pages/products/index", {
@@ -54,6 +53,16 @@ module.exports.index = async (req, res) => {
     products: products,
     filterStatus: filterStatus,
     keyword: objectSearch.keyword,
-    pagination:objectPagination
+    pagination: objectPagination,
   });
+};
+
+// [GET] /admin/products/change-status/:inactive/:123
+module.exports.changeStatus = async (req, res) => {
+  const status = req.params.status;
+  const productId = req.params.id;
+
+  await Product.updateOne({ _id: productId }, { status: status });
+
+  res.redirect(req.get("Referrer") || "/");
 };

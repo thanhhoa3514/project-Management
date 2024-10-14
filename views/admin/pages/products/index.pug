@@ -46,13 +46,35 @@ block main
                             td #{item.price}$
                             td 
                                 if(item.status=="active")
-                                    a(href="#" class="badge badge-success") Available
+                                    a(
+                                        href="javascript:;" 
+                                        data-status=item.status
+                                        data-id=item.id
+                                        button-change-status
+                                        class="badge badge-success"
+                                    ) Available
                                 else 
-                                    a(href="#" class="badge badge-danger") Unavailable
+                                    a(
+                                        href="javascript:;"
+                                        data-status=item.status
+                                        data-id=item.id
+                                        button-change-status
+                                        class="badge badge-danger"
+                                    ) Unavailable
                             td 
                                 button(class="btn btn-warning btn-sm") Modify
                                 button(class="btn btn-danger btn-sm ml-1") Remove
 
     +pagination(pagination)
+
+    form(
+        action=""
+        method="POST"
+        id="form-change-status"
+        data-path=`${prefixAdmin}/products/change-status`
+
+    ) 
+
+    script(src="/admin/js/product.js") 
 
                         
