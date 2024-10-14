@@ -57,7 +57,7 @@ module.exports.index = async (req, res) => {
   });
 };
 
-// [GET] /admin/products/change-status/:inactive/:123
+// [PATCH] /admin/products/change-status/:inactive/:123
 module.exports.changeStatus = async (req, res) => {
   const status = req.params.status;
   const productId = req.params.id;
@@ -65,4 +65,13 @@ module.exports.changeStatus = async (req, res) => {
   await Product.updateOne({ _id: productId }, { status: status });
 
   res.redirect(req.get("Referrer") || "/");
+};
+
+
+// [PATCH] /admin/products/change-status/:inactive/:123
+// 
+module.exports.changeMultiStatus= async (req, res) => {
+  console.log(req.body);
+  res.send("Hi ");
+
 };

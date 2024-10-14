@@ -22,9 +22,31 @@ block main
     .card.mb-3 
         .card-header List
         .card-body
+            form(
+                action=`${prefixAdmin}/products/change-multi?_method=PATCH`
+                method="POST"
+                form-change-multi
+            )
+                .d-flex.align-items-start
+                    .form-group
+                        select(name="type" class="form-control")
+                            option(value="active") Active
+                            option(value="inactive") Inactive
+                    .form-group 
+                        input(
+                            type="text"
+                            name="ids"
+                            value=""
+                            class="form-control"
+                        )
+                    button(type="submit" class="btn btn-primary") Apply   
+
+
             table.table.table-hover.table-sm 
                 thead
                     tr
+                        th 
+                            input(type="checkbox" name="checkall")
                         th Order 
                         th Image
                         th Title 
@@ -35,6 +57,12 @@ block main
                 tbody 
                     each item,index in products
                         tr 
+                            td 
+                                input(
+                                    type="checkbox"
+                                    name="id"
+                                    value=item.id
+                                )
                             td #{index+1}
                             td  
                                 img(src="https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
