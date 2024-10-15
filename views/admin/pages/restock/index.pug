@@ -3,11 +3,13 @@ include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/formChangeMultiStatus.pug
-
+include ../../mixins/form-apply.pug
 
 
 block main
     h1 Restock Page
+
+    +apply()
 
     table.table.table-hover.table-sm 
         thead
@@ -37,10 +39,20 @@ block main
                         else 
                             a(href="#" class="badge badge-danger") Unavailable
                     td 
-                        button(class="btn btn-warning btn-sm") Modify
-                        button(class="btn btn-danger btn-sm ml-1") Remove
+                        button(
+                            class="btn btn-success"
+                            button-restore
+                            data-id=item.id
+                        ) Restore
 
     +pagination(pagination)
+
+    form(
+        action=""
+        method="POST"
+        id="form-restore-item"
+        data-path=`${prefixAdmin}/restock/restock-item`
+    )
 
     script(src="/admin/js/product.js") 
 

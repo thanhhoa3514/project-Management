@@ -55,3 +55,28 @@ if(buttonDelete.length > 0) {
 
 }
 // End Delete Item
+
+// Restore Item
+const buttonRestoreItem=document.querySelectorAll("[button-restore]");
+
+if(buttonRestoreItem.length>0){
+
+  const formRestore=document.querySelector("#form-restore-item");
+
+  const path=formRestore.getAttribute("data-path");
+
+  buttonRestoreItem.forEach(button=>{
+    button.addEventListener("click",()=>{
+
+      const dataId=button.getAttribute("data-id");
+      
+      console.log(dataId);
+      const action=`${path}/${dataId}?_method=PATCH`;
+
+      formRestore.action=action;
+      formRestore.submit();
+    })
+  })
+
+}
+// End restore item 

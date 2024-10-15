@@ -25,3 +25,16 @@ module.exports.restock=async(req, res) => {
         pagination: objectPagination,
     });
 };
+
+
+// [PATCH] /admin/products/restore/:id
+module.exports.restockItem= async (req, res) => {
+    const productId = req.params.id;
+
+  await Product.updateOne({ _id: productId },
+    { deleted: false,
+      deletedAt: new Date()
+    });
+  res.redirect(req.get("Referrer") || "/");
+    
+};

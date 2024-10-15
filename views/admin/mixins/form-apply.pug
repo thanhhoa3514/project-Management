@@ -1,0 +1,15 @@
+mixin apply()
+    form(
+        action=path
+        method="POST"
+        form-restore
+    )
+        .d-flex.align-items-end
+            .form-group 
+                input(
+                    type="text"
+                    name="ids"
+                    value=""
+                    class="form-control d-none"
+                )
+            button(type="submit" class="btn btn-primary") Apply  
