@@ -91,7 +91,12 @@ module.exports.changeMultiStatus = async (req, res) => {
 module.exports.deleteProduct = async (req, res) => {
   const productId = req.params.id;
 
-  await Product.deleteOne({ _id: productId });
+  // await Product.deleteOne({ _id: productId });
+  await Product.updateOne({ _id: productId },
+    { deleted: true,
+      deletedAt: new Date()
+    });
+
 
   res.redirect(req.get("Referrer") || "/");
 };
