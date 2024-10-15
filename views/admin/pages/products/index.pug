@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/formChangeMultiStatus.pug
 
 
 
@@ -22,24 +23,7 @@ block main
     .card.mb-3 
         .card-header List
         .card-body
-            form(
-                action=`${prefixAdmin}/products/change-multi?_method=PATCH`
-                method="POST"
-                form-change-multi
-            )
-                .d-flex.align-items-start
-                    .form-group
-                        select(name="type" class="form-control")
-                            option(value="active") Active
-                            option(value="inactive") Inactive
-                    .form-group 
-                        input(
-                            type="text"
-                            name="ids"
-                            value=""
-                            class="form-control d-none"
-                        )
-                    button(type="submit" class="btn btn-primary") Apply   
+            +formChangeMultiStatus(`${prefixAdmin}/products/change-multi?_method=PATCH`) 
 
 
             table(
