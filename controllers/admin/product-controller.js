@@ -2,6 +2,7 @@ const Product = require("../../models/product-model");
 const filterStatusHelpers = require("../../helpers/filterStatus");
 const searchHelpers = require("../../helpers/search");
 const paginationHelpers = require("../../helpers/pagination");
+const bodyParser = require("body-parser");
 
 // [GET] admin/products
 
@@ -67,11 +68,20 @@ module.exports.changeStatus = async (req, res) => {
   res.redirect(req.get("Referrer") || "/");
 };
 
+// [PATCH] /admin/products/change-multi
+module.exports.changeMultiStatus = async (req, res) => {
+  const type = req.body.type;
+  const ids = req.body.ids.split(",");
 
-// [PATCH] /admin/products/change-status/:inactive/:123
-// 
-module.exports.changeMultiStatus= async (req, res) => {
-  console.log(req.body);
-  res.send("Hi ");
-
+  switch (type) {
+    case "active":
+      await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      break;
+    case "inactive":
+      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      break;
+    default:
+      break;
+  }
+  res.redirect(req.get("Referrer") || "/");
 };
