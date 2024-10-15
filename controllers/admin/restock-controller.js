@@ -33,7 +33,7 @@ module.exports.restockItem= async (req, res) => {
 
   await Product.updateOne({ _id: productId },
     { deleted: false,
-      deletedAt: new Date()
+      restoreAt: new Date()
     });
   res.redirect(req.get("Referrer") || "/");
     

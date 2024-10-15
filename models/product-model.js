@@ -11,6 +11,7 @@ const productSchema = new mongoose.Schema({
   position: Number,
   deleted: Boolean,
   deletedAt: Date,
+  restoreAt: Date,
 });
 const Product = mongoose.model('Product', productSchema, "products");
 // console.log(productSchema);
