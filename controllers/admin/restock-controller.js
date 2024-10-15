@@ -3,7 +3,7 @@ const paginationHelpers = require("../../helpers/pagination");
 
 module.exports.restock=async(req, res) => {
     let find={
-        deleted: false
+        deleted: true
     }
 
     const countTotalItems=Product.countDocuments(find);
