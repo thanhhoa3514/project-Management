@@ -69,7 +69,7 @@ if (buttonPagination) {
         url.searchParams.set("page", pageCurrent);
 
       }
-      
+
       window.location.href = url.href;
     });
   });
@@ -158,7 +158,18 @@ if(formChangeMulti){
       const inputForm=formChangeMulti.querySelector("input[name='ids']")
 
       inputEachCheck.forEach((inputCheck) => {
-        ids.push(inputCheck.value);
+        const id=inputCheck.value;
+        if(typeChange=="change-position"){
+
+          const position=inputCheck.closest("tr").querySelector("input[name='position']").value;
+
+          ids.push(`${id}-${position}`);
+          
+        }else{
+
+          ids.push(id);
+        }
+
       });
 
       inputForm.value=ids.join(',');
