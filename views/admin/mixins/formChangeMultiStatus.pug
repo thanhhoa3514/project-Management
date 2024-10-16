@@ -7,8 +7,11 @@ mixin formChangeMultiStatus(path)
         .d-flex.align-items-start
             .form-group
                 select(name="type" class="form-control")
+                    option(selected disable) Chose option
                     option(value="active") Active
                     option(value="inactive") Inactive
+                    option(value="delete-all") Delete
+
             .form-group 
                 input(
                     type="text"
