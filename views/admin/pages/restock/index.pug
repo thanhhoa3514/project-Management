@@ -4,9 +4,12 @@ include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/formChangeMultiStatus.pug
 include ../../mixins/form-apply.pug
+include ../../mixins/alert.pug
 
 
 block main
+    +alert(5000)
+    
     h1 Restock Page
 
     +apply()

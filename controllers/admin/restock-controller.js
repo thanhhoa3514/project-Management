@@ -35,6 +35,8 @@ module.exports.restockItem= async (req, res) => {
     { deleted: false,
       restoreAt: new Date()
     });
+  req.flash("success","Restock successfully!");
+
   res.redirect(req.get("Referrer") || "/");
     
 };

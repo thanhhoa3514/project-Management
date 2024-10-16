@@ -3,11 +3,14 @@ include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/formChangeMultiStatus.pug
-
+include ../../mixins/alert.pug
 
 
 block main
+    +alert(5000)
+            
     h1 Products Page
+
 
     .card.mb-3
         .card-header Filter and  Search
