@@ -3,6 +3,7 @@ const filterStatusHelpers = require("../../helpers/filterStatus");
 const searchHelpers = require("../../helpers/search");
 const paginationHelpers = require("../../helpers/pagination");
 const bodyParser = require("body-parser");
+const systemConfig=require("../../config/system");
 
 // [GET] admin/products
 
@@ -105,6 +106,8 @@ module.exports.changeMultiStatus = async (req, res) => {
         await Product.updateOne({ _id:id},{
           position: position
         })
+        req.flash("success",`${ids.length} Items have been change its position!`);
+
       }
     
     // case "restore-all":
@@ -127,4 +130,36 @@ module.exports.deleteProduct = async (req, res) => {
   req.flash("delete","Item has been removed!");
   
   res.redirect(req.get("Referrer") || "/");
+};
+
+// [GET] /admin/products/create
+module.exports.createProduct = async (req, res) => {
+
+
+  // Render view with products and filter status
+  res.render("admin/pages/products/create", {
+    pageTitle: "New item",
+  });
+};
+
+// [POST] /admin/products/create
+
+module.exports.createProductPOST = async (req, res) => {
+  req.body.price=parseInt(req.body.price);
+  req.body.discountPercentage=parseInt(req.body.discountPercentage);
+  req.body.stock=parseInt(req.body.stock);
+
+  if(req.body.position==""){
+    const countDocuments = await Product.countDocuments();
+    req.body.position=countDocuments+1;
+    // console.log(countDocuments);
+  }else{
+    req.body.position=parseInt(req.body.position);
+  }
+
+  const newProduct = new Product(req.body);
+  await newProduct.save();
+
+  // Render view with products and filter status
+  res.redirect(`${systemConfig.prefixAdmin}/products`)
 };
