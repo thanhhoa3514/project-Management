@@ -26,12 +26,12 @@ module.exports.createProductPOST=(req,res,next)=>{
     }
 
     //Check if the title contains special characters
-    const specialCharRegex=/[^a-zA-Z0-9]/;
-    if(specialCharRegex.test(req.body.title)){
-        req.flash("error","Title contains special characters!");
-        res.redirect(req.get("Referrer") || "/");
-        return;
-    }
+    // const specialCharRegex=/[^a-zA-Z0-9]/;
+    // if(specialCharRegex.test(req.body.title)){
+    //     req.flash("error","Title contains special characters!");
+    //     res.redirect(req.get("Referrer") || "/");
+    //     return;
+    // }
 
     // Check if the title contains invalid characters
     const invalidCharRegex = /[<>]/;
