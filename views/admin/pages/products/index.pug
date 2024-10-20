@@ -96,6 +96,10 @@ block main
                                     ) Unavailable
                             td 
                                 a(
+                                    href=`${prefixAdmin}/products/detail/${item.id}`
+                                    class="btn btn-secondary btn-sm"
+                                ) Detail
+                                a(
                                     href=`${prefixAdmin}/products/edit/${item.id}`
                                     class="btn btn-warning btn-sm"
                                 ) Modify
