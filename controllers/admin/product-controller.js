@@ -145,7 +145,19 @@ module.exports.createProduct = async (req, res) => {
 // [POST] /admin/products/create
 
 module.exports.createProductPOST = async (req, res) => {
-  console.log(req.file);
+  
+
+
+  // Check If the title  already exists
+  const existTitle = await Product.findOne({
+    title:req.body.title
+  });
+  if(existTitle){
+    req.flash("error","Title already exists!");
+    res.redirect(req.get("Referrer") || "/");
+    return;
+  }
+
   req.body.price=parseInt(req.body.price);
   req.body.discountPercentage=parseInt(req.body.discountPercentage);
   req.body.stock=parseInt(req.body.stock);
@@ -156,8 +168,10 @@ module.exports.createProductPOST = async (req, res) => {
   }else{
     req.body.position=parseInt(req.body.position);
   }
-
-  req.body.thumbnail=`/uploads/${req.file.filename}`;
+  if(req.file){
+    req.body.thumbnail=`/uploads/${req.file.filename}`;
+  };
+  // req.body.thumbnail=`/uploads/${req.file.filename}`;
 
   const newProduct = new Product(req.body);
   await newProduct.save();

@@ -14,3 +14,12 @@ mixin alert(time)
                 show-alert
                 data-time=time
             )   #{messages.delete} <span close-alert>X</span> 
+
+mixin alert-error(time)
+     - if (messages.error)
+        .message.danger
+            div(
+                class="alert alert-danger"
+                show-alert
+                data-time=time
+            )   #{messages.error} <span close-alert>X</span> 
