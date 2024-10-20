@@ -217,11 +217,12 @@ if(uploadImage){
 const deleteUploadImage = document.querySelector("[upload-image]");
 if(deleteUploadImage){
   const buttonDeleteImage = document.querySelector("[delete-image-preview]");
+  const uploadInputImage =document.querySelector("[upload-image-input]");
   const uploadInputPreviewImage =document.querySelector("[upload-image-preview]");
   buttonDeleteImage.addEventListener("click", (e) => {
     if(uploadInputPreviewImage.src!=""){
       uploadInputPreviewImage.src="";
-      uploadInputPreviewImage.value="";
+      uploadInputImage.value="";
     }
   });
 }
