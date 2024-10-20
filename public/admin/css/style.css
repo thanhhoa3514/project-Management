@@ -100,3 +100,31 @@
     border-radius: 50%;
     cursor: pointer;
 }
+/* Image preview */
+[style-form]{
+    position: relative;
+    display: inline-block;
+}
+
+.image-preview{
+    width: 150px;
+    height: auto;
+    margin-top: 15px;
+    border:1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+
+}
+.image-preview[src=""]{
+    display: none;
+}
+
+.delete-image{
+    position: absolute;
+  top: 0;
+  right: 0;
+    width: 30px;
+  margin-top: 25px;
+
+}
+/* End image preview */
