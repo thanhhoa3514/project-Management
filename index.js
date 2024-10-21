@@ -36,7 +36,8 @@ app.use(cookieParser("Hello123az"));
 app.use(session({
   secret: 'Hello123az', // Provide a secret key
   resave : false, // Add resave option
-  saveUninitialized: true // Add saveUninitialized option
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 } 
 }));
 app.use(flash());
 
