@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const methodOverride = require("method-override");
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 // const mongoose = require("mongoose");
 require("dotenv").config();
@@ -37,7 +38,10 @@ app.use(session({
   secret: 'Hello123az', // Provide a secret key
   resave : false, // Add resave option
   saveUninitialized: true,
-  cookie: { maxAge: 60000 } 
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URL,
+    ttl: 14 * 24 * 60 * 60 // 14 days
+  })
 }));
 app.use(flash());
 
