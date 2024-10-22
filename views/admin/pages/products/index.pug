@@ -4,6 +4,8 @@ include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/formChangeMultiStatus.pug
 include ../../mixins/alert.pug
+include ../../mixins/sort.pug
+
 
 
 block main
@@ -21,19 +23,27 @@ block main
 
                 .col-5
                     +search(keyword)
-
+    .card.md-3
+        .card-header Sort
+        .card-body
+            .row 
+                .col-6
+                    +sort()
+                    
 
     .card.mb-3 
         .card-header List
-        .card-body
-            .row 
-                .col-8
-                    +formChangeMultiStatus(`${prefixAdmin}/products/change-multi?_method=PATCH`) 
-                .col-4
-                    a(
-                        href=`${prefixAdmin}/products/create`
-                        class="btn btn-outline-success"
-                    ) New Item
+            .card-body
+                .row 
+                    .col-8
+                        +formChangeMultiStatus(`${prefixAdmin}/products/change-multi?_method=PATCH`) 
+                    .col-4
+                        a(
+                            href=`${prefixAdmin}/products/create`
+                            class="btn btn-outline-success"
+                        ) New Item
+
+    
 
             table(
                 class="table table-hover table-sm "

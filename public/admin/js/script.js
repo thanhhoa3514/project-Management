@@ -228,3 +228,55 @@ if(deleteUploadImage){
 }
 
 // End of upload image
+
+// Sort 
+
+const sortOptions=document.querySelector("[sort]");
+
+if(sortOptions){
+  let url=new URL(window.location.href);
+
+  const sortSelect=sortOptions.querySelector("[sort-select]");
+
+  const sortClear=sortOptions.querySelector("[sort-clear]");
+
+  sortSelect.addEventListener("change",(e)=>{
+    // Take value from event
+    const value=e.target.value;
+
+    // Destructoring of value
+    const [sortKey,sortValue] = value.split("-");
+
+    // Set params on url
+    url.searchParams.set("sortKey",sortKey);
+
+    // Set params on url
+
+    url.searchParams.set("sortValue",sortValue);
+
+    // Redirect to url
+    window.location.href=url.href;
+  });
+
+  // Clear sorting
+  sortClear.addEventListener("click",(e)=>{
+    // Remove params on url
+    url.searchParams.delete("sortKey");
+    url.searchParams.delete("sortValue");
+    // Redirect to url
+    window.location.href=url.href;
+  });
+
+  // Adding selected for option
+  const sortKey=url.searchParams.get("sortKey");
+  const sortValue=url.searchParams.get("sortValue");
+
+  if(sortKey&&sortValue) {
+    const stringSort=`${sortKey}-${sortValue}`;
+    const optionSelected=sortSelect.querySelector(`option[value='${stringSort}']`); 
+    // console.log(optionSelected);
+    optionSelected.selected=true;
+
+  }
+}
+// End sort

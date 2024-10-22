@@ -33,6 +33,7 @@ router.get("/edit/:id", controller.editProduct);
 router.patch(
   "/edit/:id",
   upload.single("thumbnail"),
+  uploadCloud.upload,
   validates.createProductPOST,
   controller.editProductPATCH
 );
