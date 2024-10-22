@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const flash = require('express-flash');
 const bodyParser = require('body-parser');
 const methodOverride = require("method-override");
@@ -44,6 +45,10 @@ app.use(session({
   })
 }));
 app.use(flash());
+
+// Tiny mce
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')))
+// End tiny-mce
 
 
 //  App Local Variables
