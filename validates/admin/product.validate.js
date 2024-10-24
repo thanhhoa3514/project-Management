@@ -8,7 +8,7 @@ module.exports.createProductPOST=(req,res,next)=>{
     }
     
     // Trim the space of the front and the end product
-    req.body.title=req.body.title.trim();
+    // req.body.title=req.body.title.trim();
 
     // Check the title must contain at least eight characters
     if(req.body.title.length<8){
@@ -55,7 +55,6 @@ module.exports.createProductPOST=(req,res,next)=>{
         res.redirect(req.get("Referrer") || "/");
         return;
     }
-    req.body.price = req.body.price.trim();
 
     if (isNaN(req.body.price)) {
         req.flash("error", "Product price must be a valid number!");

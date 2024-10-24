@@ -1,0 +1,97 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+block main 
+    +alert-error(3000)
+    h1(class="mb-4") Add New Product Category 
+    
+    form(
+        action=`${prefixAdmin}/products-category/create`
+        method="POST"
+        enctype="multipart/form-data"
+    ) 
+        div(class="form-group")
+            label(for="title") Headline
+            input(
+                type="text"
+                id="title"
+                name="title"
+                class="form-control"
+                required
+            )
+        div(class="form-group")
+            label(for="parent_id") Parent Category
+            input(
+                type="text"
+                id="parent_id"
+                name="parent_id"
+                class="form-control "
+                rows="5"
+            )
+        div(class="form-group")
+            label(for="content") Content
+            textarea(
+                type="text"
+                id="content"
+                name="content"
+                class="form-control textarea-mce"
+                rows="5"
+            )
+        div(
+            style-form
+            class="form-group"
+            upload-image
+        )
+            label(for="thumbnail") Image of item
+            input(
+                type="file"
+                id="thumbnail"
+                name="thumbnail"
+                class="form-control-file"
+                accept="image/*"
+                upload-image-input
+            )
+            button(
+                type="button" 
+                class="btn btn-secondary delete-image"
+                delete-image-preview
+            ) x
+            img(
+                src="",
+                upload-image-preview
+                class="image-preview"
+            )
+        div(class="form-group")
+            label(for="position") Position
+            input(
+                type="number"
+                id="position"
+                name="position"
+                class="form-control"
+                placeholder="Automatically increment position"
+                min="1"
+            )
+        div(class="form-group form-check form-check-inline")
+            input(
+                type="radio"
+                class="form-check-input"
+                id="statusActive"
+                name="status"
+                value="active"
+                checked
+            ) 
+            label(for="statusActive" class="form-check-label") Active 
+        div(class="form-group form-check form-check-inline")
+            input(
+                type="radio"
+                class="form-check-input"
+                id="statusInActive"
+                name="status"
+                value="inactive"
+                checked
+            )
+            label(for="statusInActive" class="form-check-label") Inactive
+        div(class="form-group")
+            button(
+                type="submit"
+                class="btn btn-primary"
+            ) Create

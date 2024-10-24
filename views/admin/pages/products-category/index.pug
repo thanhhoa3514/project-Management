@@ -1,0 +1,108 @@
+extends ../../layouts/default.pug
+
+
+
+
+block main
+
+            
+    h1 Category 
+   
+    .card.mb-3 
+        .card-header List
+            .card-body
+                .row 
+                    .col-8
+                    .col-4
+                        a(
+                            href=`${prefixAdmin}/products-category/create`
+                            class="btn btn-outline-success"
+                        ) New Catalog
+
+
+                table(
+                    class="table table-hover table-sm "
+                    checkbox-multi
+                )
+                    thead
+                        tr
+                            th 
+                                input(type="checkbox" name="checkall")
+                            th Order 
+                            th Image
+                            th Title 
+                            th Position
+                            th Status
+                            th Action
+
+                    tbody 
+                        each item,index in records
+                            tr 
+                                td 
+                                    input(
+                                        type="checkbox"
+                                        name="id"
+                                        value=item.id
+                                    )
+                                td #{index+1}
+                                td  
+                                    img(src="https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
+                                        alt=item.title
+                                        width="80px"
+                                        height="auto"
+                                    )
+                                td #{item.title}   
+                                td 
+                                    input(
+                                        type="number"
+                                        value=item.position 
+                                        style="width: 60px"
+                                        min="1"
+                                        name="position"
+                                    )
+                                td 
+                                    if(item.status=="active")
+                                        a(
+                                            href="javascript:;" 
+                                            data-status=item.status
+                                            data-id=item.id
+                                            button-change-status
+                                            class="badge badge-success"
+                                        ) Available
+                                    else 
+                                        a(
+                                            href="javascript:;"
+                                            data-status=item.status
+                                            data-id=item.id
+                                            button-change-status
+                                            class="badge badge-danger"
+                                        ) Unavailable
+                                td 
+                                    a(
+                                        href=`${prefixAdmin}/products-category/detail/${item.id}`
+                                        class="btn btn-secondary btn-sm"
+                                    ) Detail
+                                    a(
+                                        href=`${prefixAdmin}/products-category/edit/${item.id}`
+                                        class="btn btn-warning btn-sm"
+                                    ) Modify
+                                    button(
+                                        class="btn btn-danger btn-sm ml-1"
+                                        button-delete
+                                        data-id=item.id
+
+                                    ) Remove
+
+
+//- _id       
+//- title 
+//- parent_id 
+//- description 
+//- thumbnail 
+//- status 
+//- position 
+//- deleted 
+//- deletedAt 
+//- createdAt 
+//- updatedAt 
+//- slug
