@@ -8,6 +8,8 @@ const validate = require("../../validates/admin/product-category.validate");
 const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware");
 
 router.get("/", controller.index);
+// router.patch("/change-status-category/:status/:id", controller.changeStatusCategory);
+
 router.get("/create", controller.create);
 
 router.post(
