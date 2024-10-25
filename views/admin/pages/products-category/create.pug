@@ -1,5 +1,7 @@
 extends ../../layouts/default.pug
 include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
+
 block main 
     +alert-error(3000)
     h1(class="mb-4") Add New Product Category 
@@ -20,13 +22,17 @@ block main
             )
         div(class="form-group")
             label(for="parent_id") Parent Category
-            input(
-                type="text"
+            select(
                 id="parent_id"
                 name="parent_id"
-                class="form-control "
-                rows="5"
+                class="form-control"
             )
+
+                option(value="") ---Chose a category ---
+                if(records)
+                    +select-tree(records)
+
+                        
         div(class="form-group")
             label(for="content") Content
             textarea(

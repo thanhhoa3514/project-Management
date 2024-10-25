@@ -1,5 +1,8 @@
 extends ../../layouts/default.pug
+
 include ../../mixins/filter-status.pug
+include ../../mixins/table-tree.pug
+
 //- include ../../mixins/search.pug
 
 
@@ -47,63 +50,8 @@ block main
                         th Action
 
                 tbody 
-                    each item,index in records
-                        tr 
-                            td 
-                                input(
-                                    type="checkbox"
-                                    name="id"
-                                    value=item.id
-                                )
-                            td #{index+1}
-                            td  
-                                img(src="https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
-                                    alt=item.title
-                                    width="80px"
-                                    height="auto"
-                                )
-                            td #{item.title}   
-                            td 
-                                input(
-                                    type="number"
-                                    value=item.position 
-                                    style="width: 60px"
-                                    min="1"
-                                    name="position"
-                                )
-                            td 
-                                if(item.status=="active")
-                                    a(
-                                        href="javascript:;" 
-                                        data-status=item.status
-                                        data-id=item.id
-                                        button-change-status
-                                        class="badge badge-success"
-                                    ) Available
-                                else 
-                                    a(
-                                        href="javascript:;"
-                                        data-status=item.status
-                                        data-id=item.id
-                                        button-change-status
-                                        class="badge badge-danger"
-                                    ) Unavailable
-                            td 
-                                a(
-                                    href=`${prefixAdmin}/products-category/detail/${item.id}`
-                                    class="btn btn-secondary btn-sm"
-                                ) Detail
-                                a(
-                                    href=`${prefixAdmin}/products-category/edit/${item.id}`
-                                    class="btn btn-warning btn-sm"
-                                ) Modify
-                                button(
-                                    class="btn btn-danger btn-sm ml-1"
-                                    button-delete
-                                    data-id=item.id
-
-                                ) Remove
-    script(src="/admin/js/product.js") 
+                    +table-tree(records)
+    //- script(src="/admin/js/product.js") 
 
 
 
