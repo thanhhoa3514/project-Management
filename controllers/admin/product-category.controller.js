@@ -75,3 +75,80 @@ module.exports.createCategoryPOST = async (req, res) => {
 
   res.redirect(`${systemConfig.prefixAdmin}/products-category`);
 };
+
+// [GET] admin/products-category/edit/:id
+module.exports.edit = async (req, res) => {
+  try {
+    
+    const idCategory = req.params.id;
+    // console.log(idCategory);
+  
+    const record = await ProductCategory.findOne({
+      _id: idCategory,
+      deleted: false,
+    });
+    // console.log(record);
+  
+    const data = await ProductCategory.find({
+      deleted: false,
+    });
+  
+    const newRecords = createTreeCategoryHelpers.tree(data);
+  
+    res.render("admin/pages/products-category/edit", {
+      pageTitle: "Edit Products Category",
+      record: record,
+      tree: newRecords,
+    });
+  } catch (error) {
+    res.redirect(`${systemConfig.prefixAdmin}/products-category`);
+    
+  }
+};
+
+// [PATCH] admin/products-category/edit/:id
+
+module.exports.editPATCH = async (req, res) => {
+  const idCategory = req.params.id;
+
+  req.body.position = parseInt(req.body.position);
+  try {
+    await ProductCategory.updateOne(
+      {
+        _id: idCategory,
+      },
+      req.body
+    );
+    req.flash("success","Successfully updated");
+  } catch (error) {
+    req.flash("error","Error updating");
+    console.log(error);
+    return res.status(500).send("Server Error");
+  }
+
+  res.redirect(req.get("Referrer") || "/");
+
+};
+
+// [GET] /admin/products-category/detail/:id
+
+module.exports.detailCategory=async(req, res) => {
+  try {
+    
+    const find={
+      deleted:false,
+      _id:req.params.id
+    };
+  
+    const record = await ProductCategory.findOne(find);
+    console.log(record);
+    // Render view with products and filter status
+    res.render("admin/pages/products-category/detail", {
+      pageTitle: record.title,
+      record:record
+    });
+  } catch (error) {
+
+    res.redirect(`${systemConfig.prefixAdmin}/products-category`);
+  }
+};

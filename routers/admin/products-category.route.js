@@ -19,5 +19,14 @@ router.post(
   validate.createCategoryPOST,
   controller.createCategoryPOST
 );
+router.get("/edit/:id", controller.edit);
+router.patch(
+  "/edit/:id",
+  upload.single("thumbnail"),
+  uploadCloud.upload,
+  validate.createCategoryPOST,
+  controller.editPATCH
+);
+router.get("/detail/:id", controller.detailCategory);
 
 module.exports = router;

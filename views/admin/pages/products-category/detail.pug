@@ -1,0 +1,37 @@
+extends ../../layouts/default.pug
+//- include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
+block main 
+
+
+    if(record.title)
+        h1(class="mb-4") #{record.title}
+
+    if(record.parent_id)
+        div(class="mb-4")
+            span Parent Category: <b>#{record.parent_id}</b>
+    else 
+        div(class="mb-4")
+            span Parent Category: <b>Not Found</b>
+    if(record.thumbnail)
+        div(class="mb-4")
+            img(
+                src=record.thumbnail
+                style="width: 100px"
+            )
+    if(record.status)
+        div(class="mb-4")
+            span Status
+            if(record.status=="active")
+                span(class="badge badge-success") Active 
+            else
+                span(class="badge badge-danger") Inactive 
+    if(record.position)
+        div(class="mb-4") Position: <b>#{record.position}</b>
+    if(record.description)
+        div(class="mb-4") Describe: !{record.description}
+    div(class="edit")
+        a(
+            href=`${prefixAdmin}/products-category/edit/${record.id}`
+            class="btn btn-warning"
+        ) Edit

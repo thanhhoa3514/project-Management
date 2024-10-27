@@ -4,10 +4,12 @@ include ../../mixins/select-tree.pug
 
 block main 
     +alert-error(3000)
-    h1(class="mb-4") Add New Product Category 
+    +alert(3000)
     
+    h1(class="mb-4") Edit Category 
+    //- div #{record}
     form(
-        action=`${prefixAdmin}/products-category/create`
+        action=`${prefixAdmin}/products-category/edit/${record.id}?_method=PATCH`
         method="POST"
         enctype="multipart/form-data"
     ) 
@@ -19,6 +21,7 @@ block main
                 name="title"
                 class="form-control"
                 required
+                value=record.title
             )
         div(class="form-group")
             label(for="parent_id") Parent Category
@@ -29,8 +32,8 @@ block main
             )
 
                 option(value="") ---Chose a category ---
-                if(records)
-                    +select-tree(records)
+                if(tree)
+                    +select-tree(tree,1,record.parent_id)
 
                         
         div(class="form-group")
@@ -41,7 +44,9 @@ block main
                 name="description"
                 class="form-control textarea-mce"
                 rows="5"
-            )
+                
+
+            ) #{record.description}
         div(
             style-form
             class="form-group"
@@ -62,7 +67,7 @@ block main
                 delete-image-preview
             ) x
             img(
-                src="",
+                src=record.thumbnail
                 upload-image-preview
                 class="image-preview"
             )
@@ -75,6 +80,7 @@ block main
                 class="form-control"
                 placeholder="Automatically increment position"
                 min="1"
+                value=record.position
             )
         div(class="form-group form-check form-check-inline")
             input(
@@ -83,7 +89,7 @@ block main
                 id="statusActive"
                 name="status"
                 value="active"
-                checked
+                checked=(record.status=="active" ? true : false)
             ) 
             label(for="statusActive" class="form-check-label") Active 
         div(class="form-group form-check form-check-inline")
@@ -93,11 +99,11 @@ block main
                 id="statusInActive"
                 name="status"
                 value="inactive"
-                checked
+                checked=(record.status=="inactive" ? true : false)
             )
             label(for="statusInActive" class="form-check-label") Inactive
         div(class="form-group")
             button(
                 type="submit"
                 class="btn btn-primary"
-            ) Create
+            ) Update
