@@ -8,7 +8,7 @@ block main
     if(product.discountPercentage)
         div(class="mb-4") Discount: <b>#{product.discountPercentage}%</b>
     if(product.stock)
-        div(class="mb-4") Inventory: <b>#{product.stock}</b>
+        div(class="mb-4") Remaining: <b>#{product.stock}</b>
     if(product.thumbnail)
         div(class="mb-4")
             img(
