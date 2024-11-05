@@ -31,3 +31,53 @@ module.exports.createRolePOST = async (req, res) => {
   await record.save();
   res.redirect(`${systemConfig.prefixAdmin}/roles`);
 };
+
+// [GET] admin/roles/edit/:id
+
+module.exports.editRole = async (req, res) => {
+
+    try {
+        
+        let find={
+            _id: req.params.id,
+            deleted: false,
+        }
+    
+        const data= await Role.findOne(find);
+        //console.log(data);
+    
+        res.render("admin/pages/roles/edit", {
+          pageTitle: "Create Permissions",
+          data: data
+        });
+    } catch (error) {
+       res.redirect(`${systemConfig.prefixAdmin}/roles`); 
+    }
+
+    //console.log(res.params.id);
+
+  };
+
+
+
+  // [PATCH] admin/roles/edit/:id
+
+module.exports.editRolePATCH = async (req, res) => {
+
+    try {
+        
+        const id=req.params.id;
+        //console.log(req.body);
+      
+        await Role.updateOne({ _id:id }, req.body);
+    
+        req.flash("success","Successfully updated!");
+        res.redirect(`${systemConfig.prefixAdmin}/roles`); 
+
+    
+        // res.redirect(req.get("Referrer") || "/");
+    } catch (error) {
+        req.flash("error","Updated Fail!");
+        res.redirect(`${systemConfig.prefixAdmin}/roles`); 
+    }
+};
