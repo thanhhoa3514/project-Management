@@ -1,9 +1,13 @@
 const Product = require("../../models/product-model");
+const ProductCategory = require("../../models/product-category.model");
+
 const filterStatusHelpers = require("../../helpers/filterStatus");
 const searchHelpers = require("../../helpers/search");
 const paginationHelpers = require("../../helpers/pagination");
 const bodyParser = require("body-parser");
 const systemConfig=require("../../config/system");
+const createTreeCategoryHelpers = require("../../helpers/createTreeCategory");
+
 
 // [GET] admin/products
 
@@ -144,11 +148,20 @@ module.exports.deleteProduct = async (req, res) => {
 
 // [GET] /admin/products/create
 module.exports.createProduct = async (req, res) => {
+  let find = {
+    deleted: false,
+  };
 
+  const category = await ProductCategory.find(find);
 
-  // Render view with products and filter status
+  // Create the level
+  const newCategory = createTreeCategoryHelpers.tree(category);
+
+  // Render view with products and filter status  
   res.render("admin/pages/products/create", {
     pageTitle: "New item",
+    category: newCategory,
+
   });
 };
 
@@ -198,11 +211,20 @@ module.exports.editProduct = async (req, res) => {
     };
   
     const product = await Product.findOne(find);
+
+  
+    const category = await ProductCategory.find({
+      deleted: false,
+    });
+  
+    // Create the level
+    const newCategory = createTreeCategoryHelpers.tree(category);
   
     // Render view with products and filter status
     res.render("admin/pages/products/edit", {
       pageTitle: "Edit item",
-      product:product
+      product:product,
+      category: newCategory,
     });
   } catch (error) {
 
