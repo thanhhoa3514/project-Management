@@ -12,5 +12,9 @@ router.get("/create", controller.createRole);
 router.get("/edit/:id", controller.editRole);
 
 router.patch("/edit/:id", controller.editRolePATCH);
+router.get("/permissions", controller.permissions);
+router.patch("/permissions/", controller.editPermissionPATCH);
+
+
 
 module.exports = router;

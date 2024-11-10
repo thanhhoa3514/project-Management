@@ -1,5 +1,6 @@
 const Role = require("../../models/role-model");
 const systemConfig = require("../../config/system");
+const { json } = require("body-parser");
 
 // [GET] admin/roles
 
@@ -80,4 +81,47 @@ module.exports.editRolePATCH = async (req, res) => {
         req.flash("error","Updated Fail!");
         res.redirect(`${systemConfig.prefixAdmin}/roles`); 
     }
+};
+
+
+
+// [GET] admin/roles/permissions
+module.exports.permissions = async (req, res) => {
+
+  let find = {
+    deleted: false,
+  };
+
+  const records = await Role.find(find);
+  res.render("admin/pages/roles/permissions",{
+    pageTitle: "Authentication",
+    records: records,
+  });
+};
+
+module.exports.editPermissionPATCH = async (req, res) => {
+  try {
+    
+    //console.log(req.body.permissions);
+  
+    const permissions = JSON.parse(req.body.permissions);
+    // console.log(permissions);
+  
+    for (const item of permissions) {
+      // const id=permission.id;
+      // const permissions=permission.permissions;
+  
+      await Role.updateOne(
+        { _id: item.id },
+        { Permission_groups: item.permissions }
+      );
+    }
+  
+    req.flash("success","Successfully updated!");
+  
+    res.redirect(req.get("Referrer") || "/");
+  } catch (error) {
+    req.flash("error","Updated Fail!");
+    res.redirect(req.get("Referrer") || "/");
+  }
 };
