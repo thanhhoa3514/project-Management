@@ -61,7 +61,7 @@ block main
                         td(class="text-center")
                             input(type="checkbox")
 
-
+                //- PRODUCT
                 tr 
                     td(colspan="4")
                         b  Products 
@@ -87,6 +87,7 @@ block main
                         td(class="text-center")
                             input(type="checkbox")
                 
+                //- ROLES
                 tr 
                     td(colspan="4")
                         b  Role
@@ -111,7 +112,12 @@ block main
                     each item in records
                         td(class="text-center")
                             input(type="checkbox")
-
+                tr(data-name="roles_permissions")
+                    td Permission 
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")
+                //- RESTORE
                 tr 
                     td(colspan="4")
                         b  Restore 
