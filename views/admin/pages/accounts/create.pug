@@ -1,0 +1,120 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
+
+
+block main 
+    +alert-error(3000)
+    +alert(3000)
+    
+    h1(class="mb-4") Add new Account
+    
+    form(
+        action=`${prefixAdmin}/accounts/create`
+        method="POST"
+        enctype="multipart/form-data"
+    ) 
+        div(class="form-group")
+            label(for="fullName") Last and First Name
+            input(
+                type="text"
+                id="fullName"
+                name="fullName"
+                class="form-control"
+                required
+            )
+
+        div(class="form-group")
+            label(for="email")  Email *
+            input(
+                id="email"
+                name="email"
+                class="form-control"
+                type="email"
+                required
+            )
+        div(class="form-group")
+            label(for="password") Password *
+            textarea(
+                type="password"
+                id="password"
+                name="password"
+                class="form-control"
+                required
+            )
+        
+        div(class="form-group")
+            label(for="phone") Phone
+            input(
+                type="text"
+                id="phone"
+                name="phone"
+                class="form-control"
+               
+
+            )
+        div(
+            style-form
+            class="form-group"
+            upload-image
+        )
+            label(for="avatar") Avatar
+            input(
+                type="file"
+                id="avatar"
+                name="avatar"
+                class="form-control-file"
+                accept="image/*"
+                upload-image-input
+            )
+            button(
+                type="button" 
+                class="btn btn-secondary delete-image"
+                delete-image-preview
+            ) x
+            img(
+                src="",
+                upload-image-preview
+                class="image-preview"
+            )
+        div(class="form-group")
+            label(for="role_id") Authentication
+            select(
+                name="role_id" 
+                id="role_id"
+                class="form-control"
+            )
+                option(disable) -- Select-- 
+                each item in roles
+                    option(value=item.id) #{item.title}
+                
+
+        div(class="form-group form-check form-check-inline" )
+            input(
+                type="radio"
+                id="statusActive"
+                name="status"
+                class="form-check-input"
+                value="active"
+                checked
+            )
+            label(for="statusActive" class="form-check-label") Active 
+        div(class="form-group form-check form-check-inline")
+            input(
+                type="radio"
+                class="form-check-input"
+                id="statusInActive"
+                name="status"
+                value="inactive"
+                checked
+            )
+            label(for="statusInActive" class="form-check-label") Inactive
+        div(class="form-group")
+            button(
+                type="submit"
+                class="btn btn-primary"
+            ) Create
+            
+
+    script(src="/admin/js/product.js") 
+    
