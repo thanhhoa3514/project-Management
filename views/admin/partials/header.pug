@@ -1,7 +1,73 @@
-header.header 
-    .container-fluid
-        .row.align-items-center
-            .col-3 
-                .inner-logo
-                    a(href="/admin/dashboard") ADMIN
-            .col-9                     
+header.header.py-2.bg-white.border-bottom.shadow-sm
+  .container-fluid
+    .row.align-items-center
+        //- Logo Section
+        .col-6.col-md-3
+            .inner-logo
+                a.d-flex.align-items-center.text-decoration-none(
+                    href="/admin/dashboard"
+                )
+                    i.fas.fa-shield-alt.text-primary.mr-2
+                    span.h4.font-weight-bold.text-dark.mb-0 ADMIN     
+
+        .col-md-6.d-none.d-md-block
+            nav.main-nav
+                ul.nav.justify-content-center
+                    li.nav-item
+                        a.nav-link(
+                            href="/admin/dashboard"
+                            class=currentPath === '/admin/dashboard' ? 'active' : ''
+                        )
+                            i.fas.fa-home.mr-1
+                            | Dashboard
+                    li.nav-item
+                        a.nav-link(
+                            href="/admin/users"
+                            class=currentPath === '/admin/users' ? 'active' : ''
+                        )
+                            i.fas.fa-users.mr-1
+                            | Users
+                    li.nav-item
+                        a.nav-link(
+                            href="/admin/settings"
+                            class=currentPath === '/admin/settings' ? 'active' : ''
+                        )
+                            i.fas.fa-cog.mr-1
+                            | Settings 
+        
+        .col-6.col-md-3
+            .d-flex.justify-content-end.align-items-center
+                //- Notifications Dropdown
+                .dropdown.mr-3
+                    button.btn.btn-light.btn-sm.position-relative(
+                        type="button"
+                        data-toggle="dropdown"
+                        aria-expanded="false"
+                    )
+                    i.fas.fa-bell
+                    
+            
+                //- User Dropdown
+                .dropdown
+                    button.btn.btn-link.text-dark.dropdown-toggle.d-flex.align-items-center(
+                        type="button"
+                        data-toggle="dropdown"
+                        aria-expanded="false"
+                    )
+                
+                
+                    .dropdown-menu.dropdown-menu-right
+                        a.dropdown-item(href="/admin/profile")
+                            i.fas.fa-user.mr-2
+                            | Profile
+                        a.dropdown-item(href="/admin/settings")
+                            i.fas.fa-cog.mr-2
+                            | Settings
+                        .dropdown-divider
+                        a.dropdown-item.text-danger(
+                            href=`${prefixAdmin}/auth/logout`
+                            data-confirm="Are you sure you want to logout?"
+                        )
+                            i.fas.fa-sign-out-alt.mr-2
+                            | Logout
+            

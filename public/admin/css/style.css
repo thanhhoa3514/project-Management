@@ -1,16 +1,33 @@
 /* Header */
-.header{
-    background: #202020;
-    padding: 10px 0;
+.header {
     position: sticky;
-    top:0;
-    z-index: 999;
+    top: 0;
+    z-index: 1000;
+    background: white;
 }
 
-.header .inner-logo a {
-    font-size: 24px;
-    font-weight: 700;
-    color: #fff;
+.nav-link {
+    color: #6c757d;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #007bff;
+}
+.dropdown-toggle::after {
+    vertical-align: middle;
+}
+
+.badge {
+    font-size: 0.65rem;
+    padding: 0.25em 0.4em;
+}
+
+@media (max-width: 768px) {
+    .inner-logo {
+      font-size: 0.9rem;
+    }
 }
 
 /* End Header */
@@ -153,3 +170,4 @@
       height: 100vh;
     }
 } */
+
