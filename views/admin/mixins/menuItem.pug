@@ -1,0 +1,12 @@
+mixin menuItem(href, icon, text, badge)
+  - const isActive = currentPath === href
+  li.nav-item
+    a.nav-link(
+      href=href
+      class=isActive ? 'active' : ''
+    )
+      i(class=`fas ${icon} sidebar-icon`)
+      span.menu-text= text
+      
+
+    

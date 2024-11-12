@@ -1,17 +1,51 @@
-.sider
-    .inner-menu
-        ul 
-            li  
-                a(href=`${prefixAdmin}/dashboard`) Dashboard 
-            li      
-                a(href=`${prefixAdmin}/products`) Products
-            li      
-                a(href=`${prefixAdmin}/products-category`) Products Category
-            li      
-                a(href=`${prefixAdmin}/restock`) Restock
-            li      
-                a(href=`${prefixAdmin}/roles`) Permissions
-            li      
-                a(href=`${prefixAdmin}/roles/permissions`) Authorization
-            li      
-                a(href=`${prefixAdmin}/accounts`) Accounts
+include ../../admin/mixins/menuItem.pug
+
+aside.sidebar
+  .sidebar-wrapper
+    //- Profile Section
+    .sidebar-profile.mb-4.p-3
+      .d-flex.align-items-center
+        .profile-image.mr-3
+          
+        .profile-info
+          h6.mb-1= user ? user.name : 'Admin User'
+          small.text-muted= user ? user.role : 'Administrator'
+
+    //- Search Box
+    .sidebar-search.px-3.mb-4
+      .input-group
+        input.form-control.form-control-sm(
+          type="text"
+          placeholder="Search menu..."
+          id="menuSearch"
+        )
+        .input-group-append
+          span.input-group-text
+            i.fas.fa-search
+    
+    nav.sidebar-nav
+      ul.nav.flex-column#sidebarMenu
+        +menuItem(`${prefixAdmin}/dashboard`, 'fa-tachometer-alt', 'Dashboard', )
+        
+        //- Products Section
+        li.nav-item.menu-header Products Management
+        +menuItem(`${prefixAdmin}/products`, 'fa-box', 'Products')
+        +menuItem(`${prefixAdmin}/products-category`, 'fa-tags', 'Categories')
+        +menuItem(`${prefixAdmin}/restock`, 'fa-warehouse', 'Restock',)
+        
+        //- Access Control Section
+        li.nav-item.menu-header Access Control
+        +menuItem(`${prefixAdmin}/roles`, 'fa-shield-alt', 'Permissions')
+        +menuItem(`${prefixAdmin}/roles/permissions`, 'fa-lock', 'Authorization')
+        +menuItem(`${prefixAdmin}/accounts`, 'fa-users', 'Accounts')
+        
+        //- Settings Section
+        li.nav-item.menu-header System
+        +menuItem(`${prefixAdmin}/settings`, 'fa-cog', 'Settings')
+        +menuItem(`${prefixAdmin}/logs`, 'fa-history', 'Activity Logs')
+
+    .sidebar-footer.mt-auto.p-3
+      .d-flex.justify-content-between.align-items-center
+        small.text-muted Version 1.0.0
+        button.btn.btn-sm.btn-link.sidebar-collapse-btn(type="button")
+          i.fas.fa-angle-double-left
