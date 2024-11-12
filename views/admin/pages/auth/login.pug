@@ -1,0 +1,89 @@
+extends ../../layouts/auth.pug
+include ../../mixins/alert.pug
+
+
+block main 
+
+    +alert-error(3000)
+    +alert(3000)
+
+    section.vh-100
+        .container-fluid.h-custom
+            .row.d-flex.justify-content-center.align-items-center.h-100
+                .col-md-9.col-lg-6.col-xl-5
+                    img.img-fluid(
+                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                        alt="Sample image"
+                    )
+                .col-md-8.col-lg-6.col-xl-4.offset-xl-1
+                    form(
+                    action=`${prefixAdmin}/auth/login`
+                    method="POST"
+                    )
+                        .d-flex.flex-row.align-items-center.justify-content-center.justify-content-lg-start
+                            p.lead.fw-normal.mb-0.me-3 Sign in with
+                            button.btn.btn-primary.btn-floating.mx-1(type="button")
+                                i.fab.fa-facebook-f
+                            button.btn.btn-primary.btn-floating.mx-1(type="button")
+                                i.fab.fa-twitter
+                            button.btn.btn-primary.btn-floating.mx-1(type="button")
+                                i.fab.fa-linkedin-in
+
+                        .divider.d-flex.align-items-center.my-4
+                            p.text-center.fw-bold.mx-3.mb-0 Or
+
+                        //- Email input
+                        .form-outline.mb-4
+                            input#email.form-control.form-control-lg(
+                            type="email"
+                            name="email"
+                            placeholder="Enter a valid email address"
+                            required
+                            )
+                            label.form-label(for="email") Email address
+
+                        //- Password input
+                        .form-outline.mb-3
+                            input#password.form-control.form-control-lg(
+                            type="password"
+                            name="password"
+                            placeholder="Enter password"
+                            required
+                            )
+                            label.form-label(for="password") Password
+
+                        .d-flex.justify-content-between.align-items-center
+                        //- Checkbox
+                        .form-check.mb-0
+                            input#remember.form-check-input.me-2(
+                                type="checkbox"
+                                name="remember"
+                            )
+                            label.form-check-label(for="remember") Remember me
+                        a.text-body(href="#!") Forgot password?
+
+                        .text-center.text-lg-start.mt-4.pt-2
+                            button.btn.btn-primary.btn-lg(
+                                type="submit"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                            ) Login
+                            p.small.fw-bold.mt-2.pt-1.mb-0
+                                | Don't have an account? 
+                                a.link-danger(href="#!") Register
+        .d-flex.flex-column.flex-md-row.text-center.text-md-start.justify-content-between.py-4.px-4.px-xl-5.bg-primary
+            //- Copyright
+            .text-white.mb-3.mb-md-0 Copyright © 2020. All rights reserved.
+        
+            //- Right
+            .social-links
+                a.text-white.me-4(href="#!")
+                    i.fab.fa-facebook-f
+                a.text-white.me-4(href="#!")
+                    i.fab.fa-twitter
+                a.text-white.me-4(href="#!")
+                    i.fab.fa-google
+                a.text-white(href="#!")
+                    i.fab.fa-linkedin-in
+
+
+
