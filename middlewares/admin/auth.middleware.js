@@ -1,0 +1,28 @@
+const systemConfig = require("../../config/system");
+const Account=require("../../models/account-model");
+
+module.exports.requireAuth=async(req,res,next)=>{
+
+    // Check if token is existing on page 
+    if(!req.cookies.token){
+        // Redirect to login page when token is not present
+        res.redirect(`${systemConfig.prefixAdmin}/auth/login`);
+        return;
+    }else{
+        // Check if token exists in database it is avoiding when we change token in page at the time when we in dashboard page
+        
+        // Fetch user from database by token
+        const user=await Account.findOne({
+            token:req.cookies.token
+        });
+
+        // If user not found then redirect to login page
+        if(!user){
+            res.redirect(`${systemConfig.prefixAdmin}/auth/login`);
+        }else{
+            // If user found then next
+            next();
+        }
+
+    }
+}
