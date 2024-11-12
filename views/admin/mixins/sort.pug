@@ -1,18 +1,12 @@
 mixin sort()
-    div(sort)
-        select(
-            class="form-control"
-            name="sort"
-            sort-select
-        )
-            option(value="position-asc") Ascending position
-            option(value="position-desc") Descending position
-            option(value="price-desc") Descending price
-            option(value="price-asc")  Ascending price
-            option(value="title-desc")  A-Z title
-            option(value="title-asc")  Z-A title
+   
+        label(for="sortSelect") Sort By
+        select#sortSelect.form-control(name="sort")
+            option(value="position-asc") Ascending Position
+            option(value="position-desc") Descending Position
+            option(value="price-desc") Highest Price
+            option(value="price-asc") Lowest Price
+            option(value="title-desc") Z-A Title
+            option(value="title-asc") A-Z Title
 
-        button(
-            class="btn btn-danger mt-2"
-            sort-clear
-        ) Clear
+        button#sortClear.btn.btn-outline-danger.mt-2 Clear
