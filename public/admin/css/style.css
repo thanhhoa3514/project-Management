@@ -292,3 +292,8 @@ input[type="number"] {
   padding: 15px;
 }
 /* End Card */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+}
