@@ -5,151 +5,160 @@ include ../../mixins/pagination.pug
 include ../../mixins/formChangeMultiStatus.pug
 include ../../mixins/alert.pug
 include ../../mixins/sort.pug
+include ../../mixins/moment.pug
+
 
 
 
 block main
-    +alert(5000)
-            
-    .container-fluid.py-4
-        //- Header
-        .d-flex.justify-content-between.align-items-center.mb-4
-            h1.h3 Products Management
-            a(href=`${prefixAdmin}/products/create`).btn.btn-success
-                i.fas.fa-plus 
-                |  New Product
+   
+        +alert(5000)
+                
+        .container-fluid.py-4
+            //- Header
+            .d-flex.justify-content-between.align-items-center.mb-4
+                h1.h3 Products Management
+                a(href=`${prefixAdmin}/products/create`).btn.btn-success
+                    i.fas.fa-plus 
+                    |  New Product
 
 
-    .card.mb-4
-        .card-header.bg-white
-            h5.card-title.mb-0 Filters and Search
-        .card-body 
-            .row
-                .col-md-6
-                    .form-group
-                        +filter-status(filterStatus)
+        .card.mb-4
+            .card-header.bg-white
+                h5.card-title.mb-0 Filters and Search
+            .card-body 
+                .row
+                    .col-md-6
+                        .form-group
+                            +filter-status(filterStatus)
 
-                .col-md-6
-                    .form-group
-                        +search(keyword)
-    .card.md-3
-        .card-header.bg-white
-            h5.card-title.mb-0 Sort
-        .card-body
-            .row 
-                .col-md-6
-                    .form-group
-                        +sort()
+                    .col-md-6
+                        .form-group
+                            +search(keyword)
+        .card.md-3
+            .card-header.bg-white
+                h5.card-title.mb-0 Sort
+            .card-body
+                .row 
+                    .col-md-6
+                        .form-group
+                            +sort()
+                        
+
+        .card.mb-3 
+            .card-header.bg-white
+                h5.card-title.mb-0 List
+            .card-body
+                .row 
+                    .col-8
+                        +formChangeMultiStatus(`${prefixAdmin}/products/change-multi?_method=PATCH`) 
                     
 
-    .card.mb-3 
-        .card-header.bg-white
-            h5.card-title.mb-0 List
-        .card-body
-            .row 
-                .col-8
-                    +formChangeMultiStatus(`${prefixAdmin}/products/change-multi?_method=PATCH`) 
-                
+        
 
-    
+                table(
+                    class="table table-hover table-sm "
+                    checkbox-multi
+                )
+                    thead
+                        tr
+                            th 
+                                input(type="checkbox" name="checkall")
+                            th Order 
+                            th Image
+                            th Title 
+                            th Price
+                            th Position
+                            th Status
+                            th CreatedBy
+                            th Action
 
-            table(
-                class="table table-hover table-sm "
-                checkbox-multi
-            )
-                thead
-                    tr
-                        th 
-                            input(type="checkbox" name="checkall")
-                        th Order 
-                        th Image
-                        th Title 
-                        th Price
-                        th Position
-                        th Status
-                        th Action
+                    tbody 
+                        each item,index in products
+                            tr 
+                                td 
+                                    input(
+                                        type="checkbox"
+                                        name="id"
+                                        value=item.id
+                                    )
+                                td #{pagination.limitItems*(pagination.currentPage-1)+(index+1)}
+                                td  
+                                    img(src=item.thumbnail,
+                                        alt=item.title
+                                        width="80px"
+                                        height="auto"
+                                    )
+                                td #{item.title}          
+                                td #{item.price}$
+                                td 
+                                    input.form-control.form-control-sm.position-input(
+                                        type="number"
+                                        value=item.position 
+                                        style="width: 60px"
+                                        min="1"
+                                        name="position"
+                                    )
+                                td 
+                                    if(item.status=="active")
+                                        a(
+                                            href="javascript:;" 
+                                            data-status=item.status
+                                            data-id=item.id
+                                            button-change-status
+                                            class="badge badge-success"
+                                        ) Available
+                                    else 
+                                        a(
+                                            href="javascript:;"
+                                            data-status=item.status
+                                            data-id=item.id
+                                            button-change-status
+                                            class="badge badge-danger"
+                                        ) Unavailable
+                                td 
+                                    p #{item.accountFullName}
+                                    p
+                                        +formatDateTime(item.createdBy.createdAt)
 
-                tbody 
-                    each item,index in products
-                        tr 
-                            td 
-                                input(
-                                    type="checkbox"
-                                    name="id"
-                                    value=item.id
-                                )
-                            td #{pagination.limitItems*(pagination.currentPage-1)+(index+1)}
-                            td  
-                                img(src=item.thumbnail,
-                                    alt=item.title
-                                    width="80px"
-                                    height="auto"
-                                )
-                            td #{item.title}          
-                            td #{item.price}$
-                            td 
-                                input.form-control.form-control-sm.position-input(
-                                    type="number"
-                                    value=item.position 
-                                    style="width: 60px"
-                                    min="1"
-                                    name="position"
-                                )
-                            td 
-                                if(item.status=="active")
-                                    a(
-                                        href="javascript:;" 
-                                        data-status=item.status
-                                        data-id=item.id
-                                        button-change-status
-                                        class="badge badge-success"
-                                    ) Available
-                                else 
-                                    a(
-                                        href="javascript:;"
-                                        data-status=item.status
-                                        data-id=item.id
-                                        button-change-status
-                                        class="badge badge-danger"
-                                    ) Unavailable
-                            td.table-actions
-                                .btn-group.btn-group-sm
-                                    a(
-                                        href=`${prefixAdmin}/products/detail/${item.id}`
-                                        class="btn btn-secondary btn-sm ml-1"
-                                    ) Detail
-                                        i.fas.fa-eye
-                                    a(
-                                        href=`${prefixAdmin}/products/edit/${item.id}`
-                                        class="btn btn-warning btn-sm ml-1"
-                                    ) Edit
-                                        i.fas.fa-edit
-                                    button(
-                                        class="btn btn-danger btn-sm ml-1"
-                                        button-delete
-                                        data-id=item.id
+                                td.table-actions
+                                    .btn-group.btn-group-sm
+                                        a(
+                                            href=`${prefixAdmin}/products/detail/${item.id}`
+                                            class="btn btn-secondary btn-sm ml-1"
+                                        ) Detail
+                                            i.fas.fa-eye
+                                        a(
+                                            href=`${prefixAdmin}/products/edit/${item.id}`
+                                            class="btn btn-warning btn-sm ml-1"
+                                        ) Edit
+                                            i.fas.fa-edit
+                                        button(
+                                            class="btn btn-danger btn-sm ml-1"
+                                            button-delete
+                                            data-id=item.id
 
-                                    ) Delete
-                                        i.fas.fa-trash
+                                        ) Delete
+                                            i.fas.fa-trash
 
-    +pagination(pagination)
+        +pagination(pagination)
 
-    form(
-        action=""
-        method="POST"
-        id="form-change-status"
-        data-path=`${prefixAdmin}/products/change-status`
+        form(
+            action=""
+            method="POST"
+            id="form-change-status"
+            data-path=`${prefixAdmin}/products/change-status`
 
-    ) 
+        ) 
 
-    form(
-        action=""
-        method="POST"
-        id="form-delete-item"
-        data-path=`${prefixAdmin}/products/delete`
+        form(
+            action=""
+            method="POST"
+            id="form-delete-item"
+            data-path=`${prefixAdmin}/products/delete`
 
-    )
+        )
 
-    script(src="/admin/js/product.js") 
+        script(src="/admin/js/product.js") 
 
                         

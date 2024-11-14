@@ -21,6 +21,13 @@ const productSchema = new mongoose.Schema({
     unique: true
 
   },
+  createdBy:{
+    account_Id: String,
+    createdAt:{
+      type: Date,
+      default: Date.now
+    }
+  },
   deleted: {
     type: Boolean,
     default: false,

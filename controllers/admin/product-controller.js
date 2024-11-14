@@ -7,6 +7,8 @@ const paginationHelpers = require("../../helpers/pagination");
 const bodyParser = require("body-parser");
 const systemConfig=require("../../config/system");
 const createTreeCategoryHelpers = require("../../helpers/createTreeCategory");
+const Account = require("../../models/account-model");
+
 
 
 // [GET] admin/products
@@ -63,6 +65,17 @@ module.exports.index = async (req, res) => {
     .sort(sort)
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
+  
+
+  for (const product of products) {
+    const user=await Account.findOne({
+      _id: product.createdBy.account_Id,
+
+    });
+    if(user){
+      product.accountFullName=user.fullName;
+    }
+  }
 
   // Render view with products and filter status
   res.render("admin/pages/products/index", {
@@ -148,6 +161,7 @@ module.exports.deleteProduct = async (req, res) => {
 
 // [GET] /admin/products/create
 module.exports.createProduct = async (req, res) => {
+  //console.log(res.locals.user);
   let find = {
     deleted: false,
   };
@@ -193,6 +207,9 @@ module.exports.createProductPOST = async (req, res) => {
   }
 
   // req.body.thumbnail=`/uploads/${req.file.filename}`;
+  req.body.createdBy={
+    account_Id:res.locals.user.id
+  };
 
   const newProduct = new Product(req.body);
   await newProduct.save();

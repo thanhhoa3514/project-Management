@@ -1,5 +1,6 @@
 const systemConfig = require("../../config/system");
 const Account=require("../../models/account-model");
+const Role = require("../../models/role-model");
 
 module.exports.requireAuth=async(req,res,next)=>{
 
@@ -14,13 +15,21 @@ module.exports.requireAuth=async(req,res,next)=>{
         // Fetch user from database by token
         const user=await Account.findOne({
             token:req.cookies.token
-        });
+        }).select("-password");
 
         // If user not found then redirect to login page
         if(!user){
             res.redirect(`${systemConfig.prefixAdmin}/auth/login`);
         }else{
+
+            const role=await Role.findOne({
+                _id:user.role_id
+            }).select("title Permission_groups");
             // If user found then next
+
+            res.locals.user = user;
+            res.locals.role = role;
+
             next();
         }
 
