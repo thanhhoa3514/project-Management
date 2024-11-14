@@ -71,6 +71,7 @@ block main
                             th Position
                             th Status
                             th CreatedBy
+                            th Updated Recently
                             th Action
 
                     tbody 
@@ -120,6 +121,12 @@ block main
                                     p #{item.accountFullName}
                                     p
                                         +formatDateTime(item.createdBy.createdAt)
+                                td 
+                                    - const updatedBy=item.updatedBy[item.updatedBy.length-1];
+                                    if(updatedBy)
+                                        p #{updatedBy.accountFullName}
+                                        p
+                                            +formatDateTime(updatedBy.createdAt)
 
                                 td.table-actions
                                     .btn-group.btn-group-sm
