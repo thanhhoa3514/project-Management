@@ -33,8 +33,14 @@ const productSchema = new mongoose.Schema({
     default: false,
     required: false,
   },
-  deletedAt: Date,
-  restoreAt: Date,
+  deletedBy:{
+    account_Id: String,
+    deletedAt:Date
+  },
+  restoreBy:{
+    account_Id: String,
+    restoreAt:Date
+  },
 },{
   timestamps: true,
   // toObject: { virtuals: true },
