@@ -14,139 +14,128 @@ block main
    
         +alert(5000)
                 
-        .container-fluid.py-4
-            //- Header
-            .d-flex.justify-content-between.align-items-center.mb-4
-                h1.h3 Products Management
-                a(href=`${prefixAdmin}/products/create`).btn.btn-success
-                    i.fas.fa-plus 
-                    |  New Product
+        //- Page Header  
+        .row.align-items-center.mb-4  
+            .col-md-6  
+                h1.h3.text-primary Products Management  
+            .col-md-6.text-right  
+                a(href=`${prefixAdmin}/products/create`).btn.btn-success  
+                    i.fas.fa-plus.mr-2  
+                    | New Product 
 
 
-        .card.mb-4
-            .card-header.bg-white
-                h5.card-title.mb-0 Filters and Search
-            .card-body 
-                .row
-                    .col-md-6
-                        .form-group
-                            +filter-status(filterStatus)
-
-                    .col-md-6
-                        .form-group
-                            +search(keyword)
-        .card.md-3
-            .card-header.bg-white
-                h5.card-title.mb-0 Sort
-            .card-body
-                .row 
-                    .col-md-6
-                        .form-group
-                            +sort()
+        //- Filters and Search  
+        .row.mb-4  
+            .col-md-12  
+                .card.shadow-sm  
+                    .card-header.bg-light.d-flex.justify-content-between.align-items-center  
+                        h5.card-title.m-0 Filters and search 
+                        button.btn.btn-sm.btn-outline-secondary(type="button" data-toggle="collapse" data-target="#filterSection")  
+                            i.fas.fa-filter.mr-2  
+                            | Toggle Filters  
+                    .card-body.collapse.show#filterSection  
+                        .row  
+                            .col-md-4  
+                                .form-group  
+                                    label Filter by Status  
+                                    +filter-status(filterStatus)  
+                            .col-md-4  
+                                .form-group  
+                                    label Search Products  
+                                    +search(keyword)  
+                            .col-md-4  
+                                .form-group  
+                                    label Sort Options  
+                                    +sort()
                         
 
-        .card.mb-3 
-            .card-header.bg-white
-                h5.card-title.mb-0 List
-            .card-body
-                .row 
-                    .col-8
-                        +formChangeMultiStatus(`${prefixAdmin}/products/change-multi?_method=PATCH`) 
+        //- Product List  
+        .card.shadow-sm.mb-4  
+            .card-header.bg-light.d-flex.justify-content-between.align-items-center  
+                h5.card-title.m-0 Product List  
+                .d-flex.align-items-center  
+                    +formChangeMultiStatus(`${prefixAdmin}/products/change-multi?_method=PATCH`)  
                     
+            .card-body.p-0  
+                .table-responsive  
+                    table.table.table-striped.table-hover.mb-0(checkbox-multi)  
+                        thead.thead-light  
+                            tr  
+                                th.text-center   
+                                    input(type="checkbox" name="checkall")  
+                                th.text-center #  
+                                th.text-center Image  
+                                th Product Title  
+                                th Price  
+                                th Position  
+                                th Status  
+                                th Created By  
+                                th Last Updated  
+                                th.text-right Actions  
 
-        
-
-                table(
-                    class="table table-hover table-sm "
-                    checkbox-multi
-                )
-                    thead
-                        tr
-                            th 
-                                input(type="checkbox" name="checkall")
-                            th Order 
-                            th Image
-                            th Title 
-                            th Price
-                            th Position
-                            th Status
-                            th CreatedBy
-                            th Updated Recently
-                            th Action
-
-                    tbody 
-                        each item,index in products
-                            tr 
-                                td 
-                                    input(
-                                        type="checkbox"
-                                        name="id"
-                                        value=item.id
-                                    )
-                                td #{pagination.limitItems*(pagination.currentPage-1)+(index+1)}
-                                td  
-                                    img(src=item.thumbnail,
-                                        alt=item.title
-                                        width="80px"
-                                        height="auto"
-                                    )
-                                td #{item.title}          
-                                td #{item.price}$
-                                td 
-                                    input.form-control.form-control-sm.position-input(
-                                        type="number"
-                                        value=item.position 
-                                        style="width: 60px"
-                                        min="1"
-                                        name="position"
-                                    )
-                                td 
-                                    if(item.status=="active")
-                                        a(
-                                            href="javascript:;" 
-                                            data-status=item.status
-                                            data-id=item.id
-                                            button-change-status
-                                            class="badge badge-success"
-                                        ) Available
-                                    else 
-                                        a(
-                                            href="javascript:;"
-                                            data-status=item.status
-                                            data-id=item.id
-                                            button-change-status
-                                            class="badge badge-danger"
-                                        ) Unavailable
-                                td 
-                                    p #{item.accountFullName}
-                                    p
-                                        +formatDateTime(item.createdBy.createdAt)
-                                td 
-                                    - const updatedBy=item.updatedBy[item.updatedBy.length-1];
-                                    if(updatedBy)
-                                        p #{updatedBy.accountFullName}
-                                        p
-                                            +formatDateTime(updatedBy.createdAt)
-
-                                td.table-actions
-                                    .btn-group.btn-group-sm
-                                        a(
-                                            href=`${prefixAdmin}/products/detail/${item.id}`
-                                            class="btn btn-secondary btn-sm ml-1"
-                                        ) Detail
-                                            i.fas.fa-eye
-                                        a(
-                                            href=`${prefixAdmin}/products/edit/${item.id}`
-                                            class="btn btn-warning btn-sm ml-1"
-                                        ) Edit
-                                            i.fas.fa-edit
-                                        button(
-                                            class="btn btn-danger btn-sm ml-1"
-                                            button-delete
-                                            data-id=item.id
-
-                                        ) Delete
-                                            i.fas.fa-trash
+                        tbody   
+                            each item, index in products  
+                                tr  
+                                    td.text-center   
+                                        input(  
+                                            type="checkbox"  
+                                            name="id"  
+                                            value=item.id  
+                                        )  
+                                    td.text-center #{pagination.limitItems*(pagination.currentPage-1)+(index+1)}  
+                                    td.text-center  
+                                        img.rounded(  
+                                            src=item.thumbnail  
+                                            alt=item.title  
+                                            width="60"  
+                                            height="60"  
+                                            style="object-fit: cover;"  
+                                        )  
+                                    td.align-middle #{item.title}  
+                                    td.align-middle.text-primary.font-weight-bold #{item.price}$  
+                                    td.align-middle  
+                                        input.form-control.form-control-sm.text-center.position-input(  
+                                            type="number"  
+                                            value=item.position   
+                                            style="width: 70px"  
+                                            min="1"  
+                                            name="position"  
+                                        )  
+                                    td.align-middle  
+                                        if(item.status=="active")  
+                                            span.badge.badge-success.py-1 Available  
+                                        else   
+                                            span.badge.badge-danger.py-1 Unavailable  
+                                    td.align-middle  
+                                        small  
+                                            p.mb-1 #{item.accountFullName}  
+                                            p.text-muted  
+                                                +formatDateTime(item.createdBy.createdAt)  
+                                    td.align-middle  
+                                        - const updatedBy = item.updatedBy[item.updatedBy.length-1];  
+                                        if(updatedBy)  
+                                            small  
+                                                p.mb-1 #{updatedBy.accountFullName}  
+                                                p.text-muted  
+                                                    +formatDateTime(updatedBy.createdAt)  
+                                    td.text-right.align-middle  
+                                        .btn-group.btn-group-sm  
+                                            a.btn.btn-info.btn-sm(  
+                                                href=`${prefixAdmin}/products/detail/${item.id}`  
+                                                title="View Details"  
+                                            )  
+                                                i.fas.fa-eye  
+                                            a.btn.btn-warning.btn-sm(  
+                                                href=`${prefixAdmin}/products/edit/${item.id}`  
+                                                title="Edit Product"  
+                                            )  
+                                                i.fas.fa-edit  
+                                            button.btn.btn-danger.btn-sm(  
+                                                button-delete  
+                                                data-id=item.id  
+                                                title="Delete Product"  
+                                            )  
+                                                i.fas.fa-trash
 
         +pagination(pagination)
 

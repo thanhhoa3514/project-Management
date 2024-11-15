@@ -10,7 +10,6 @@ aside.sidebar
         .profile-info
           h6.mb-1= user ? user.name : 'Admin User'
           small.text-muted= user ? user.role : 'Administrator'
-
     //- Search Box
     .sidebar-search.px-3.mb-4
       .input-group
@@ -43,7 +42,6 @@ aside.sidebar
         li.nav-item.menu-header System
         +menuItem(`${prefixAdmin}/settings`, 'fa-cog', 'Settings')
         +menuItem(`${prefixAdmin}/logs`, 'fa-history', 'Activity Logs')
-
     .sidebar-footer.mt-auto.p-3
       .d-flex.justify-content-between.align-items-center
         small.text-muted Version 1.0.0

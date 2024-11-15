@@ -118,3 +118,23 @@ module.exports.editAccountPATCH=async(req, res) => {
     res.redirect(req.get("Referrer") || "/");
 
 }
+
+// [GET] admin/account/details/:id
+module.exports.detailAccount= async(req, res)=> {
+  try {
+    const find = {
+      deleted: false,
+      _id: req.params.id,
+    };
+
+    const record = await Account.findOne(find).select("-password -token");
+    console.log(record);
+    // Render view with products and filter status
+    res.render("admin/pages/accounts/detail", {
+      pageTitle: DetailAccounts,
+      record: record,
+    });
+  } catch (error) {
+    res.redirect(`${systemConfig.prefixAdmin}/accounts`);
+  }
+}

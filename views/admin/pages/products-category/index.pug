@@ -17,13 +17,14 @@ block main
 
     +alert(5000)
                 
-    .container-fluid.py-4
-        //- Header
-        .d-flex.justify-content-between.align-items-center.mb-4
-            h1.h3 Categories Management
-            a(href=`${prefixAdmin}/products-category/create`).btn.btn-success
-                i.fas.fa-plus 
-                |  New Category
+    //- Page Header  
+    .row.align-items-center.mb-4  
+        .col-md-6  
+            h1.h3.text-primary Category Management  
+        .col-md-6.text-right  
+            a(href=`${prefixAdmin}/products-category/create`).btn.btn-success  
+                i.fas.fa-plus.mr-2  
+                | New Product 
     .card.mb-3
         .card-header Filter and  Search
         .card-body 
@@ -33,25 +34,28 @@ block main
 
                 //- .col-5
                 //-     +search(keyword)
+    
 
-
-            table(
-                class="table table-hover table-sm "
-                checkbox-multi
-            )
-                thead
-                    tr
-                        th 
-                            input(type="checkbox" name="checkall")
-                        th Order 
-                        th Image
-                        th Title 
-                        th Position
-                        th Status
-                        th CreatedBy
-                        th Updated Recently
-                        th Action
-
+    .card.shadow-sm.mb-4  
+    .card-header.bg-light.d-flex.justify-content-between.align-items-center  
+        h5.card-title.m-0 Category List  
+        .d-flex.align-items-center  
+            //- +formChangeMultiStatus(`${prefixAdmin}/products/change-multi?_method=PATCH`)  
+            
+    .card-body.p-0  
+        .table-responsive  
+            table.table.table-striped.table-hover.mb-0(checkbox-multi)  
+                thead.thead-light  
+                    tr   
+                        th.text-center #  
+                        th.text-center Image  
+                        th Product Title  
+                        th Price  
+                        th Position  
+                        th Status  
+                        th Created By  
+                        th Last Updated  
+                        th.text-right Actions
                 tbody 
                     +table-tree(records)
 
