@@ -43,19 +43,33 @@ mixin table-tree(items,level=1)
                         class="badge badge-danger"
                     ) Unavailable
             td 
+                p #{item.accountFullName}
+                p
+                    +formatDateTime(item.createdBy.createdAt)
+            td 
+                - const updatedBy=item.updatedBy[item.updatedBy.length-1];
+                if(updatedBy)
+                    p #{updatedBy.accountFullName}
+                    p
+                        +formatDateTime(updatedBy.createdAt)
+            td 
                 a(
                     href=`${prefixAdmin}/products-category/detail/${item.id}`
-                    class="btn btn-secondary btn-sm"
+                    class="btn btn-secondary btn-sm ml-1"
                 ) Detail
+                    i.fas.fa-eye
                 a(
                     href=`${prefixAdmin}/products-category/edit/${item.id}`
-                    class="btn btn-warning btn-sm"
+                    class="btn btn-warning btn-sm ml-1"
                 ) Modify
+                   i.fas.fa-edit
                 button(
                     class="btn btn-danger btn-sm ml-1"
                     button-delete
                     data-id=item.id
 
                 ) Remove
+                    i.fas.fa-trash
         if item.children && item.children.length>0
             +table-tree(item.children,level+1)
+    

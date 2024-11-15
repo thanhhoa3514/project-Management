@@ -2,6 +2,9 @@ const ProductCategory = require("../../models/product-category.model");
 const filterStatusCategoryHelpers = require("../../helpers/filterStatus");
 const systemConfig = require("../../config/system");
 const createTreeCategoryHelpers = require("../../helpers/createTreeCategory");
+const Account = require("../../models/account-model");
+const paginationHelpers = require("../../helpers/pagination");
+
 
 // [GET] admin/products-category
 module.exports.index = async (req, res) => {
@@ -18,16 +21,61 @@ module.exports.index = async (req, res) => {
     find.status = req.query.status;
   }
 
+  // Pagination
+  const countTotalItemsPage = await ProductCategory.countDocuments(find);
+
+  let objectPagination = paginationHelpers(
+    {
+      currentPage: 1,
+      limitItems: 4,
+    },
+    req.query,
+    countTotalItemsPage
+  );
+
+  // End pagination
+
   // Query products
-  const records = await ProductCategory.find(find);
+  const records = await ProductCategory.find(find)
+  .limit(objectPagination.limitItems)
+  .skip(objectPagination.skip);
 
   // Create the level
   const newRecords = createTreeCategoryHelpers.tree(records);
+
+  for (const record of records) {
+
+    // Take out the information of users who created product
+    const userCreated = await Account.findOne({
+      _id: record.createdBy.account_Id,
+    });
+
+    // If user is already existing add new fields by locals variables user
+    if (userCreated) {
+      record.accountFullName = userCreated.fullName;
+    }
+
+    // Take out the information of users who updated product recently
+    const updatedRecently=record.updatedBy[record.updatedBy.length-1];
+    // console.log(updatedByRecently);
+
+
+    // Check if the product has been updated recently
+    if(updatedRecently){
+      const userUpdatedRecently = await Account.findOne({
+        _id: updatedRecently.account_Id,
+      });
+
+      updatedRecently.accountFullName=userUpdatedRecently.fullName;
+    }
+    
+  }
 
   res.render("admin/pages/products-category/index", {
     pageTitle: "Category product page",
     filterStatus: filterStatus,
     records: newRecords,
+    pagination: objectPagination
   });
 };
 
@@ -69,6 +117,10 @@ module.exports.createCategoryPOST = async (req, res) => {
   } else {
     req.body.position = parseInt(req.body.position);
   }
+
+  req.body.createdBy = {
+    account_Id: res.locals.user.id,
+  };
 
   const record = new ProductCategory(req.body);
   await record.save();
@@ -113,11 +165,22 @@ module.exports.editPATCH = async (req, res) => {
 
   req.body.position = parseInt(req.body.position);
   try {
+
+    const updatedBy={
+      account_Id: res.locals.user.id,
+      updateAt: new Date()
+    };
+
     await ProductCategory.updateOne(
       {
         _id: idCategory,
       },
-      req.body
+      {
+        ...req.body,
+        $push: {
+          updatedBy: updatedBy,
+        }
+      },
     );
     req.flash("success","Successfully updated");
   } catch (error) {
