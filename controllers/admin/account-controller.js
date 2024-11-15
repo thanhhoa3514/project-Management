@@ -16,7 +16,7 @@ module.exports.index = async (req, res) => {
   for (const record of records) {
     const role = await Role.findOne({
       _id: record.role_id,
-      deleted: false
+      deleted: false,
     });
     record.role = role;
   }
@@ -60,67 +60,59 @@ module.exports.createAccountPOST = async (req, res, next) => {
   }
 };
 
-
 // [GET] admin/accounts/edit/:id
-module.exports.editAccount=async(req, res) => {
+module.exports.editAccount = async (req, res) => {
+  let find = {
+    _id: req.params.id,
+    deleted: false,
+  };
+  try {
+    const data = await Account.findOne(find);
+    const roles = await Role.find({
+      deleted: false,
+    });
 
-    let find={
-        _id: req.params.id,
-        deleted: false
-    }
-    try {
-        const data= await Account.findOne(find);
-        const roles= await Role.find({
-            deleted: false
-        });
-
-        res.render("admin/pages/accounts/edit", {
-        pageTitle: "Edit Account",
-        data:data,
-        roles: roles,
-        });
-    } catch (error) {
+    res.render("admin/pages/accounts/edit", {
+      pageTitle: "Edit Account",
+      data: data,
+      roles: roles,
+    });
+  } catch (error) {
     res.redirect(`${systemConfig.prefixAdmin}/accounts`);
-        
-    }
-
+  }
 };
-
 
 // [PATCH] /admin/accounts/edit/:id
 
-module.exports.editAccountPATCH=async(req, res) => {
-    // console.log(req.body);
+module.exports.editAccountPATCH = async (req, res) => {
+  // console.log(req.body);
 
-    const id=req.params.id;
+  const id = req.params.id;
 
-    const emailExists = await Account.findOne({
-        _id: {$ne: id},  // exclude the current record
-        email: req.body.email,
-        deleted: false,
-    });
+  const emailExists = await Account.findOne({
+    _id: { $ne: id }, // exclude the current record
+    email: req.body.email,
+    deleted: false,
+  });
 
-    if(emailExists){
-        req.flash("error", "Email already exists");
-        
-    }else{
-
-        if(req.body.password){
-            const cipherText = CryptoJS.SHA256(req.body.password).toString();
-            req.body.password = cipherText;
-        }else{
-            delete req.body.password;
-        }
-        //  console.log(req.body);
-        await Account.updateOne({_id:id},req.body);
-        req.flash("success","Successfully updated!");
+  if (emailExists) {
+    req.flash("error", "Email already exists");
+  } else {
+    if (req.body.password) {
+      const cipherText = CryptoJS.SHA256(req.body.password).toString();
+      req.body.password = cipherText;
+    } else {
+      delete req.body.password;
     }
-    res.redirect(req.get("Referrer") || "/");
-
-}
+    //  console.log(req.body);
+    await Account.updateOne({ _id: id }, req.body);
+    req.flash("success", "Successfully updated!");
+  }
+  res.redirect(req.get("Referrer") || "/");
+};
 
 // [GET] admin/account/details/:id
-module.exports.detailAccount= async(req, res)=> {
+module.exports.detailAccount = async (req, res) => {
   try {
     const find = {
       deleted: false,
@@ -128,8 +120,8 @@ module.exports.detailAccount= async(req, res)=> {
     };
 
     const record = await Account.findOne(find).select("-password -token");
-    console.log(record);
-    // Render view with products and filter status
+    // console.log(record);
+
     res.render("admin/pages/accounts/detail", {
       pageTitle: DetailAccounts,
       record: record,
@@ -137,4 +129,4 @@ module.exports.detailAccount= async(req, res)=> {
   } catch (error) {
     res.redirect(`${systemConfig.prefixAdmin}/accounts`);
   }
-}
+};

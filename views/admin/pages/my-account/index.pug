@@ -1,0 +1,26 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.my-5
+    .row.justify-content-center 
+      .col-md-8
+        .card
+          .card-body
+            h1.card-title.mb-4 Personal Information
+            .text-center.mb-3
+              if (user.avatar)
+                img.rounded-circle.mb-3(src=user.avatar, alt='User Avatar', style='width: 150px;')
+              else
+                img.rounded-circle.mb-3(src='/admin/images/avatar.png', alt='Default Avatar', style='width: 150px;')
+            if (user.fullName)
+              p.font-weight-bold First and Last Name: #{user.fullName}
+            if (user.email)
+              p.font-weight-bold Email: #{user.email}
+            if (user.phone)
+              p.font-weight-bold Phone: #{user.phone}
+            p
+              span.font-weight-bold Status:
+              span.badge.badge- #{user.status === 'active' ? 'success' : 'danger'} #{user.status === 'active' ? 'Active' : 'Inactive'}
+            if (role.title)
+              p.font-weight-bold Authentication: #{role.title}
+            a.btn.btn-primary.btn-sm(href=`${prefixAdmin}/my-account/edit`) Edit Account

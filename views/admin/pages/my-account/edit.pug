@@ -1,0 +1,41 @@
+extends ../../layouts/default.pug
+
+include ../../mixins/alert.pug
+//- include ../../mixins/select-tree.pug
+
+block main
+  +alert-error(3000)
+  +alert(3000)
+  
+  h1.mb-4 Edit Account
+
+  form(action=`${prefixAdmin}/my-account/edit?_method=PATCH`, method="POST", enctype="multipart/form-data")
+    .form-group
+      label(for="fullName") Full Name
+      input#fullName.form-control(type="text", name="fullName", required, value=user.fullName)
+    
+    .form-group
+      label(for="email") Email
+      input#email.form-control(type="email", name="email", required, value=user.email)
+    
+    .form-group
+      label(for="password") Password
+      input#password.form-control(type="password", name="password")
+    
+    .form-group
+      label(for="phone") Phone
+      input#phone.form-control(type="tel", name="phone", value=user.phone)
+    
+    .form-group.d-flex.align-items-center
+      label.mr-3(for="avatar") Avatar
+      .custom-file
+        input#avatar.custom-file-input(type="file", name="avatar", accept="image/*")
+        label.custom-file-label(for="avatar") Choose file
+      if user.avatar
+        button.btn.btn-outline-danger.btn-sm.ml-3(type="button", data-delete-image) Remove
+    
+    if user.avatar
+      img.img-thumbnail.my-3(src=user.avatar, alt="Avatar Preview")
+    
+    .form-group
+      button.btn.btn-primary(type="submit") Update
