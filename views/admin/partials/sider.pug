@@ -32,6 +32,11 @@ aside.sidebar
         +menuItem(`${prefixAdmin}/products-category`, 'fa-tags', 'Categories')
         +menuItem(`${prefixAdmin}/restock`, 'fa-warehouse', 'Restock',)
         
+        //- Articles Section
+        li.nav-item.menu-header Articles Management
+        +menuItem(`${prefixAdmin}/articles`, 'fa-newspaper', 'Articles')
+        +menuItem(`${prefixAdmin}/articles-category`, 'fa-folder', 'Article Categories')
+
         //- Access Control Section
         li.nav-item.menu-header Access Control
         +menuItem(`${prefixAdmin}/roles`, 'fa-shield-alt', 'Permissions')

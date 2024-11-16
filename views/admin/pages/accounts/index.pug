@@ -1,5 +1,12 @@
 extends ../../layouts/default.pug  
+include ../../mixins/alert.pug
+
 block main   
+
+    //- Alert Messages
+    .alerts-container
+        +success-alert(5000)
+        +danger-alert(5000)
     .container-fluid  
         .row.mb-4  
             .col-12  

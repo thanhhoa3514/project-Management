@@ -6,58 +6,93 @@ include ../../mixins/formChangeMultiStatus.pug
 include ../../mixins/form-apply.pug
 include ../../mixins/alert.pug
 
-
 block main
-    +alert(5000)
-    
-    h1 Restock Page
+    .container-fluid.py-4
+        +alert(5000)
 
-    +apply()
+        //- Header Section
+        .d-flex.justify-content-between.align-items-center.mb-4
+            h1.h3.mb-0 Restock Page
+            button.btn.btn-success.bulk-restore-btn(disabled)
+                i.fas.fa-sync-alt.mr-2
+                | Bulk Restore
 
-    table.table.table-hover.table-sm 
-        thead
-            tr
-                th Order 
-                th Image
-                th Title 
-                th Price
-                th Status
-                th Action
+        //- Filters and Search
+        .card.mb-4
+            .card-body
+                .row
+                    .col-md-8
+                        +apply()
+                    .col-md-4
+                        +search()
 
-        tbody 
-            each item,index in products
-                tr 
-                    td #{index+1}
-                    td  
-                        img(
-                            src=item.thumbnail,
-                            alt=item.title
-                            width="80px"
-                            height="auto"
-                        )
-                    td #{item.title}          
-                    td #{item.price}$
-                    td 
-                        if(item.status=="active")
-                            a(href="#" class="badge badge-success") Available
-                        else 
-                            a(href="#" class="badge badge-danger") Unavailable
-                    td 
-                        button(
-                            class="btn btn-success"
-                            button-restore
-                            data-id=item.id
-                        ) Restore
+        //- Main Table Card
+        .card
+            .card-body.p-0
+                .table-responsive
+                    table.table.table-hover.table-sm.mb-0
+                        thead.thead-light
+                            tr
+                                th.align-middle
+                                    .custom-control.custom-checkbox
+                                        input#select-all.custom-control-input(type="checkbox")
+                                        label.custom-control-label(for="select-all")
+                                th.align-middle Order
+                                th.align-middle Image
+                                th.align-middle Title
+                                th.align-middle Price
+                                th.align-middle Status
+                                th.align-middle.text-right Actions
+                        tbody
+                            each item, index in products
+                                tr
+                                    td.align-middle
+                                        .custom-control.custom-checkbox
+                                            input.custom-control-input.item-checkbox(
+                                                type="checkbox"
+                                                id=`item-${item.id}`
+                                                data-id=item.id
+                                            )
+                                            label.custom-control-label(for=`item-${item.id}`)
+                                    td.align-middle #{index+1}
+                                    td.align-middle
+                                        .product-img-wrapper.rounded(style="width: 80px; height: 80px;")
+                                            img.img-fluid.rounded(
+                                                src=item.thumbnail
+                                                alt=item.title
+                                                style="object-fit: cover; width: 100%; height: 100%;"
+                                            )
+                                    td.align-middle
+                                        .font-weight-medium #{item.title}
+                                    td.align-middle $#{item.price}
+                                    td.align-middle
+                                        if(item.status=="active")
+                                            span.badge.badge-success.px-2.py-1
+                                                i.fas.fa-check-circle.mr-1
+                                                | Available
+                                        else
+                                            span.badge.badge-danger.px-2.py-1
+                                                i.fas.fa-times-circle.mr-1
+                                                | Unavailable
+                                    td.align-middle.text-right
+                                        button.btn.btn-sm.btn-success(
+                                            button-restore
+                                            data-id=item.id
+                                            data-toggle="tooltip"
+                                            title="Restore Item"
+                                        )
+                                            i.fas.fa-sync-alt.mr-1
+                                            | Restore
 
-    +pagination(pagination)
+        //- Pagination
+        .mt-4
+            +pagination(pagination)
 
-    form(
-        action=""
-        method="POST"
-        id="form-restore-item"
-        data-path=`${prefixAdmin}/restock/restock-item`
-    )
-
-    script(src="/admin/js/product.js") 
-
-    
+        //- Hidden Form for Restore Action
+        form(
+            action=""
+            method="POST"
+            id="form-restore-item"
+            data-path=`${prefixAdmin}/restock/restock-item`
+        )
+        script(src="/admin/js/product.js") 

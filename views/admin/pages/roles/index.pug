@@ -1,51 +1,74 @@
 extends ../../layouts/default.pug
 
-block main 
-    h1(class="mb-4") Permission Groups 
-
-    .card.mb-3
-        .card-header List
-        .card-body 
-            .row
-                .col-8
-                .col-4.text-right
-                    a(
-                        href=`${prefixAdmin}/roles/create`
-                        class="btn btn-outline-success"
-                    ) + New
-            table(
-                class="table table-hover table-sm "
-                checkbox-multi
+block main
+    .container-fluid.py-4
+        // Header Section
+        .d-flex.justify-content-between.align-items-center.mb-4
+            h1.h3.mb-0 Permission Groups
+            a(
+                href=`${prefixAdmin}/roles/create`
+                class="btn btn-success"
             )
-                thead
-                    tr
-                        th Order 
-                        th Permission
-                        th Short Description
-                        th Action    
+                i.fas.fa-plus.mr-2
+                | Create New Role
 
-                tbody 
-                    if(records.length>0)
-                        each item,index in records
-                            tr 
-                                td #{index+1}          
-                                td #{item.title}
-                                td #{item.description}
-                                td 
-                                    a(
-                                        href=`${prefixAdmin}/roles/detail/${item.id}`
-                                        class="btn btn-secondary btn-sm"
-                                    ) Detail
-                                    a(
-                                        href=`${prefixAdmin}/roles/edit/${item.id}`
-                                        class="btn btn-warning btn-sm"
-                                    ) Modify
-                                    button(
-                                        class="btn btn-danger btn-sm ml-1"
-                                        button-delete
-                                        data-id=item.id
-                                    ) Remove
+        // Main Card
+        .card.shadow-sm
+            .card-header.bg-white
+                .row.align-items-center
+                    .col-md-8
+                        h5.mb-0 Permission List
+                    .col-md-4
+                        .input-group
+                            input.form-control(
+                                type="text"
+                                placeholder="Search permissions..."
+                            )
+                            .input-group-append
+                                button.btn.btn-outline-secondary(type="button")
+                                    i.fas.fa-search
 
-                    else 
-                        tr 
-                            td(colspan="4" class="text-center") There is no group here! 
+            .card-body.p-0
+                .table-responsive
+                    table.table.table-hover.mb-0(checkbox-multi)
+                        thead.thead-light
+                            tr
+                                th.align-middle(style="width: 80px;") Order
+                                th.align-middle Permission
+                                th.align-middle Description
+                                th.align-middle.text-right(style="width: 200px;") Actions
+                        tbody
+                            if(records.length>0)
+                                each item, index in records
+                                    tr
+                                        td.align-middle #{index+1}
+                                        td.align-middle
+                                            span.font-weight-medium #{item.title}
+                                        td.align-middle #{item.description}
+                                        td.align-middle
+                                            .btn-group.float-right
+                                                a.btn.btn-sm.btn-info(
+                                                    href=`${prefixAdmin}/roles/detail/${item.id}`
+                                                    data-toggle="tooltip"
+                                                    title="View Details"
+                                                )
+                                                    i.fas.fa-eye
+                                                a.btn.btn-sm.btn-warning(
+                                                    href=`${prefixAdmin}/roles/edit/${item.id}`
+                                                    data-toggle="tooltip"
+                                                    title="Edit"
+                                                )
+                                                    i.fas.fa-edit
+                                                button.btn.btn-sm.btn-danger(
+                                                    button-delete
+                                                    data-id=item.id
+                                                    data-toggle="tooltip"
+                                                    title="Delete"
+                                                )
+                                                    i.fas.fa-trash-alt
+                            else
+                                tr
+                                    td.text-center.py-4(colspan="4")
+                                        .text-muted
+                                            i.fas.fa-folder-open.d-block.mb-2.fa-2x
+                                            | No permission groups found

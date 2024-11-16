@@ -1,0 +1,135 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  .container-fluid
+    //- Page Header
+    .d-sm-flex.align-items-center.justify-content-between.mb-4
+      h1.h3.mb-0.text-gray-800 Articles Management
+      a.btn.btn-primary.btn-sm.shadow-sm(href=`${prefixAdmin}/articles/create`)
+        i.fas.fa-plus.fa-sm.text-white-50.mr-2
+        | Add New Article
+
+    //- Alert Messages
+    +alert-error(3000)
+    +alert(3000)
+
+    //- Filters Card
+    .card.shadow.mb-4
+      .card-header.py-3
+        h6.m-0.font-weight-bold.text-primary Filters
+      .card-body
+        form#filterForm
+          .row
+            .col-md-3
+              .form-group
+                label(for="status") Status
+                select#status.form-control(name="status")
+                  option(value="") All Status
+                  option(value="active") Active
+                  option(value="inactive") Inactive
+            
+            .col-md-3
+              .form-group
+                label(for="category") Category
+                select#category.form-control(name="category")
+                  option(value="") All Categories
+                  if categories
+                    each category in categories
+                      option(value=category.id)= category.title
+            
+            .col-md-4
+              .form-group
+                label(for="search") Search
+                input#search.form-control(
+                  type="text"
+                  name="search"
+                  placeholder="Search by title..."
+                )
+            
+            .col-md-2.d-flex.align-items-end
+              button.btn.btn-primary.btn-block(type="submit")
+                i.fas.fa-search.mr-2
+                | Search
+
+    //- Articles Table Card
+    .card.shadow.mb-4
+      .card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between
+        h6.m-0.font-weight-bold.text-primary Articles List
+        .dropdown.no-arrow
+          button#dropdownMenuButton.btn.btn-link.btn-sm.dropdown-toggle(
+            type="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          )
+            i.fas.fa-ellipsis-v.fa-sm.fa-fw.text-gray-400
+          .dropdown-menu.dropdown-menu-right.shadow(
+            aria-labelledby="dropdownMenuButton"
+          )
+            a.dropdown-item(href="#") 
+              i.fas.fa-file-export.mr-2
+              | Export
+            a.dropdown-item(href="#")
+              i.fas.fa-file-import.mr-2
+              | Import
+      
+      .card-body
+        .table-responsive
+          table.table.table-bordered
+            thead
+              tr
+                th(style="width: 50px")
+                  .custom-control.custom-checkbox
+                    input#checkAll.custom-control-input(type="checkbox")
+                    label.custom-control-label(for="checkAll")
+                th Title
+                th Category
+                th Author
+                th Status
+                th.text-center Views
+                th Created At
+                th.text-center(style="width: 120px") Actions
+            
+            tbody
+              if records && records.length > 0
+                each item in records
+                  tr
+                    td
+                      .custom-control.custom-checkbox
+                        input.custom-control-input(
+                          type="checkbox"
+                          id=`check${item.id}`
+                          value=item.id
+                        )
+                        label.custom-control-label(for=`check${item.id}`)
+                    td
+                      a(href=`${prefixAdmin}/articles/edit/${item.id}`)
+                        = item.title
+                      if item.thumbnail
+                        img.ml-2(
+                          src=item.thumbnail
+                          alt=item.title
+                          style="height: 30px; width: auto;"
+                        )
+                    td= item.category ? item.category.title : 'Uncategorized'
+                    td= item.author ? item.author.name : 'System'
+                    td
+                      span(class=`badge badge-${item.status === 'active' ? 'success' : 'secondary'}`)
+                        = item.status
+                    td.text-center= item.views || 0
+                    td= moment(item.createdAt).format('DD/MM/YYYY HH:mm')
+                    td.text-center
+                      a.btn.btn-sm.btn-primary.mr-1(
+                        href=`${prefixAdmin}/articles/edit/${item.id}`
+                        title="Edit"
+                      )
+                        i.fas.fa-edit
+                      button.btn.btn-sm.btn-danger.btn-delete(
+                        data-id=item.id
+                        title="Delete"
+                      )
+                        i.fas.fa-trash
+              else
+                tr
+                  td.text-center(colspan="8") No articles found 

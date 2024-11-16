@@ -5,8 +5,10 @@ include ../../mixins/alert.pug
 
 block main 
     h1(class="mb-4") Edit Account
-    +alert-error(3000)
-    +alert(3000)
+    //- Alert Messages
+    .alerts-container
+        +success-alert(5000)
+        +danger-alert(5000)
 
     if(roles)
         form(
