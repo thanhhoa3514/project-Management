@@ -3,142 +3,183 @@ include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
 block main 
-    +alert-error(3000)
-    +alert(3000)
-    h1(class="mb-4") Edit products
-    
-    form(
-        action=`${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
-        id="form-edit-product"
-        method="POST"
-        enctype="multipart/form-data"
-    ) 
-        div(class="form-group")
-            label(for="title") Headline
-            input(
-                type="text"
-                id="title"
-                name="title"
-                class="form-control"
-                required
-                value=product.title
-            )
+    .container.py-4
+        +alert-error(3000)
+        +alert(3000)
         
-        div(class="form-group")
-            label(for="products_category_id")  Category
-            select(
-                id="products_category_id"
-                name="products_category_id"
-                class="form-control"
-            )
-
-                option(value="") ---Chose a category ---
-                if(category)
-                    +select-tree(category,1,product.products_category_id)
-        div(class="form-group")
-            label(for="desc") Describe
-            textarea(
-                type="text"
-                id="desc"
-                name="description"
-                class="form-control  textarea-mce"
-                rows="5"
-                value=product.description
-                
-            ) #{product.description}
-        div(class="form-group")
-            label(for="price") Price
-            input(
-                type="number"
-                id="price"
-                name="price"
-                class="form-control"
-                value=product.price
-
-                min="0"
-
-            )
-        div(class="form-group")
-            label(for="discount") Discount Percentage
-            input(
-                type="number"
-                id="discount"
-                name="discountPercentage"
-                class="form-control"
-                value=product.discountPercentage
-                min="0"
-            )
-        div(class="form-group")
-            label(for="stock") Remaining: 
-            input(
-                type="number"
-                id="stock"
-                name="stock"
-                class="form-control"
-                value=product.stock
-                min="0"
-            )
-        div(
-            style-form
-            class="form-group"
-            upload-image
-        )
-            label(for="thumbnail") Image of item
-            input(
-                type="file"
-                id="thumbnail"
-                name="thumbnail"
-                class="form-control-file"
-                accept="image/*"
-                upload-image-input
-            )
-            button(
-                type="button" 
-                class="btn btn-secondary delete-image"
-                delete-image-preview
-            ) x
-            img(
-                src=product.thumbnail,
-                upload-image-preview
-                class="image-preview"
-            )
-        div(class="form-group")
-            label(for="position") Position
-            input(
-                type="number"
-                id="position"
-                name="position"
-                class="form-control"
-                placeholder="Automatically increment position"
-                min="1"
-                value=product.position
-            )
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="form-check-input"
-                id="statusActive"
-                name="status"
-                value="active"
-                checked=(product.status=="active" ? true : false)
-            ) 
-            label(for="statusActive" class="form-check-label") Active 
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="form-check-input"
-                id="statusInActive"
-                name="status"
-                value="inactive"
-                checked=(product.status=="inactive" ? true : false)
-            )
-            label(for="statusInActive" class="form-check-label") Inactive
-        div(class="form-group")
-            button(
-                type="submit"
-                class="btn btn-primary"
-            ) Update
+        .card.shadow-sm
+            .card-header.bg-white
+                h1.h3.mb-0 Edit Product
             
+            .card-body
+                form(
+                    action=`${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
+                    id="form-edit-product"
+                    method="POST"
+                    enctype="multipart/form-data"
+                )
+                    .row
+                        .col-md-8
+                            //- Basic Information
+                            .card.mb-4
+                                .card-header.bg-light
+                                    h5.mb-0 Basic Information
+                                .card-body
+                                    .form-group
+                                        label(for="title").font-weight-bold Headline
+                                        input(
+                                            type="text"
+                                            id="title"
+                                            name="title"
+                                            class="form-control"
+                                            required
+                                            value=product.title
+                                        )
+                                    
+                                    .form-group
+                                        label(for="products_category_id").font-weight-bold Category
+                                        select(
+                                            id="products_category_id"
+                                            name="products_category_id"
+                                            class="form-control"
+                                        )
+                                            option(value="") --- Choose a category ---
+                                            if(category)
+                                                +select-tree(category,1,product.products_category_id)
+                                    
+                                    .form-group
+                                        label(for="desc").font-weight-bold Description
+                                        textarea(
+                                            type="text"
+                                            id="desc"
+                                            name="description"
+                                            class="form-control textarea-mce"
+                                            rows="5"
+                                            value=product.description
+                                        ) #{product.description}
 
-    script(src="/admin/js/product.js") 
-    
+                            //- Pricing and Stock
+                            .card.mb-4
+                                .card-header.bg-light
+                                    h5.mb-0 Pricing & Stock
+                                .card-body
+                                    .row
+                                        .col-md-4
+                                            .form-group
+                                                label(for="price").font-weight-bold Price
+                                                .input-group
+                                                    .input-group-prepend
+                                                        span.input-group-text $
+                                                    input(
+                                                        type="number"
+                                                        id="price"
+                                                        name="price"
+                                                        class="form-control"
+                                                        value=product.price
+                                                        min="0"
+                                                    )
+                                        
+                                        .col-md-4
+                                            .form-group
+                                                label(for="discount").font-weight-bold Discount
+                                                .input-group
+                                                    input(
+                                                        type="number"
+                                                        id="discount"
+                                                        name="discountPercentage"
+                                                        class="form-control"
+                                                        value=product.discountPercentage
+                                                        min="0"
+                                                    )
+                                                    .input-group-append
+                                                        span.input-group-text %
+                                        
+                                        .col-md-4
+                                            .form-group
+                                                label(for="stock").font-weight-bold Stock
+                                                input(
+                                                    type="number"
+                                                    id="stock"
+                                                    name="stock"
+                                                    class="form-control"
+                                                    value=product.stock
+                                                    min="0"
+                                                )
+
+                        .col-md-4
+                            //- Image Upload
+                            .card.mb-4
+                                .card-header.bg-light
+                                    h5.mb-0 Product Image
+                                .card-body
+                                    div(
+                                        style-form
+                                        class="form-group mb-0"
+                                        upload-image
+                                    )
+                                        label(for="thumbnail").font-weight-bold Image of item
+                                        input(
+                                            type="file"
+                                            id="thumbnail"
+                                            name="thumbnail"
+                                            class="form-control-file"
+                                            accept="image/*"
+                                            upload-image-input
+                                        )
+                                        button(
+                                            type="button" 
+                                            class="btn btn-secondary delete-image"
+                                            delete-image-preview
+                                        ) x
+                                        img(
+                                            src=product.thumbnail,
+                                            upload-image-preview
+                                            class="image-preview"
+                                        )
+
+                            //- Position and Status
+                            .card.mb-4
+                                .card-header.bg-light
+                                    h5.mb-0 Settings
+                                .card-body
+                                    .form-group
+                                        label(for="position").font-weight-bold Position
+                                        input(
+                                            type="number"
+                                            id="position"
+                                            name="position"
+                                            class="form-control"
+                                            placeholder="Automatically increment position"
+                                            min="1"
+                                            value=product.position
+                                        )
+                                    
+                                    .form-group.mb-0
+                                        label.d-block.font-weight-bold Status
+                                        .btn-group.btn-group-toggle(data-toggle="buttons")
+                                            label.btn.btn-outline-success.active=(product.status=="active" ? "active" : "")
+                                                input(
+                                                    type="radio"
+                                                    id="statusActive"
+                                                    name="status"
+                                                    value="active"
+                                                    checked=(product.status=="active" ? true : false)
+                                                )
+                                                | Active
+                                            label.btn.btn-outline-danger=(product.status=="inactive" ? "active" : "")
+                                                input(
+                                                    type="radio"
+                                                    id="statusInActive"
+                                                    name="status"
+                                                    value="inactive"
+                                                    checked=(product.status=="inactive" ? true : false)
+                                                )
+                                                | Inactive
+
+                    .text-right.mt-4
+                        button(
+                            type="submit"
+                            class="btn btn-primary btn-lg px-5"
+                        ) Update Product
+
+    script(src="/admin/js/product.js")

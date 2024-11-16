@@ -1,37 +1,59 @@
 extends ../../layouts/default.pug
-//- include ../../mixins/alert.pug
-include ../../mixins/select-tree.pug
-block main 
 
+block main
+    .container.py-4
+        .card
+            .card-body
+                if(record.title)
+                    h1.card-title.border-bottom.pb-3.mb-4 #{record.title}
+                
+                .row
+                    .col-md-8
+                        //- Parent Category
+                        .mb-4
+                            .d-flex.align-items-center
+                                span.text-muted.mr-2 Parent Category:
+                                if(record.parent_id)
+                                    strong #{record.parent_id}
+                                else
+                                    span.badge.badge-secondary Not Found
 
-    if(record.title)
-        h1(class="mb-4") #{record.title}
+                        //- Status
+                        if(record.status)
+                            .mb-4
+                                span.text-muted.mr-2 Status:
+                                if(record.status=="active")
+                                    span.badge.badge-success Active
+                                else
+                                    span.badge.badge-danger Inactive
 
-    if(record.parent_id)
-        div(class="mb-4")
-            span Parent Category: <b>#{record.parent_id}</b>
-    else 
-        div(class="mb-4")
-            span Parent Category: <b>Not Found</b>
-    if(record.thumbnail)
-        div(class="mb-4")
-            img(
-                src=record.thumbnail
-                style="width: 100px"
-            )
-    if(record.status)
-        div(class="mb-4")
-            span Status
-            if(record.status=="active")
-                span(class="badge badge-success") Active 
-            else
-                span(class="badge badge-danger") Inactive 
-    if(record.position)
-        div(class="mb-4") Position: <b>#{record.position}</b>
-    if(record.description)
-        div(class="mb-4") Describe: !{record.description}
-    div(class="edit")
-        a(
-            href=`${prefixAdmin}/products-category/edit/${record.id}`
-            class="btn btn-warning"
-        ) Edit
+                        //- Position
+                        if(record.position)
+                            .mb-4
+                                span.text-muted.mr-2 Position:
+                                strong #{record.position}
+
+                        //- Description
+                        if(record.description)
+                            .mb-4
+                                h5.text-muted Description
+                                .card.bg-light
+                                    .card-body !{record.description}
+
+                    .col-md-4
+                        //- Thumbnail
+                        if(record.thumbnail)
+                            .card.mb-4
+                                .card-body.text-center
+                                    img.img-fluid.rounded(
+                                        src=record.thumbnail
+                                        alt=record.title
+                                        style="max-width: 200px"
+                                    )
+
+                .mt-4
+                    a.btn.btn-warning(
+                        href=`${prefixAdmin}/products-category/edit/${record.id}`
+                    )
+                        i.fas.fa-edit.mr-1
+                        | Edit Category

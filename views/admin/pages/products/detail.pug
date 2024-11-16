@@ -1,33 +1,80 @@
 extends ../../layouts/default.pug
-block main 
 
-    if(product.title)
-        h1(class="mb-4") #{product.title}
-    if(product.price)
-        div(class="mb-4") Price: <b>#{product.price}</b>$
-    if(product.discountPercentage)
-        div(class="mb-4") Discount: <b>#{product.discountPercentage}%</b>
-    if(product.stock)
-        div(class="mb-4") Remaining: <b>#{product.stock}</b>
-    if(product.thumbnail)
-        div(class="mb-4")
-            img(
-                src=product.thumbnail
-                style="width: 100px"
-            )
-    if(product.status)
-        div(class="mb-4")
-            span Status
-            if(product.status=="active")
-                span(class="badge badge-success") Active 
-            else
-                span(class="badge badge-danger") Inactive 
-    if(product.position)
-        div(class="mb-4") Position: <b>#{product.position}</b>
-    if(product.description)
-        div(class="mb-4") Describe: !{product.description}
-    div(class="edit")
-        a(
-            href=`${prefixAdmin}/products/edit/${product.id}`
-            class="btn btn-warning"
-        ) Edit
+block main
+    .container.py-4
+        .card.shadow-sm
+            .card-body
+                if(product.title)
+                    h1.card-title.border-bottom.pb-3.mb-4 #{product.title}
+
+                .row
+                    .col-md-4.mb-4.mb-md-0
+                        if(product.thumbnail)
+                            .card
+                                .card-body.text-center
+                                    img.img-fluid.rounded(
+                                        src=product.thumbnail
+                                        alt=product.title
+                                    )
+                    
+                    .col-md-8
+                        .row
+                            .col-md-6
+                                //- Price and Discount Section
+                                .card.mb-4.bg-light
+                                    .card-body
+                                        if(product.price)
+                                            .d-flex.justify-content-between.align-items-center.mb-2
+                                                span.text-muted Price:
+                                                .h4.mb-0.text-primary $#{product.price}
+                                        
+                                        if(product.discountPercentage)
+                                            .d-flex.justify-content-between.align-items-center
+                                                span.text-muted Discount:
+                                                span.badge.badge-success.p-2 #{product.discountPercentage}% OFF
+
+                            .col-md-6
+                                //- Stock and Status Section
+                                .card.mb-4.bg-light
+                                    .card-body
+                                        if(product.stock)
+                                            .d-flex.justify-content-between.align-items-center.mb-2
+                                                span.text-muted Stock:
+                                                if(product.stock < 10)
+                                                    span.badge.badge-danger #{product.stock} units
+                                                else if(product.stock < 50)
+                                                    span.badge.badge-warning #{product.stock} units
+                                                else
+                                                    span.badge.badge-success #{product.stock} units
+
+                                        if(product.status)
+                                            .d-flex.justify-content-between.align-items-center
+                                                span.text-muted Status:
+                                                if(product.status=="active")
+                                                    span.badge.badge-success Active
+                                                else
+                                                    span.badge.badge-danger Inactive
+
+                        //- Position
+                        if(product.position)
+                            .card.mb-4.bg-light
+                                .card-body
+                                    .d-flex.justify-content-between.align-items-center
+                                        span.text-muted Position:
+                                        strong #{product.position}
+
+                        //- Description
+                        if(product.description)
+                            .card.mb-4
+                                .card-header.bg-light
+                                    h5.mb-0 Description
+                                .card-body
+                                    .description-content !{product.description}
+
+                //- Edit Button
+                .mt-4.text-right
+                    a.btn.btn-warning.btn-lg(
+                        href=`${prefixAdmin}/products/edit/${product.id}`
+                    )
+                        i.fas.fa-edit.mr-2
+                        | Edit Product

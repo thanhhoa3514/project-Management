@@ -3,101 +3,120 @@ include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
 block main 
-    +alert-error(3000)
-    h1(class="mb-4") Add New Product Category 
-    
-    form(
-        action=`${prefixAdmin}/products-category/create`
-        method="POST"
-        enctype="multipart/form-data"
-    ) 
-        div(class="form-group")
-            label(for="title") Headline
-            input(
-                type="text"
-                id="title"
-                name="title"
-                class="form-control"
-                required
-            )
-        div(class="form-group")
-            label(for="parent_id") Parent Category
-            select(
-                id="parent_id"
-                name="parent_id"
-                class="form-control"
-            )
+   .container-fluid.py-4
+        .row.justify-content-center
+            .col-12.col-lg-8
+                .card.shadow
+                    .card-body
+                        +alert-error(3000)
+                        
+                        h1.h3.mb-4.text-gray-800 Add New Product Category 
+        
+                        form(
+                            action=`${prefixAdmin}/products-category/create`
+                            method="POST"
+                            enctype="multipart/form-data"
+                        ) 
+                            div(class="form-group")
+                                label(for="title") Headline
+                                input(
+                                    type="text"
+                                    id="title"
+                                    name="title"
+                                    class="form-control"
+                                    required
+                                )
+                            div(class="form-group")
+                                label(for="parent_id") Parent Category
+                                select(
+                                    id="parent_id"
+                                    name="parent_id"
+                                    class="form-control"
+                                )
 
-                option(value="") ---Chose a category ---
-                if(records)
-                    +select-tree(records)
+                                    option(value="") ---Chose a category ---
+                                    if(records)
+                                        +select-tree(records)
 
                         
-        div(class="form-group")
-            label(for="description") Description
-            textarea(
-                type="text"
-                id="description"
-                name="description"
-                class="form-control textarea-mce"
-                rows="5"
-            )
-        div(
-            style-form
-            class="form-group"
-            upload-image
-        )
-            label(for="thumbnail") Image of item
-            input(
-                type="file"
-                id="thumbnail"
-                name="thumbnail"
-                class="form-control-file"
-                accept="image/*"
-                upload-image-input
-            )
-            button(
-                type="button" 
-                class="btn btn-secondary delete-image"
-                delete-image-preview
-            ) x
-            img(
-                src="",
-                upload-image-preview
-                class="image-preview"
-            )
-        div(class="form-group")
-            label(for="position") Position
-            input(
-                type="number"
-                id="position"
-                name="position"
-                class="form-control"
-                placeholder="Automatically increment position"
-                min="1"
-            )
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="form-check-input"
-                id="statusActive"
-                name="status"
-                value="active"
-                checked
-            ) 
-            label(for="statusActive" class="form-check-label") Active 
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="form-check-input"
-                id="statusInActive"
-                name="status"
-                value="inactive"
-                checked
-            )
-            label(for="statusInActive" class="form-check-label") Inactive
-        div(class="form-group")
-            button(
-                type="submit"
-                class="btn btn-primary"
-            ) Create
+                            div(class="form-group")
+                                label(for="description") Description
+                                textarea(
+                                    type="text"
+                                    id="description"
+                                    name="description"
+                                    class="form-control textarea-mce"
+                                    rows="5"
+                                )
+                            div(
+                                style-form
+                                class="form-group"
+                                upload-image
+                            )
+                                label(for="thumbnail") Image of item
+                                input(
+                                    type="file"
+                                    id="thumbnail"
+                                    name="thumbnail"
+                                    class="form-control-file"
+                                    accept="image/*"
+                                    upload-image-input
+                                ) 
+                                
+                                button.btn.btn-danger.btn-sm.position-absolute(
+                                    type="button" 
+                                    class="btn btn-secondary delete-image"
+                                    delete-image-preview
+                                ) 
+                                    i.fas.fa-times.mr-1
+                                    
+                                img(
+                                    src="",
+                                    upload-image-preview
+                                    class="image-preview"
+                                )
+                            div(class="form-group")
+                                label(for="position") Position
+                                input(
+                                    type="number"
+                                    id="position"
+                                    name="position"
+                                    class="form-control"
+                                    placeholder="Automatically increment position"
+                                    min="1"
+                                )
+                            .form-group
+                                label.d-block Status
+                                .custom-control.custom-radio.custom-control-inline
+                                    input(
+                                        type="radio"
+                                        class="custom-control-input"
+                                        id="statusActive"
+                                        name="status"
+                                        value="active"
+                                        checked
+                                    )
+                                    label(
+                                        class="custom-control-label"
+                                        for="statusActive"
+                                    ) Active
+                                .custom-control.custom-radio.custom-control-inline
+                                    input(
+                                        type="radio"
+                                        class="custom-control-input"
+                                        id="statusInActive"
+                                        name="status"
+                                        value="inactive"
+                                    )
+                                    label(
+                                        class="custom-control-label"
+                                        for="statusInActive"
+                                    ) Inactive
+        
+                            div(class="form-group")
+                                button(
+                                    type="submit"
+                                    class="btn btn-primary btn-block"
+                                ) 
+                                    i.fas.fa-plus.mr-2 
+                                    | Create
