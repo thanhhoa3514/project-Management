@@ -67,11 +67,23 @@ block main
                                     td.align-middle $#{item.price}
                                     td.align-middle
                                         if(item.status=="active")
-                                            span.badge.badge-success.px-2.py-1
+                                           a(
+                                                href="javascript:;" 
+                                                data-status=item.status
+                                                data-id=item.id
+                                                button-change-status1
+                                                class="badge badge-success"
+                                            ) 
                                                 i.fas.fa-check-circle.mr-1
                                                 | Available
                                         else
-                                            span.badge.badge-danger.px-2.py-1
+                                            a(
+                                                href="javascript:;" 
+                                                data-status=item.status
+                                                data-id=item.id
+                                                button-change-status1
+                                                class="badge badge-danger"
+                                            ) 
                                                 i.fas.fa-times-circle.mr-1
                                                 | Unavailable
                                     td.align-middle.text-right
@@ -88,6 +100,14 @@ block main
         .mt-4
             +pagination(pagination)
 
+        form(
+            action=""
+            method="POST"
+            id="form-change-status"
+            data-path=`${prefixAdmin}/restock/change-status`
+
+        )
+
         //- Hidden Form for Restore Action
         form(
             action=""
@@ -95,4 +115,4 @@ block main
             id="form-restore-item"
             data-path=`${prefixAdmin}/restock/restock-item`
         )
-        script(src="/admin/js/product.js") 
+        script(src="/admin/js/restore.js") 

@@ -3,18 +3,18 @@ include ../../mixins/alert.pug
 
 block main
   .container-fluid
-    //- Page Header
+    // Page Header
     .d-sm-flex.align-items-center.justify-content-between.mb-4
-      h1.h3.mb-0.text-gray-800 Articles Management
+      h1.h3.mb-0.text-gray-800 News & Blog Management
       a.btn.btn-primary.btn-sm.shadow-sm(href=`${prefixAdmin}/articles/create`)
         i.fas.fa-plus.fa-sm.text-white-50.mr-2
-        | Add New Article
+        | Add New Post
 
-    //- Alert Messages
+    // Alert Messages
     +alert-error(3000)
     +alert(3000)
 
-    //- Filters Card
+    // Filters Card
     .card.shadow.mb-4
       .card-header.py-3
         h6.m-0.font-weight-bold.text-primary Filters
@@ -26,8 +26,9 @@ block main
                 label(for="status") Status
                 select#status.form-control(name="status")
                   option(value="") All Status
-                  option(value="active") Active
-                  option(value="inactive") Inactive
+                  option(value="draft") Draft
+                  option(value="published") Published
+                  option(value="scheduled") Scheduled
             
             .col-md-3
               .form-group
@@ -37,8 +38,17 @@ block main
                   if categories
                     each category in categories
                       option(value=category.id)= category.title
+                      
+            .col-md-3
+              .form-group
+                label(for="type") Content Type
+                select#type.form-control(name="type")
+                  option(value="") All Types
+                  option(value="news") News
+                  option(value="blog") Blog Post
+                  option(value="announcement") Announcement
             
-            .col-md-4
+            .col-md-3
               .form-group
                 label(for="search") Search
                 input#search.form-control(
@@ -47,15 +57,18 @@ block main
                   placeholder="Search by title..."
                 )
             
-            .col-md-2.d-flex.align-items-end
-              button.btn.btn-primary.btn-block(type="submit")
+            .col-md-12.mt-3
+              button.btn.btn-primary(type="submit")
                 i.fas.fa-search.mr-2
                 | Search
+              button.btn.btn-secondary.ml-2(type="reset")
+                i.fas.fa-undo.mr-2
+                | Reset
 
-    //- Articles Table Card
+    // Articles Table Card
     .card.shadow.mb-4
       .card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between
-        h6.m-0.font-weight-bold.text-primary Articles List
+        h6.m-0.font-weight-bold.text-primary News & Blog Posts
         .dropdown.no-arrow
           button#dropdownMenuButton.btn.btn-link.btn-sm.dropdown-toggle(
             type="button"
@@ -73,6 +86,10 @@ block main
             a.dropdown-item(href="#")
               i.fas.fa-file-import.mr-2
               | Import
+            .dropdown-divider
+            a.dropdown-item(href="#")
+              i.fas.fa-cog.mr-2
+              | Settings
       
       .card-body
         .table-responsive
@@ -84,16 +101,17 @@ block main
                     input#checkAll.custom-control-input(type="checkbox")
                     label.custom-control-label(for="checkAll")
                 th Title
+                th Type
                 th Category
                 th Author
                 th Status
+                th Published Date
                 th.text-center Views
-                th Created At
-                th.text-center(style="width: 120px") Actions
+                th.text-center(style="width: 150px") Actions
             
             tbody
-              if records && records.length > 0
-                each item in records
+              if articles && articles.length > 0
+                each item in articles
                   tr
                     td
                       .custom-control.custom-checkbox
@@ -104,22 +122,36 @@ block main
                         )
                         label.custom-control-label(for=`check${item.id}`)
                     td
-                      a(href=`${prefixAdmin}/articles/edit/${item.id}`)
-                        = item.title
-                      if item.thumbnail
-                        img.ml-2(
-                          src=item.thumbnail
-                          alt=item.title
-                          style="height: 30px; width: auto;"
-                        )
-                    td= item.category ? item.category.title : 'Uncategorized'
-                    td= item.author ? item.author.name : 'System'
+                      .d-flex.align-items-center
+                        if item.thumbnail
+                          img.mr-2(
+                            src=item.thumbnail
+                            alt=item.title
+                            style="height: 40px; width: 40px; object-fit: cover;"
+                          )
+                        div
+                          a.font-weight-bold(href=`${prefixAdmin}/articles/edit/${item.id}`)
+                            = item.title
+                          if item.excerpt
+                            .small.text-muted= item.excerpt.substring(0, 60) + '...'
                     td
-                      span(class=`badge badge-${item.status === 'active' ? 'success' : 'secondary'}`)
+                      span(class=`badge badge-${item.tag === 'news' ? 'info' : item.tag === 'blog' ? 'primary' : 'warning'}`)
+                        = item.tag
+                    
+                    td= item.category ? item.category.title : 'Uncategorized'
+                    td= item.author ? item.author : 'System'
+                    td
+                      span(class=`badge badge-${item.status === 'published' ? 'success' : item.status === 'draft' ? 'secondary' : 'warning'}`)
                         = item.status
+                    td= item.createdAt ? moment(item.createdAt).format('DD/MM/YYYY HH:mm') : '-'
                     td.text-center= item.views || 0
-                    td= moment(item.createdAt).format('DD/MM/YYYY HH:mm')
                     td.text-center
+                      a.btn.btn-sm.btn-info.mr-1(
+                        href=`/news/${item.slug}`
+                        target="_blank"
+                        title="View"
+                      )
+                        i.fas.fa-eye
                       a.btn.btn-sm.btn-primary.mr-1(
                         href=`${prefixAdmin}/articles/edit/${item.id}`
                         title="Edit"
@@ -132,4 +164,4 @@ block main
                         i.fas.fa-trash
               else
                 tr
-                  td.text-center(colspan="8") No articles found 
+                  td.text-center(colspan="9") No posts found

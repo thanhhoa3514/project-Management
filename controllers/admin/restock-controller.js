@@ -46,3 +46,28 @@ module.exports.restockItem = async (req, res) => {
 
   res.redirect(req.get("Referrer") || "/");
 };
+
+//  [PATCH] admin/restock/:status/:id
+
+module.exports.changeStatus= async (req, res) => {
+
+  const status = req.params.status;
+  const productId = req.params.id;
+
+  const updatedBy={
+    account_Id: res.locals.user.id,
+    updateAt: new Date()
+  };
+
+  await Product.updateOne({ _id: productId }, {
+     status: status,
+     $push: {
+      updatedBy: updatedBy,
+    }
+  });
+
+  req.flash("success", "Successfully updated!");
+
+  res.redirect(req.get("Referrer") || "/");
+
+};

@@ -102,10 +102,26 @@ block main
                                             name="position"  
                                         )  
                                     td.align-middle  
-                                        if(item.status=="active")  
-                                            span.badge.badge-success.py-1 Available  
-                                        else   
-                                            span.badge.badge-danger.py-1 Unavailable  
+                                        if(item.status=="active")
+                                           a(
+                                                href="javascript:;" 
+                                                data-status=item.status
+                                                data-id=item.id
+                                                button-change-status
+                                                class="badge badge-success"
+                                            ) 
+                                                i.fas.fa-check-circle.mr-1
+                                                | Available
+                                        else
+                                            a(
+                                                href="javascript:;" 
+                                                data-status=item.status
+                                                data-id=item.id
+                                                button-change-status
+                                                class="badge badge-danger"
+                                            ) 
+                                                i.fas.fa-times-circle.mr-1
+                                                | Unavailable 
                                     td.align-middle  
                                         small  
                                             p.mb-1 #{item.accountFullName}  
