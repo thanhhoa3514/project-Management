@@ -1,0 +1,107 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+
+block main
+    
+    .container-fluid
+        //- Page Header
+        .d-sm-flex.align-items-center.justify-content-between.mb-4
+            h1.h3.mb-0.text-gray-800 Article Details
+            .d-flex
+                a.btn.btn-secondary.btn-sm.shadow-sm.mr-2(href=`${prefixAdmin}/articles`)
+                    i.fas.fa-arrow-left.fa-sm.text-white-50.mr-2
+                    | Back to List
+                if article.id
+                    a.btn.btn-primary.btn-sm.shadow-sm.mr-2(href=`${prefixAdmin}/articles/edit/${article.id}`)
+                        i.fas.fa-edit.fa-sm.text-white-50.mr-2
+                        | Edit Article
+                if article.slug
+                    a.btn.btn-info.btn-sm.shadow-sm(href=`/news/${article.slug}` target="_blank")
+                        i.fas.fa-eye.fa-sm.text-white-50.mr-2
+                        | View on Site
+
+        //- Alert Messages
+        +alert-error(3000)
+        +alert(3000)
+
+        .row
+            .col-lg-8
+                //- Article Content Card
+                .card.shadow.mb-4
+                    .card-header.py-3
+                        h6.m-0.font-weight-bold.text-primary Article Content
+                    .card-body
+                        if article.thumbnail
+                            .text-center.mb-4
+                                img.img-fluid.rounded(
+                                    src=article.thumbnail
+                                    alt=article.title
+                                    style="max-height: 400px; object-fit: cover;"
+                                )
+                    
+                        h2.mb-3= article.title
+                
+                        if article.excerpt
+                        .lead.mb-4= article.excerpt
+                        
+                        .article-content
+                        != article.content
+
+            .col-lg-4
+                //- Article Info Card
+                .card.shadow.mb-4
+                    .card-header.py-3
+                        h6.m-0.font-weight-bold.text-primary Article Information
+                    .card-body
+                        .mb-3
+                            .small.text-muted Status
+                            .font-weight-bold
+                                span(class=`badge badge-${article.status === 'published' ? 'success' : article.status === 'draft' ? 'secondary' : 'warning'}`)
+                                = article.status
+
+                        .mb-3
+                            .small.text-muted Type
+                            .font-weight-bold
+                                span(class=`badge badge-${article.tag === 'news' ? 'info' : article.tag === 'blog' ? 'primary' : 'warning'}`)
+                                = article.tag
+
+                        .mb-3
+                            .small.text-muted Category
+                            .font-weight-bold= article.category ? article.category.title : 'Uncategorized'
+
+                        .mb-3
+                            .small.text-muted Author
+                            .font-weight-bold= article.author ? article.author : 'System'
+
+                        .mb-3
+                            .small.text-muted Created Date
+                            .font-weight-bold= article.createdAt ? moment(article.createdAt).format('DD/MM/YYYY HH:mm') : '-'
+
+                        .mb-3
+                            .small.text-muted Last Updated
+                            .font-weight-bold= article.updatedAt ? moment(article.updatedAt).format('DD/MM/YYYY HH:mm') : '-'
+
+                        .mb-3
+                            .small.text-muted Views
+                            .font-weight-bold= article.views || 0
+
+                //- Meta Information Card
+                .card.shadow.mb-4
+                    .card-header.py-3
+                        h6.m-0.font-weight-bold.text-primary Meta Information
+                    .card-body
+                        if article.meta
+                            .mb-3
+                                .small.text-muted Meta Title
+                                .font-weight-bold= article.meta.title || '-'
+
+                            .mb-3
+                                .small.text-muted Meta Description
+                                .font-weight-bold= article.meta.description || '-'
+
+                            .mb-3
+                                .small.text-muted Meta Keywords
+                                .font-weight-bold= article.meta.keywords || '-'
+                        else
+                            p.text-muted No meta information available

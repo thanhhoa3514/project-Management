@@ -147,9 +147,10 @@ block main
                     td.text-center= item.views || 0
                     td.text-center
                       a.btn.btn-sm.btn-info.mr-1(
-                        href=`/news/${item.slug}`
-                        target="_blank"
-                        title="View"
+                        href=`${prefixAdmin}/articles/detail/${item.id}`
+                        title="View Detail"
+                        
+                        
                       )
                         i.fas.fa-eye
                       a.btn.btn-sm.btn-primary.mr-1(

@@ -27,4 +27,7 @@ router.patch(
   validatesArticle.sanitizeArticle,
   controller.editArticlePATCH
 );
+
+router.get("/detail/:id", controller.detail);
+
 module.exports = router;

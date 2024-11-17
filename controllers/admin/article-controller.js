@@ -149,3 +149,23 @@ module.exports.editArticlePATCH=async(req, res)=>{
     }
 
 }
+
+
+// [GET] admin/articles/detail
+module.exports.detail=async(req, res)=>{
+    try {
+        const find = {
+          deleted: false,
+          _id: req.params.id,
+        };
+    
+        const article = await Article.findOne(find);
+    
+        res.render("admin/pages/article/detail",{
+            pageTitle: "Detail Article",
+            article:article
+        });
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/articles`);
+    }
+}
