@@ -118,3 +118,34 @@ module.exports.editArticle=async (req, res) => {
       }
 
 };
+
+// [PATCH] admin/articles/edit/:id
+module.exports.editArticlePATCH=async(req, res)=>{
+    // console.log(req.body);
+    const id = req.params.id;
+    req.body.author = res.locals.user.fullName;
+    // if (req.file) {
+    //     req.body.thumbnail = `/uploads/${req.file.filename}`;
+    // }
+
+    try {
+
+        const updatedBy={
+          account_Id: res.locals.user.id,
+          updateAt: new Date()
+        };
+    
+    
+        await Article.updateOne({ _id: id }, {
+          ...req.body,
+          $push: {
+            updatedBy: updatedBy,
+          }
+        });
+        req.flash("success", "Successfully updated!");
+        res.redirect(req.get("Referrer") || "/");
+    } catch (error) {
+        req.flash("error", "Error updating");
+    }
+
+}

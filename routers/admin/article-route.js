@@ -10,16 +10,21 @@ const validatesArticle = require("../../validates/admin/article.validate");
 router.get("/", controller.index);
 router.get("/create", controller.createArticle);
 router.post(
-    "/create",
-    upload.single("thumbnail"),
-    uploadCloud.upload,
-    validatesArticle.validateArticle,
-    validatesArticle.sanitizeArticle,
-    controller.createArticlePOST
-  );
+  "/create",
+  upload.single("thumbnail"),
+  uploadCloud.upload,
+  validatesArticle.validateArticle,
+  validatesArticle.sanitizeArticle,
+  controller.createArticlePOST
+);
 
-  router.get("/edit/:id", controller.editArticle);
-
+router.get("/edit/:id", controller.editArticle);
+router.patch(
+  "/edit/:id",
+  upload.single("thumbnail"),
+  uploadCloud.upload,
+  validatesArticle.validateArticle,
+  validatesArticle.sanitizeArticle,
+  controller.editArticlePATCH
+);
 module.exports = router;
-
-
