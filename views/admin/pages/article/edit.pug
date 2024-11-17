@@ -1,0 +1,138 @@
+extends ../../layouts/default.pug
+
+include ../../mixins/alert.pug
+
+block main
+    .container.py-5
+        .row.justify-content-center
+            .col-lg-10
+                .card.shadow-sm
+                    .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+                        h4.mb-0 Edit Article
+                        .badge.badge-light= article.status
+                    
+                    .card-body
+                        form(
+                            action=`${prefixAdmin}/articles/edit/${article.id}?_method=PATCH`
+                            method="POST"
+                            enctype="multipart/form-data"
+                        )
+                            .form-group
+                                label.font-weight-bold(for="title") Title
+                                input.form-control(
+                                    type="text" 
+                                    name="title" 
+                                    id="title" 
+                                    required
+                                    value=article.title
+                                )
+                                small.form-text.text-muted This will automatically update the URL slug
+                            
+                            //- .form-group
+                            //-     label.font-weight-bold(for="category") Category
+                            //-     select.form-control(name="category" id="category" )
+                            //-         option(value="") Select Category
+                            //-         if categories
+                            //-             each category in categories
+                            //-                 option(
+                            //-                     value=category._id
+                            //-                     selected=(category._id.toString() === article.category.toString())
+                            //-                 )= category.name
+                            
+                            .form-group
+                                label.font-weight-bold(for="tags") Tags
+                                input.form-control(
+                                    type="text" 
+                                    name="tags" 
+                                    id="tags" 
+                                    value=article.tags.join(', ')
+                                    placeholder="Enter tags separated by commas"
+                                )
+                                small.form-text.text-muted Example: technology, news, featured
+                            
+                            div(
+                                style-form
+                                class="form-group mb-0"
+                                upload-image
+                            )
+                                label(for="thumbnail").font-weight-bold Thumbnail Image
+                                input(
+                                    type="file"
+                                    id="thumbnail"
+                                    name="thumbnail"
+                                    class="form-control-file"
+                                    accept="image/*"
+                                    upload-image-input
+                                )
+                                button(
+                                    type="button" 
+                                    class="btn btn-secondary delete-image"
+                                    delete-image-preview
+                                ) x
+                                img(
+                                    src=article.thumbnail,
+                                    upload-image-preview
+                                    class="image-preview"
+                                )
+                                small.form-text.text-muted Recommended size: 1200x630px
+                            
+                            .form-group
+                                label(for="content").font-weight-bold Content
+                                textarea.form-control(
+                                    name="content" 
+                                    id="content" 
+                                    rows="15" 
+                                    required
+                                )= article.content
+                            
+                            
+                            
+                            .form-group
+                                label Status
+                                .d-flex
+                                    .custom-control.custom-radio.mr-4
+                                        input.custom-control-input(
+                                        type="radio" 
+                                        name="status" 
+                                        id="draft" 
+                                        value="draft"
+                                        checked=(article.status === 'draft')
+                                        )
+                                        label.custom-control-label(for="draft") Draft
+                                    .custom-control.custom-radio.mr-4
+                                        input.custom-control-input(
+                                        type="radio" 
+                                        name="status" 
+                                        id="published" 
+                                        value="published"
+                                        checked=(article.status === 'published')
+                                        )
+                                        label.custom-control-label(for="published") Published
+                                    .custom-control.custom-radio
+                                        input.custom-control-input(
+                                        type="radio" 
+                                        name="status" 
+                                        id="archived" 
+                                        value="archived"
+                                        checked=(article.status === 'archived')
+                                        )
+                                        label.custom-control-label(for="archived") Archived
+
+                            .form-group.mt-4
+                                .row
+                                    .col-md-6
+                                        .text-muted
+                                            small
+                                                | Created: #{moment(article.createdAt).format('MMMM DD, YYYY')}
+                                                br
+                                                | Last updated: #{moment(article.updatedAt).format('MMMM DD, YYYY')}
+                                    .col-md-6.text-right
+                                        button.btn.btn-secondary.mr-2(type="button" onclick="window.history.back()") 
+                                            i.fas.fa-arrow-left.mr-2
+                                            | Back
+                                        button.btn.btn-primary(type="submit")
+                                            i.fas.fa-save.mr-2
+                                            | Update Article
+
+    
+    
