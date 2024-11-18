@@ -37,8 +37,7 @@ module.exports.index = async (req, res) => {
 
   // Query products
   const records = await ProductCategory.find(find)
-  .limit(objectPagination.limitItems)
-  .skip(objectPagination.skip);
+  
 
   // Create the level
   const newRecords = createTreeCategoryHelpers.tree(records);
@@ -75,7 +74,7 @@ module.exports.index = async (req, res) => {
     pageTitle: "Category product page",
     filterStatus: filterStatus,
     records: newRecords,
-    pagination: objectPagination
+  
   });
 };
 
