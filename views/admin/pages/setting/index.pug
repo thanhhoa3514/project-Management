@@ -1,0 +1,234 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+    .container-fluid
+        // Page Header
+        .d-sm-flex.align-items-center.justify-content-between.mb-4
+            h1.h3.mb-0.text-gray-800 System Settings
+            button.btn.btn-primary.btn-sm.shadow-sm#saveSettings(type="button")
+                i.fas.fa-save.fa-sm.text-white-50.mr-2
+                | Save Changes
+
+        // Alert Messages
+        +alert-error(3000)
+        +alert(3000)
+
+        .row
+            .col-lg-3
+                // Settings Navigation
+                .card.shadow.mb-4
+                    .card-body.p-0
+                        .list-group.list-group-flush
+                            a.list-group-item.list-group-item-action.active(href="#general" data-toggle="tab")
+                                i.fas.fa-cog.mr-2
+                                | General Settings
+                            a.list-group-item.list-group-item-action(href="#website" data-toggle="tab")
+                                i.fas.fa-globe.mr-2
+                                | Website Settings
+                            a.list-group-item.list-group-item-action(href="#email" data-toggle="tab")
+                                i.fas.fa-envelope.mr-2
+                                | Email Settings
+                            a.list-group-item.list-group-item-action(href="#social" data-toggle="tab")
+                                i.fas.fa-share-alt.mr-2
+                                | Social Media
+                            a.list-group-item.list-group-item-action(href="#security" data-toggle="tab")
+                                i.fas.fa-shield-alt.mr-2
+                                | Security Settings
+                            a.list-group-item.list-group-item-action(href="#backup" data-toggle="tab")
+                                i.fas.fa-database.mr-2
+                                | Backup & Restore
+                            a.list-group-item.list-group-item-action(href="#notifications" data-toggle="tab")
+                                i.fas.fa-bell.mr-2
+                                | Notifications
+                            a.list-group-item.list-group-item-action(href="#analytics" data-toggle="tab")
+                                i.fas.fa-chart-line.mr-2
+                                | Analytics
+
+            .col-lg-9
+                form(
+                    id="settingsForm"
+                )
+
+                    //- Tab Content
+                    .tab-content
+                        //- General Settings
+                        #general.tab-pane.fade.show.active
+                            .card.shadow.mb-4
+                                .card-header.py-3
+                                    h6.m-0.font-weight-bold.text-primary General Settings
+                                .card-body
+                                    .form-group
+                                        label(for="siteName") Site Name
+                                        input#siteName.form-control(type="text" name="siteName" value=settings.siteName)
+                                    
+                                    .form-group
+                                        label(for="siteDescription") Site Description
+                                        textarea#siteDescription.form-control(name="siteDescription" rows="3")= settings.siteDescription
+                                    
+                                    .form-group
+                                        label(for="timezone") Timezone
+                                        select#timezone.form-control(name="timezone")
+                                            option(value="UTC" selected=settings.timezone === "UTC") UTC
+                                            option(value="Asia/Ho_Chi_Minh" selected=settings.timezone === "Asia/Ho_Chi_Minh") Asia/Ho Chi Minh
+                                    
+                                    .form-group
+                                        label(for="dateFormat") Date Format
+                                        select#dateFormat.form-control(name="dateFormat")
+                                            option(value="DD/MM/YYYY" selected=settings.dateFormat === "DD/MM/YYYY") DD/MM/YYYY
+                                            option(value="MM/DD/YYYY" selected=settings.dateFormat === "MM/DD/YYYY") MM/DD/YYYY
+                                            option(value="YYYY-MM-DD" selected=settings.dateFormat === "YYYY-MM-DD") YYYY-MM-DD
+
+                        //- Website Settings
+                        #website.tab-pane.fade
+                            .card.shadow.mb-4
+                                .card-header.py-3
+                                    h6.m-0.font-weight-bold.text-primary Website Settings
+                                .card-body
+                                    .form-group
+                                        label(for="logo") Site Logo
+                                        .custom-file
+                                            input#logo.custom-file-input(type="file" name="logo")
+                                            label.custom-file-label(for="logo") Choose file
+                                        if settings.logo
+                                            img.mt-2(src=settings.logo alt="Site Logo" style="max-height: 50px")
+                                    
+                                    .form-group
+                                        label(for="favicon") Favicon
+                                        .custom-file
+                                            input#favicon.custom-file-input(type="file" name="favicon")
+                                            label.custom-file-label(for="favicon") Choose file
+                                    
+                                    .form-group
+                                        label(for="metaKeywords") Meta Keywords
+                                        input#metaKeywords.form-control(type="text" name="metaKeywords" value=settings.metaKeywords)
+                                    
+                                    .form-group
+                                        label(for="metaDescription") Meta Description
+                                        textarea#metaDescription.form-control(name="metaDescription" rows="3")= settings.metaDescription
+
+                        //- Email Settings
+                        #email.tab-pane.fade
+                            .card.shadow.mb-4
+                                .card-header.py-3
+                                    h6.m-0.font-weight-bold.text-primary Email Settings
+                                .card-body
+                                    .form-group
+                                        label(for="smtpHost") SMTP Host
+                                        input#smtpHost.form-control(type="text" name="smtpHost" value=settings.smtpHost)
+                                    
+                                    .form-group
+                                        label(for="smtpPort") SMTP Port
+                                        input#smtpPort.form-control(type="number" name="smtpPort" value=settings.smtpPort)
+                                    
+                                    .form-group
+                                        label(for="smtpUser") SMTP Username
+                                        input#smtpUser.form-control(type="text" name="smtpUser" value=settings.smtpUser)
+                                    
+                                    .form-group
+                                        label(for="smtpPassword") SMTP Password
+                                        input#smtpPassword.form-control(type="password" name="smtpPassword")
+                                    
+                                    .form-group
+                                        label(for="emailFrom") From Email
+                                        input#emailFrom.form-control(type="email" name="emailFrom" value=settings.emailFrom)
+
+                        //- Social Media Settings
+                        #social.tab-pane.fade
+                            .card.shadow.mb-4
+                                .card-header.py-3
+                                    h6.m-0.font-weight-bold.text-primary Social Media Links
+                                .card-body
+                                    .form-group
+                                        label(for="facebook") Facebook URL
+                                        input#facebook.form-control(type="url" name="facebook" value=settings.facebook)
+                                    
+                                    .form-group
+                                        label(for="twitter") Twitter URL
+                                        input#twitter.form-control(type="url" name="twitter" value=settings.twitter)
+                                    
+                                    .form-group
+                                        label(for="instagram") Instagram URL
+                                        input#instagram.form-control(type="url" name="instagram" value=settings.instagram)
+                                    
+                                    .form-group
+                                        label(for="youtube") YouTube URL
+                                        input#youtube.form-control(type="url" name="youtube" value=settings.youtube)
+
+                        //- Security Settings
+                        #security.tab-pane.fade
+                            .card.shadow.mb-4
+                                .card-header.py-3
+                                    h6.m-0.font-weight-bold.text-primary Security Settings
+                                .card-body
+                                    .form-group
+                                        .custom-control.custom-switch
+                                            input#twoFactor.custom-control-input(type="checkbox" name="twoFactor" checked=settings.twoFactor)
+                                            label.custom-control-label(for="twoFactor") Enable Two-Factor Authentication
+                                    
+                                    .form-group
+                                        label(for="sessionTimeout") Session Timeout (minutes)
+                                        input#sessionTimeout.form-control(type="number" name="sessionTimeout" value=settings.sessionTimeout)
+                                    
+                                    .form-group
+                                        label(for="passwordPolicy") Minimum Password Length
+                                        input#passwordPolicy.form-control(type="number" name="passwordPolicy" value=settings.passwordPolicy)
+
+                        //- Backup & Restore
+                        #backup.tab-pane.fade
+                            .card.shadow.mb-4
+                                .card-header.py-3
+                                    h6.m-0.font-weight-bold.text-primary Backup & Restore
+                                .card-body
+                                    .form-group
+                                        label Auto Backup
+                                        .custom-control.custom-switch
+                                        input#autoBackup.custom-control-input(type="checkbox" name="autoBackup" checked=settings.autoBackup)
+                                        label.custom-control-label(for="autoBackup") Enable Automatic Backup
+                                    
+                                    .form-group
+                                        label(for="backupFrequency") Backup Frequency
+                                        select#backupFrequency.form-control(name="backupFrequency")
+                                        option(value="daily" selected=settings.backupFrequency === "daily") Daily
+                                        option(value="weekly" selected=settings.backupFrequency === "weekly") Weekly
+                                        option(value="monthly" selected=settings.backupFrequency === "monthly") Monthly
+                                    
+                                    .form-group
+                                        button.btn.btn-primary(type="button")
+                                        i.fas.fa-download.mr-2
+                                        | Download Latest Backup
+                                        button.btn.btn-secondary.ml-2(type="button")
+                                        i.fas.fa-upload.mr-2
+                                        | Restore from Backup
+
+                        //- Notifications
+                        #notifications.tab-pane.fade
+                            .card.shadow.mb-4
+                                .card-header.py-3
+                                    h6.m-0.font-weight-bold.text-primary Notification Settings
+                                .card-body
+                                    .form-group
+                                        label Email Notifications
+                                        .custom-control.custom-switch
+                                            input#emailNotif.custom-control-input(type="checkbox" name="emailNotif" checked=settings.emailNotif)
+                                            label.custom-control-label(for="emailNotif") Enable Email Notifications
+                                    
+                                    .form-group
+                                        label Browser Notifications
+                                        .custom-control.custom-switch
+                                            input#browserNotif.custom-control-input(type="checkbox" name="browserNotif" checked=settings.browserNotif)
+                                            label.custom-control-label(for="browserNotif") Enable Browser Notifications
+
+                        //- Analytics
+                        #analytics.tab-pane.fade
+                            .card.shadow.mb-4
+                                .card-header.py-3
+                                    h6.m-0.font-weight-bold.text-primary Analytics Settings
+                                .card-body
+                                    .form-group
+                                        label(for="googleAnalytics") Google Analytics ID
+                                        input#googleAnalytics.form-control(type="text" name="googleAnalytics" value=settings.googleAnalytics)
+                                    
+                                    .form-group
+                                        label(for="facebookPixel") Facebook Pixel ID
+                                        input#facebookPixel.form-control(type="text" name="facebookPixel" value=settings.facebookPixel)

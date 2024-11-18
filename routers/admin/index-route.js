@@ -9,6 +9,9 @@ const accountRoutes = require("./account-route");
 const authenticateRoutes = require("./auth-route");
 const profileRoutes = require("./my-account.route");
 const articleRoutes = require("./article-route");
+// const settingRoutes=require("./setting-route");
+const settingRoutes=require("./setting-route");
+
 
 
 module.exports = (app) => {
@@ -57,5 +60,11 @@ module.exports = (app) => {
     PATH_ADMIN + "/articles",
     requireAuthenticationMiddleware.requireAuth,
     articleRoutes
+  );
+
+  app.use(
+    PATH_ADMIN + "/settings",
+    requireAuthenticationMiddleware.requireAuth,
+    settingRoutes
   );
 };
