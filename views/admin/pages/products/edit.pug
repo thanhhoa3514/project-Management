@@ -46,6 +46,27 @@ block main
                                             option(value="") --- Choose a category ---
                                             if(category)
                                                 +select-tree(category,1,product.products_category_id)
+                                    .form-group
+                                        label.font-weight-bold.d-block Prevalent
+                                        .custom-control.custom-radio.custom-control-inline
+                                            input.custom-control-input(
+                                                type="radio"
+                                                id="feature1"
+                                                name="featured"
+                                                value="1"
+                                                checked=(product.featured=="1" ? true : false)
+                                            )
+                                            label.custom-control-label(for="feature1") Yes
+                                        .custom-control.custom-radio.custom-control-inline
+                                            input.custom-control-input(
+                                                type="radio"
+                                                id="feature0"
+                                                name="featured"
+                                                value="0"
+                                                checked=(product.featured=="0" ? true : false)
+
+                                            )
+                                            label.custom-control-label(for="feature0") No
                                     
                                     .form-group
                                         label(for="desc").font-weight-bold Description

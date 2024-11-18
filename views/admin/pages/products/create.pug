@@ -38,6 +38,27 @@ block main
                         option(value="") --- Choose a category ---
                         if(category)
                             +select-tree(category)
+                .form-group
+                    label.font-weight-bold.d-block Prevalent
+                    .custom-control.custom-radio.custom-control-inline
+                        input.custom-control-input(
+                            type="radio"
+                            id="feature1"
+                            name="featured"
+                            value="1"
+  
+                        )
+                        label.custom-control-label(for="feature1") Yes
+                    .custom-control.custom-radio.custom-control-inline
+                        input.custom-control-input(
+                            type="radio"
+                            id="feature0"
+                            name="feature"
+                            value="0"
+                            checked
+
+                        )
+                        label.custom-control-label(for="feature0") No
                 //- Description
                 .form-group
                     label.font-weight-bold(for="desc") Description
