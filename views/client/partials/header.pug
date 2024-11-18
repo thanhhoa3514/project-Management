@@ -25,6 +25,44 @@ header.header
                                     
                                     .dropdown-menu.dropdown-menu-right  
                                         +sub-menu(layoutProductsCategory, pathProduct)
+
+                                //- Services Dropdown  
+                                li.nav-item.dropdown  
+                                    a.nav-link.dropdown-toggle(href="/services", data-toggle="dropdown") Services  
+                                    .dropdown-menu.dropdown-menu-right  
+                                        a.dropdown-item(href="/services/consulting") Consulting  
+                                        a.dropdown-item(href="/services/implementation") Implementation  
+                                        a.dropdown-item(href="/services/support") Support  
+
+                                //- About Us  
+                                li.nav-item  
+                                    a.nav-link(href="/about") About Us  
+
+                                //- Contact  
+                                li.nav-item  
+                                    a.nav-link(href="/contact") Contact  
+
+                                //- Search and User Actions  
+                                li.nav-item.dropdown.search-dropdown  
+                                    a.nav-link.dropdown-toggle(href="#", data-toggle="dropdown")  
+                                        i.fas.fa-search  
+                                    .dropdown-menu.dropdown-menu-right.p-3  
+                                        form.form-inline  
+                                            .input-group  
+                                                input.form-control(type="search", placeholder="Search..." aria-label="Search")  
+                                                .input-group-append  
+                                                    button.btn.btn-primary(type="submit")  
+                                                        i.fas.fa-search  
+
+                                //- User Profile/Login  
+                                li.nav-item.dropdown.user-dropdown  
+                                    a.nav-link.dropdown-toggle(href="#", data-toggle="dropdown")  
+                                        i.fas.fa-user  
+                                    .dropdown-menu.dropdown-menu-right  
+                                        a.dropdown-item(href="/login") Login  
+                                        a.dropdown-item(href="/register") Register  
+                                        hr.dropdown-divider  
+                                        a.dropdown-item(href="/profile") My Profile
                             //- ul 
                             //-     li 
                             //-         a(href="/products/slug-1") Product 1 
