@@ -1,2 +1,45 @@
-footer.footer 
-    | Copyright 2024 Thanh Hoa
+footer.footer  
+    .footer-container  
+        .footer-content  
+            .footer-section.about  
+                h4 About Us  
+                p Innovative solutions that transform your digital experience  
+            
+            .footer-section.links  
+                h4 Quick Links  
+                ul  
+                    li: a(href="/") Home  
+                    li: a(href="/about") About  
+                    li: a(href="/services") Services  
+                    li: a(href="/contact") Contact  
+            
+            .footer-section.contact  
+                h4 Contact Info  
+                p   
+                    i.fas.fa-map-marker-alt  
+                    | 37 Nguyen Lu Street, Qui Nhon City  
+                p   
+                    i.fas.fa-phone  
+                    | +84 (123) 456-7890  
+                p   
+                    i.fas.fa-envelope  
+                    | contact@thanhhoa.com  
+            
+            .footer-section.social  
+                h4 Follow Us  
+                .social-icons  
+                    a.social-icon(href="#" target="_blank")  
+                        i.fab.fa-facebook-f  
+                    a.social-icon(href="#" target="_blank")  
+                        i.fab.fa-twitter  
+                    a.social-icon(href="#" target="_blank")  
+                        i.fab.fa-linkedin-in  
+                    a.social-icon(href="#" target="_blank")  
+                        i.fab.fa-instagram  
+        
+        .footer-bottom  
+            .copyright  
+                | © #{new Date().getFullYear()} Thanh Hoa. All Rights Reserved.  
+            .footer-policies  
+                a(href="/privacy") Privacy Policy  
+                a(href="/terms") Terms of Service 

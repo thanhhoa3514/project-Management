@@ -1,7 +1,24 @@
-mixin sub-menu(items,path)
-    ul  
-        each item in items
-            li 
-                a(href=`${path}/${item.slug}`) #{item.title}
-                if(item.children&&item.children.length>0)
-                    +sub-menu(item.children,path)
+mixin sub-menu(items, path, level = 0)  
+    - const maxLevel = 3 // Limit nested levels to prevent excessive nesting  
+    if level < maxLevel  
+        ul(class=`menu-level-${level}`)  
+            each item in items  
+                li.menu-item(class=`menu-item-${level}`)  
+                    - const itemUrl = item.slug ? `${path}/${item.slug}` : '#'  
+                    
+                    // Main item link  
+                    a.menu-link(  
+                        href=itemUrl   
+                        class=item.children && item.children.length > 0 ? 'has-children' : ''  
+                        data-title=item.title  
+                    )  
+                        span.menu-link-text #{item.title}  
+                        
+                        // Add dropdown icon for items with children  
+                        if item.children && item.children.length > 0  
+                            span.dropdown-icon  
+                                i.fas.fa-chevron-right  
+                    
+                    // Recursive call for children  
+                    if item.children && item.children.length > 0  
+                        +sub-menu(item.children, path, level + 1) 

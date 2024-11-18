@@ -1,23 +1,30 @@
 include ../mixins/sub-menu.pug
 
-header.header 
-    .container 
-        .row.align-item-center
-            .col-3 
-                .inner-logo
-                    a(href="/")
-                        img(src="/images/logo1.png", alt="logo")
+header.header  
+    .container-fluid.px-lg-5  
+        .row.align-items-center  
+            .col-lg-3.col-md-6.col-sm-8.col-9  
+                .inner-logo  
+                    a.d-block(href="/")  
+                        img.img-fluid.max-width-logo(src="/images/logo1.png", alt="logo")  
 
-            .col-9 
-                .inner-menu
-                    ul 
-                        li 
-                            a(href="/") Home Page 
-                    
-                        l1(class="sub-menu")
-                            - const pathProduct ="/products";
-                            a(href=pathProduct) Product
-                            +sub-menu(layoutProductsCategory,pathProduct)
+            .col-lg-9.col-md-6.col-sm-4.col-3  
+                .inner-menu  
+                    nav.navbar.navbar-expand-lg.navbar-light.p-0  
+                        button.navbar-toggler(type="button" data-toggle="collapse" data-target="#mainNavigation" aria-controls="mainNavigation" aria-expanded="false" aria-label="Toggle navigation")  
+                            span.navbar-toggler-icon  
+
+                        #mainNavigation.collapse.navbar-collapse  
+                            ul.navbar-nav.ml-auto  
+                                li.nav-item.active  
+                                    a.nav-link(href="/") Home Page  
+
+                                li.nav-item.dropdown  
+                                    - const pathProduct ="/products";  
+                                    a.nav-link.dropdown-toggle(href=pathProduct data-toggle="dropdown") Product  
+                                    
+                                    .dropdown-menu.dropdown-menu-right  
+                                        +sub-menu(layoutProductsCategory, pathProduct)
                             //- ul 
                             //-     li 
                             //-         a(href="/products/slug-1") Product 1 
