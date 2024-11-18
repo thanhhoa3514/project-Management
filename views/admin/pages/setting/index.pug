@@ -2,6 +2,15 @@ extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 
 block main
+    .form-group
+        label Dark Mode
+        .custom-control.custom-switch
+            input#darkModeToggle.custom-control-input(
+                type="checkbox"
+                name="darkMode"
+                checked=settings.darkMode
+            )
+            label.custom-control-label(for="darkModeToggle") Enable Dark Mode
     .container-fluid
         // Page Header
         .d-sm-flex.align-items-center.justify-content-between.mb-4

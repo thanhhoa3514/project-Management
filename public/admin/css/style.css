@@ -1,3 +1,11 @@
+:root {
+  --light-bg: #f8f9fc;
+  --light-text: #5a5c69;
+  --light-card: #fff;
+  --dark-bg: #1a1a1a;
+  --dark-text: #e0e0e0;
+  --dark-card: #2d2d2d;
+}
 /* Header */
 .header {
   position: sticky;
@@ -41,6 +49,43 @@
   width: calc(100% - 280px); /* Adjusted to match the width of .sidebar */
 }
 
+body {
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  transition: all 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+.dark-mode .card {
+  background-color: var(--dark-card);
+  border-color: #404040;
+}
+
+.dark-mode .card-header {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-bottom-color: #404040;
+}
+
+.dark-mode .form-control {
+  background-color: var(--dark-bg);
+  border-color: #404040;
+  color: var(--dark-text);
+}
+
+.dark-mode .list-group-item {
+  background-color: var(--dark-card);
+  border-color: #404040;
+  color: var(--dark-text);
+}
+
+.dark-mode .list-group-item.active {
+  background-color: #4e73df;
+  border-color: #4e73df;
+}
 /* End Body */
 
 /* Sider */

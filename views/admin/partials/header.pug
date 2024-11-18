@@ -64,6 +64,10 @@ header.header.py-2.bg-white.border-bottom.shadow-sm
                             i.fas.fa-cog.mr-2
                             | Settings
                         .dropdown-divider
+                        .custom-control.custom-switch
+                            input#darkModeToggle.custom-control-input(type="checkbox")
+                            label.custom-control-label.text-gray-600(for="darkModeToggle")
+                                i.fas.fa-moon.fa-fw
                         a.dropdown-item.text-danger(
                             href=`${prefixAdmin}/auth/logout`
                             data-confirm="Are you sure you want to logout?"
