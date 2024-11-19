@@ -6,6 +6,8 @@ const controller=require("../../controllers/client/product-controller")
 
 router.get("/", controller.index);
 router.get("/:slugCategory", controller.category);
+router.get("/detail/:slugProduct", controller.detail);
+
 
 // router.get("/:slug", controller.detail);
 

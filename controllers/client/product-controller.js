@@ -28,11 +28,11 @@ module.exports.category = async (req, res) => {
       status: "active",
       deleted: false,
     });
-    const listSubCategory = await productCategoryHelpers.getSubCategory(category.id);
-
+    const listSubCategory = await productCategoryHelpers.getSubCategory(
+      category.id
+    );
 
     const listSubCategoryID = listSubCategory.map((item) => item.id);
-
 
     const products = await Product.find({
       products_category_id: { $in: [category.id, ...listSubCategoryID] },
@@ -54,16 +54,35 @@ module.exports.category = async (req, res) => {
   }
 };
 
-// [GET] products/details
+// [GET] products/details/:slugProduct
 module.exports.detail = async (req, res) => {
   try {
     let find = {
       deleted: false,
-      slug: req.params.slug,
+      slug: req.params.slugProduct,
       status: "active",
     };
 
     const product = await Product.findOne(find);
+
+    if (product.products_category_id) {
+      const category = await ProductCategory.findOne({
+        _id: product.products_category_id,
+        status: "active",
+        deleted: false,
+      });
+      product.category = category;
+
+      // const relatedProducts = await Product.find({
+      //   products_category_id: category.id,
+      //   _id: { $ne: product._id },
+      //   deleted: false,
+      //   status: "active",
+      // }).limit(6);
+      // product.relatedProducts = relatedProducts;
+    }
+
+    product.newPrice = productHelpers.priceNewOneProduct(product);
     res.render("client/pages/products/detail", {
       pageTitle: product.title,
       product: product,

@@ -6,6 +6,12 @@ block main
                 if(product.title)
                     h1(class="mb-4") #{product.title}
 
+                if(product.category)
+                    span Category 
+                        a(href=`/products/${product.category.slug}`) #{product.category.title}
+                if(product.newPrice)
+                    div(class="mb-4") PriceNew: <b>#{product.newPrice}</b>$
+
                 if(product.price)
                     div(class="mb-4") Price: <b>#{product.price}</b>$
 
@@ -27,4 +33,22 @@ block main
                     div(class="mb-4") Position: <b>#{product.position}</b>
 
                 if(product.description)
-                    div(class="mb-4") Describe: #{product.description}
+                    div(class="mb-4") Describe: !{product.description}
+
+                form(
+                    action=`/cart/add/${product.id}`
+                    method="POST"
+                ) 
+                    input(
+                        class="form-control mb-2"
+                        type="number"
+                        name="quantity"
+                        min="1"
+                        value="1"
+                        max=product.stock
+                    )
+
+                    button(
+                        type="submit"
+                        class="btn btn-primary"
+                    ) Add to Cart
