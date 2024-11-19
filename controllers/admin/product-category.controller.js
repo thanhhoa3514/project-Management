@@ -92,6 +92,8 @@ module.exports.index = async (req, res) => {
 
 // [GET] admin/products-category/create
 module.exports.create = async (req, res) => {
+  // const permissions=res.locals.role.Permission_groups;
+  // console.log(permissions);
   let find = {
     deleted: false,
   };
@@ -110,6 +112,9 @@ module.exports.create = async (req, res) => {
 // [POST] admin/products-category/create
 
 module.exports.createCategoryPOST = async (req, res) => {
+
+  // const permissions=res.locals.role.Permission_groups;
+  // console.log(permissions);
   if (req.body.position == "") {
     const countDocuments = await ProductCategory.countDocuments();
     req.body.position = countDocuments + 1;
