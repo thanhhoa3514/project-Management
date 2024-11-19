@@ -3,6 +3,8 @@ mixin product-item(item)
         .card.product-card.h-100
             .card-img-top.product-image
                 img.img-fluid(src=item.thumbnail, alt=item.title)
+                if(item.featured=="1")
+                    span.text-danger.font-weight-bold Prevalent
             .card-body.text-center
                 h3.card-title.h5
                     a.text-decoration-none.text-dark(href=`/products/${item.slug}`)= item.title
