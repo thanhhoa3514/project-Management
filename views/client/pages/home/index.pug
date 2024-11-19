@@ -1,4 +1,14 @@
-extends ../../layout/default.pug 
+extends ../../layout/home.pug 
+include ../../mixins/box-head.pug
+include ../../mixins/product-layout.pug
+
 
 block main 
     h1 Home 
+    .section-products-featured
+        .container.my-3.
+        .row
+            .col-12
+                +box-head("Prevalent Products")
+        +product-grid(productFeatured)
+

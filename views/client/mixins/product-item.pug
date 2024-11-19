@@ -1,0 +1,12 @@
+mixin product-item(item)
+     .col-md-4.col-sm-6.mb-4
+        .card.product-card.h-100
+            .card-img-top.product-image
+                img.img-fluid(src=item.thumbnail, alt=item.title)
+            .card-body.text-center
+                h3.card-title.h5
+                    a.text-decoration-none.text-dark(href=`/products/${item.slug}`)= item.title
+                .product-pricing
+                    span.text-danger.font-weight-bold= `$${item.priceNew}`
+                    span.text-muted.ml-2.text-decoration-line-through= `$${item.price}`
+                    span.badge.badge-danger.ml-2= `-${item.discountPercentage}%`
