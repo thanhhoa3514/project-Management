@@ -13,8 +13,22 @@ module.exports.index = async (req, res) => {
   });
   const newProducts=productHelpers.priceNewProducts(productFeatured);
   // console.log(productFeatured);
+
+  // Get all the latest products
+  const productsNew=await Product.find({
+    deleted:false,
+    status: "active",
+  }).sort({
+    position:"desc"
+  }).limit(6);
+  const newProductsPrevalent=productHelpers.priceNewProducts(productsNew);
+
+  // End Get all the latest products
+
+
   res.render("client/pages/home/index", {
     pageTitle: "Home page",
-    productFeatured:newProducts
+    productFeatured:newProducts,
+    productsNew:newProductsPrevalent
   });
 };
