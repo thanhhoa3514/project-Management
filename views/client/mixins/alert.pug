@@ -1,0 +1,52 @@
+-
+  const ALERT_TYPES = {
+    success: {
+      className: 'alert-success',
+      icon: 'check-circle'
+    },
+    info: {
+      className: 'alert-info',
+      icon: 'info-circle'
+    },
+    warning: {
+      className: 'alert-warning',
+      icon: 'exclamation-triangle'
+    },
+    danger: {
+      className: 'alert-danger',
+      icon: 'exclamation-circle'
+    }
+  }
+
+//- Generic Alert Mixin
+mixin alert(type, message, time)
+  if message
+    .message(class=type)
+      div(
+        class=`alert ${ALERT_TYPES[type].className}`
+        show-alert
+        data-time=time || 5000
+        role="alert"
+      )
+        i(class=`fas fa-${ALERT_TYPES[type].icon} me-2`)
+        span.alert-message #{message}
+        button(
+          type="button"
+          class="close-btn"
+          close-alert
+          aria-label="Close"
+        )
+          span(aria-hidden="true") &times;
+
+//- Specific Alert Type Mixins
+mixin success-alert(time)
+  +alert('success', messages.success, time)
+
+mixin info-alert(time)
+  +alert('info', messages.info, time)
+
+mixin warning-alert(time)
+  +alert('warning', messages.warning, time)
+
+mixin danger-alert(time)
+  +alert('danger', messages.danger || messages.error || messages.delete, time)
