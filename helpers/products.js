@@ -7,5 +7,5 @@ module.exports.priceNewProducts=(products)=>{
 }
 module.exports.priceNewOneProduct=(product)=>{
     const newPrice=(product.price*(100-product.discountPercentage)/100).toFixed(0);
-    return newPrice;
+    return parseInt(newPrice);
 }

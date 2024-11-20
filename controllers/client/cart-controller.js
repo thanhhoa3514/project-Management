@@ -1,4 +1,6 @@
 const Cart=require("../../models/cart-model");
+const Product = require("../../models/product-model");
+const productHelpers = require("../../helpers/products");
 
 // [POST] cart/add/:id
 module.exports.addPOST= async(req, res) => {
@@ -24,7 +26,6 @@ module.exports.addPOST= async(req, res) => {
             }
         });
         req.flash('success', "Your product has been updated!");
-
     }else{
         
         const objectCart = {
@@ -43,3 +44,43 @@ module.exports.addPOST= async(req, res) => {
     res.redirect(req.get("Referrer") || "/");
 
 }
+
+// [GET]
+module.exports.index=async(req,res) => {
+
+    const cartId = req.cookies.cartId;
+
+    const cart= await Cart.findOne({_id: cartId});
+
+    // console.log(cart);
+    if(cart.products.length > 0){
+        for (const item of cart.products) {
+
+            const productId=item.product_id;
+
+            const productInfo= await Product.findOne({
+                _id: productId,
+                
+            }).select("title thumbnail slug price discountPercentage");
+
+            // Calculating new price for each product
+            productInfo.priceNew=productHelpers.priceNewOneProduct(productInfo);
+
+            // Add key 
+            item.productInfo=productInfo;
+
+            // Total price of each product
+            item.totalPrice=productInfo.priceNew*item.quantity;
+        }
+    }
+
+    // Total price of all products
+    cart.totalPrice=cart.products.reduce((sum,item)=>{
+        return sum+item.totalPrice;
+    },0);
+    // console.log(cart.products);
+    res.render("client/pages/cart/index", {
+        pageTitle: "Cart",
+        cartDetail:cart
+    });
+};

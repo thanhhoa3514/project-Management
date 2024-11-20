@@ -1,0 +1,58 @@
+extends ../../layout/cart.pug 
+include ../../mixins/box-head.pug
+
+
+block main 
+    .container.my-3 
+        .row 
+            .col-12
+                +box-head("Cart")
+        .row 
+            .col-12 
+                table(
+                    class="table table-bordered"
+                )
+                    thead 
+                        tr 
+                            th #
+                            th Product 
+                            th Thumbnail 
+                            th Price 
+                            th Quantity 
+                            th Subtotal 
+                            th Status 
+
+                    tbody 
+                        if(cartDetail.products.length > 0)
+                            each item,index in cartDetail.products 
+                                tr 
+                                    td #{index+1}
+                                    td 
+                                        img(src=item.productInfo.thumbnail, alt=item.productInfo.title width="80px")
+                                    td 
+                                        a(href=`/products/detail/${item.productInfo.slug}`) #{item.productInfo.title}
+                                    td #{item.productInfo.priceNew}$
+                                    td 
+                                        input(
+                                            type="number"
+                                            name="quantity"
+                                            value=item.quantity
+                                            min="1"
+                                            item-id=item.product_id
+                                            style="width: 60px"
+                                        ) 
+                                    td #{item.totalPrice}$
+                                    td 
+                                        a(
+                                            href=`/cart/delete/${item.product_id}`
+                                            class="btn btn-danger"
+                                        ) Delete
+                        else 
+                            span No products here       
+                h3(class="text-right ") Total Payment #{cartDetail.totalPrice}$
+                div(
+                    class="text-right mt-3"
+                )
+                    a(href="/checkout" class="btn btn-success") Payment 
+
+

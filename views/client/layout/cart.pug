@@ -1,3 +1,4 @@
+
 include ../mixins/alert.pug
 
 doctype html 
@@ -5,10 +6,14 @@ html
     head 
         title #{pageTitle}
 
+        link(rel="stylesheet", href="/css/style.css")
+
         link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css")
-        link(rel="stylesheet", href="/css/style-home.css")
+        link(rel="stylesheet", href="/css/cart.css")
         link(rel="stylesheet", href="/css/alert.css")
         link(rel="stylesheet", href="/css/footer.css")
+        link(rel="stylesheet", href="/css/header-navbar.css")
+
 
 
         link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet")
@@ -25,4 +30,4 @@ html
         script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js") 
         script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js")
 
-        script(src="/js/home-script.js") 
+        script(src="/js/cart.js") 
