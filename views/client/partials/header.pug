@@ -47,9 +47,17 @@ header.header
                                     a.nav-link.dropdown-toggle(href="#", data-toggle="dropdown")  
                                         i.fas.fa-search  
                                     .dropdown-menu.dropdown-menu-right.p-3  
-                                        form.form-inline  
+                                        form(
+                                            action="/search"  
+                                            method="GET"  
+                                            class="form-inline"  
+                                            
+                                        )  
                                             .input-group  
-                                                input.form-control(type="search", placeholder="Search..." aria-label="Search")  
+                                                input.form-control(type="search", placeholder="Search..." aria-label="Search"
+                                                    name="keyword"
+                                                    value=keyword
+                                                )  
                                                 .input-group-append  
                                                     button.btn.btn-primary(type="submit")  
                                                         i.fas.fa-search  
