@@ -106,3 +106,22 @@ module.exports.deleteProduct= async (req, res) => {
     res.redirect(req.get("Referrer") || "/");
     
 };
+
+// [GET] products/cart/update/:productId/:quantity
+
+
+module.exports.updateProduct= async(req, res) => {
+    const productId = req.params.productId;
+    const cartId = req.cookies.cartId;
+    const quantity = req.params.quantity;
+
+    // console.log(req.params);
+    await Cart.updateOne({_id: cartId, "products.product_id": productId}, {
+        $set: {
+            "products.$.quantity": quantity
+        }
+    });
+    req.flash('success', "Your product has been updated!");
+    res.redirect(req.get("Referrer") || "/");
+
+};

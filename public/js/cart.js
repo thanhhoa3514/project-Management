@@ -125,3 +125,23 @@ document.addEventListener("DOMContentLoaded", () => {
     setupAlert(alertElement.firstElementChild);
   };
 });
+
+
+// Update the amount of products
+// console.log("ok");
+const inputsQuantity = document.querySelectorAll("input[name='quantity']");
+// console.log(inputsQuantity);
+if(inputsQuantity.length > 0) {
+  inputsQuantity.forEach(input=>{
+    input.addEventListener("change", (e)=>{
+      const productId=input.getAttribute("product-id");
+      const quantity=e.target.value;
+      // console.log(quantity);
+      // console.log(productId);
+
+      // Redirect to new page
+      window.location.href=`/cart/update/${productId}/${quantity}`;
+      
+    })
+  })
+}
