@@ -45,7 +45,7 @@ module.exports.addPOST= async(req, res) => {
 
 }
 
-// [GET]
+// [GET] products/cart/:productId
 module.exports.index=async(req,res) => {
 
     const cartId = req.cookies.cartId;
@@ -83,4 +83,26 @@ module.exports.index=async(req,res) => {
         pageTitle: "Cart",
         cartDetail:cart
     });
+};
+
+// [GET] products/cart/delete/:productId
+
+module.exports.deleteProduct= async (req, res) => {
+    const productId = req.params.productId;
+    const cartId = req.cookies.cartId;
+
+    await Cart.updateOne({
+        _id:cartId,
+
+    },{
+        $pull: {
+            products: {
+                product_id: productId
+            }
+        }
+    });
+    req.flash('success',"Deleted product out of a cart successfully");
+    // res.send("ok");
+    res.redirect(req.get("Referrer") || "/");
+    
 };
