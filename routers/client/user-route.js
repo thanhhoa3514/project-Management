@@ -8,5 +8,9 @@ const validateRegister= require("../../validates/client/user.validate");
 router.get("/register",controller.register);
 router.post("/register",validateRegister.registerPost,controller.registerPOST);
 
+router.get("/login",controller.login);
+router.post("/login",validateRegister.loginPost,controller.loginPOST);
+
+
 
 module.exports = router;
