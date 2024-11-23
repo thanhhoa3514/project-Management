@@ -1,0 +1,45 @@
+extends ../../layout/register.pug 
+include ../../mixins/box-head.pug
+
+block main 
+    .container.my-5 
+        .row.justify-content-center 
+            .col-8 
+                h1(class="text-center") Register Account 
+                form(
+                    action="/user/register"
+                    method="POST"
+                )
+                    div(class="form-group")
+                        label(for="fullName") FullName 
+                        input(
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            class="form-control"
+                            required
+                        )
+                    div(class="form-group")
+                        label(for="email") Email 
+                        input(
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-control"
+                            required
+                        )
+
+                    div(class="form-group")
+                        label(for="password") Password 
+                        input(
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-control"
+                            required
+                        )
+                    div(class="form-group")
+                        button(
+                            type="submit"
+                            class="btn btn-primary btn-block"
+                        ) Register
