@@ -107,7 +107,7 @@ module.exports.forgotPasswordPost= async (req, res) => {
     const objectForgotPassword ={
         email: userInfo.email,
         opt:opt,
-        expireAt: Date.now()+300
+        expireAt: Date.now()
     }
 
     // console.log(objectForgotPassword);
