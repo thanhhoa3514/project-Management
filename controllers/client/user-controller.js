@@ -1,6 +1,8 @@
 const User = require("../../models/user-model");
 const CryptoJS = require("crypto-js");
+const generateHelpers= require("../../helpers/generateStringRandom");
 
+const ForgotPassword = require("../../models/forgot-password.model");
 // [GET] user/register
 
 module.exports.register = async (req, res) => {
@@ -81,4 +83,41 @@ module.exports.logout= async (req, res) => {
     res.clearCookie("tokenUser");
     req.flash("success", "Logout Successfully");
     res.redirect("/");
+};
+
+// [GET] user/password/forgot
+module.exports.forgotPassword= async (req, res) => {
+    res.render("client/pages/user/forgot-password", {
+        pageTitle: "Get forgot Password",
+    });
+};
+
+// [POST] user/password/forgot
+module.exports.forgotPasswordPost= async (req, res) => {
+    // console.log(req.body);
+    const email = req.body.email;
+    const userInfo = await User.findOne({ email: email });
+    if (!userInfo) {
+        req.flash("error", "Email not found");
+        res.redirect(req.get("Referrer") || "/user/password/forgot");
+        return;
+    }
+    // Record user information in a database
+    const opt=generateHelpers.randomDigit(6);
+    const objectForgotPassword ={
+        email: userInfo.email,
+        opt:opt,
+        expireAt: Date.now()+300
+    }
+
+    // console.log(objectForgotPassword);
+
+    const forgotPassword = new ForgotPassword(objectForgotPassword);
+    await forgotPassword.save();
+    // send email to reset password
+    // const token = cryptoRandomString(20);
+    // userInfo.resetPasswordToken = token;
+    // userInfo.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+    // await userInfo.save();
+    res.send("ok");
 };

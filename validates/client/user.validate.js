@@ -55,3 +55,13 @@ module.exports.loginPost = (req, res, next) => {
   }
   next();
 };
+
+
+module.exports.forgotPasswordPost= (req, res,next) => {
+  if (!req.body.email) {
+    req.flash("error", "Email is required!");
+    res.redirect(req.get("Referrer") || "/");
+    return;
+  }
+  next();
+};
