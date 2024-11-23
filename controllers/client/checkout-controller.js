@@ -91,10 +91,31 @@ module.exports.order = async (req, res) => {
 // [GET] /checkout/success
 module.exports.success= async (req, res) => {
     try {
-        console.log(req.params.orderId);
+        // console.log(req.params.orderId);
+
+        const order= await Order.findOne({
+            _id: req.params.orderId,
+
+        });
+        for (const product of order.products) {
+            const productInfo= await Product.findOne({
+                _id:product.product_id
+            }).select("title thumbnail");
+
+            product.productInfo=productInfo;
+            product.priceNew= productHelpers.priceNewOneProduct(product);
+            product.totalPrice= product.priceNew*product.quantity;
+
+        }
+
+        order.totalPrice=order.products.reduce((total, item) => {
+            sum += item.totalPrice;
+        },0)
+        // console.log(order);
         req.flash('success', "Your order successfully!");
         res.render("client/pages/checkout/success", {
             pageTitle: "Order success",
+            order:order
         });
     } catch (error) {
         req.flash('danger', "Something occur problem!");

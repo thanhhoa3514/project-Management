@@ -6,3 +6,59 @@ block main
         .row 
             .col-12
                 +box-head("Order successfully")
+
+        .row 
+            .col-12
+                
+                div(class="alert alert-success")
+                    | Congratulation your order has been success. Your order wil process that come to you as soon as possible
+        if(order)
+            .row 
+                .col-12
+                    h4(class="mb-2") Personal Information
+                    table(class="table table-bordered")
+                        tbody 
+                            tr 
+                                td FullName 
+                                td 
+                                    b #{order.userInfo.fullName}
+                            tr 
+                                td Phone 
+                                td 
+                                    b #{order.userInfo.phone}
+                            tr 
+                                td Address 
+                                td 
+                                    b #{order.userInfo.address}
+
+            .row 
+                .col-12
+                    h4(class="mb-2") Order Information
+                    table(
+                        class="table table-bordered"
+                    )
+                        thead 
+                            tr 
+                                th #
+                                th Product 
+                                th Thumbnail 
+                                th Price 
+                                th Quantity 
+                                th Subtotal 
+                        tbody 
+                            if(order.products.length > 0)
+                                each item,index in order.products 
+                                    tr 
+                                        td #{index+1}
+                                        td 
+                                            img(src=item.productInfo.thumbnail, alt=item.productInfo.title width="80px")
+                                        td #{item.productInfo.title}
+                                        td #{item.priceNew}$
+                                        td #{item.quantity} 
+                                        td #{item.totalPrice}$
+
+                    if(order.products.length>0)  
+
+                        h3(class="text-right ") Total Payment #{order.totalPrice}$
+                            
+                    
