@@ -4,6 +4,8 @@ const generateHelpers= require("../../helpers/generateStringRandom");
 
 const ForgotPassword = require("../../models/forgot-password.model");
 const sendMailHelpers=require("../../helpers/sendMail");
+const Cart = require("../../models/cart-model");
+
 // [GET] user/register
 
 module.exports.register = async (req, res) => {
@@ -72,6 +74,22 @@ module.exports.loginPOST= async (req, res) => {
         return;
     }
 
+    // console.log(req.cookies.cartId);
+    // console.log(userInfo.id);
+
+    const record= Cart.findOne({
+        user_id:userInfo.id
+    });
+    if(record){
+
+        await Cart.updateOne({
+            _id:req.cookies.cartId,
+        },{
+            user_id:userInfo.id
+        })
+        res.cookie("cartId",record.id);
+    }
+
     req.flash("success", "Login Success");
 
     res.cookie("tokenUser",userInfo.tokenUser);
@@ -81,6 +99,7 @@ module.exports.loginPOST= async (req, res) => {
 
 // [GET] user/logout
 module.exports.logout= async (req, res) => {
+    res.clearCookie("cartId");
     res.clearCookie("tokenUser");
     req.flash("success", "Logout Successfully");
     res.redirect("/");
