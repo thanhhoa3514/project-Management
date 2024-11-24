@@ -200,3 +200,18 @@ module.exports.resetPasswordPost= async (req, res) => {
     req.flash("success", "Reset Password Successfully");
     res.redirect("/");
 };
+
+// [GET] user/info
+module.exports.info= async (req, res) => {
+    // const tokenUser= req.cookies.tokenUser;
+
+    // const info = await User.findOne({
+    //     tokenUser: tokenUser,
+    //     deleted: false
+    // }).select("-password");
+    // // console.log(info);
+    res.render("client/pages/user/info", {
+        pageTitle: "Info User",
+        // info:info
+    });
+};

@@ -1,0 +1,9 @@
+extends ../../layout/info.pug 
+include ../../mixins/box-head.pug
+
+block main 
+    .container.my-3
+    .row
+        .col-12
+            +box-head("Informational User")
+    div #{user}

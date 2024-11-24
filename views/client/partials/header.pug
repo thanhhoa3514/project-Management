@@ -69,13 +69,13 @@ header.header
                                     .dropdown-menu.dropdown-menu-right  
                                         if(user)
                                             a.dropdown-item(href="user/logout") Logout 
+                                            a.dropdown-item(href="user/info") My Profile
                                         else  
                                             a.dropdown-item(href="user/login") Login  
                                             a.dropdown-item(href="user/register") Register  
                                         a.dropdown-item(href="/cart") Cart (#{miniCart?miniCart.totalQuantity:0})
                                         hr.dropdown-divider  
                      
-                                        a.dropdown-item(href="/profile") My Profile
                             //- ul 
                             //-     li 
                             //-         a(href="/products/slug-1") Product 1 
