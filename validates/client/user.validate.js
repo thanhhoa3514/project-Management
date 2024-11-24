@@ -65,3 +65,25 @@ module.exports.forgotPasswordPost= (req, res,next) => {
   }
   next();
 };
+
+
+module.exports.resetPasswordPost= (req, res,next) => {
+  if (!req.body.password) {
+    req.flash("error", "Password is required!");
+    res.redirect(req.get("Referrer") || "/");
+    return;
+  }
+
+  if (!req.body.confirmPassword) {
+    req.flash("error", "Please enter to confirm password!");
+    res.redirect(req.get("Referrer") || "/");
+    return;
+  }
+
+  if (req.body.password!== req.body.confirmPassword) {
+    req.flash("error", "Passwords do not match!");
+    res.redirect(req.get("Referrer") || "/");
+    return;
+  }
+  next();
+};
