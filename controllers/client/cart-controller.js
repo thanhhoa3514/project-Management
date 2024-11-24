@@ -4,44 +4,68 @@ const productHelpers = require("../../helpers/products");
 
 // [POST] cart/add/:id
 module.exports.addPOST= async(req, res) => {
-    const productId=req.params.productId;
-    const quantity=parseInt(req.body.quantity);
-
-    const cartId = req.cookies.cartId;
-    // console.log(productId);
-    // console.log(quantity);
-    // console.log(cartId);
-    const cart= await Cart.findOne({_id: cartId});
-
-
-    // console.log(cart.products);
-    const existingProducts = cart.products.find(item=> item.product_id === productId);
-    if(existingProducts){
-        // Update existing
-        const quantityNew=quantity+existingProducts.quantity;
-        // Check in database
-        await Cart.updateOne({_id: cartId, "products.product_id": productId}, {
-            $set: {
-                "products.$.quantity": quantityNew
-            }
-        });
-        req.flash('success', "Your product has been updated!");
-    }else{
+    try {
         
-        const objectCart = {
-            product_id: productId,
-            quantity: quantity
+        const productId=req.params.productId;
+        const quantity=parseInt(req.body.quantity);
+    
+        const cartId = req.cookies.cartId;
+        // console.log(productId);
+        // console.log(quantity);
+        // console.log(cartId);
+        // Find cart and verify it exists
+        
+        
+        const cart= await Cart.findOne({_id: cartId});
+        if (!cart) {
+            req.flash('error', 'Cart not found');
+            return res.redirect(req.get('Referrer') || '/');
         }
-        
-        // Update collection that go a same id with cookies
-        await Cart.updateOne({_id:cartId},{
-            $push: {
-                products: objectCart
+    
+        // If user is logged in, ensure cart belongs to user
+        if (res.locals.user && cart.user_id) {
+            if (cart.user_id.toString() !== res.locals.user._id.toString()) {
+                req.flash('error', 'Invalid cart access');
+                return res.redirect(req.get('Referrer') || '/');
             }
-        } );
+            
+        }
+
+        // console.log(cart.products);
+        const existingProducts = cart.products.find(item=> item.product_id === productId);
+        if(existingProducts){
+            // Update existing
+            const quantityNew=quantity+existingProducts.quantity;
+            // Check in database
+            await Cart.updateOne({_id: cartId, "products.product_id": productId}, {
+                $set: {
+                    "products.$.quantity": quantityNew,
+                    lastAccessed: new Date() // Update last accessed time
+                }
+            });
+            req.flash('success', "Cart updated successfully!");
+        }else{
+            
+            const objectCart = {
+                product_id: productId,
+                quantity: quantity
+            }
+            
+            // Update collection that go a same id with cookies
+            await Cart.updateOne({_id:cartId},{
+                $push: {
+                    products: objectCart
+                },
+                $set: { lastAccessed: new Date() }
+            } );
+        }
+        req.flash('success', "Product added to cart successfully");
+    } catch (error) {
+        console.error('Error adding to cart:', error);
+        req.flash('error', 'An error occurred while updating cart');
+        res.redirect(req.get('Referrer') || '/');
+        
     }
-    req.flash('success', "Added product to cart successfully");
-    res.redirect(req.get("Referrer") || "/");
 
 }
 
