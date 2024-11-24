@@ -82,12 +82,14 @@ module.exports.loginPOST= async (req, res) => {
     });
     if(record){
 
+        res.cookie("cartId",record.id);
+    }else{
+        
         await Cart.updateOne({
             _id:req.cookies.cartId,
         },{
             user_id:userInfo.id
         })
-        res.cookie("cartId",record.id);
     }
 
     req.flash("success", "Login Success");
