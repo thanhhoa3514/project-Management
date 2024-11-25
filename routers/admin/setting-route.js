@@ -9,5 +9,7 @@ const controller = require("../../controllers/admin/setting.controller");
 
 
 router.get("/", controller.index);
+router.patch("/",upload.single("logo"), uploadCloud.upload,controller.indexPatch);
+
 
 module.exports=router;

@@ -44,11 +44,23 @@ const emailSchema = new mongoose.Schema({
 
 });
 const websiteSchema = new mongoose.Schema({
+    websiteName:{
+        type: String,
+        trim: true,
+    },
     logo: {
         type: String,
         trim: true,
     },
     favicon: {
+        type: String,
+        trim: true,
+    },
+    address:{
+        type: String,
+        trim: true,
+    },
+    copyright:{
         type: String,
         trim: true,
     },
@@ -75,7 +87,7 @@ const socialMediaSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    youtube: {
+    linkedLn: {
         type: String,
         trim: true,
     },

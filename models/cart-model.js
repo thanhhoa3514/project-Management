@@ -24,7 +24,6 @@ const cartSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-const Cart = mongoose.model("Cart", cartSchema, "carts");
 // console.log(productSchema);
 // Update lastAccessed timestamp whenever cart is accessed
 cartSchema.methods.updateLastAccessed = function() {
@@ -49,4 +48,5 @@ cartSchema.statics.cleanupOldGuestCarts = async function() {
     throw error;
   }
 };
+const Cart = mongoose.model("Cart", cartSchema, "carts");
 module.exports = Cart;
