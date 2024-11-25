@@ -2,6 +2,60 @@ extends ../../layouts/default.pug
 
 block main
     h1 Dashboard
-   
+    
+    .row.mt-4 
+        .col-12 
+            .card.mb-4 
+                .card-header 
+                .card-body 
+                    if(user.avatar)
+                        img(
+                            src=user.avatar
+                            alt='User Avatar'
+                            width='100'
+                            height='100'
+                            style='object-fit: cover;'
+                            class='rounded-circle img-fluid'
+                        )
+                    if(user.fullName)
+                        p Name: <b>#{user.fullName}</b>
+                    if(user.email)
+                        p Email: <b>#{user.email}</b>
+                    if(user.phone)
+                        p Name: <b>#{user.phone}</b>
+                    if(role.title)
+                        p Name: <b>#{role.title}</b>
+
+            .col-6 
+                .card.mb-4 
+                    .card-header  Categories
+                    .card-body 
+                        p Remaining : <b>#{statistics.categoryProduct.total}</b>
+                        p Active : <b>#{statistics.categoryProduct.active}</b>
+                        p Inactive : <b>#{statistics.categoryProduct.inactive}</b>
+
+            .col-6 
+                .card.mb-4 
+                    .card-header  Products
+                    .card-body 
+                        p Remaining : <b>#{statistics.product.total}</b>
+                        p Active : <b>#{statistics.product.active}</b>
+                        p Inactive : <b>#{statistics.product.inactive}</b>
+
+            .col-6 
+                .card.mb-4 
+                    .card-header  Accounts Admin
+                    .card-body 
+                        p Remaining : <b>#{statistics.account.total}</b>
+                        p Active : <b>#{statistics.account.active}</b>
+                        p Inactive : <b>#{statistics.account.inactive}</b>
+            
+            .col-6 
+                .card.mb-4 
+                    .card-header  Accounts Client
+                    .card-body 
+                        p Remaining : <b>#{statistics.user.total}</b>
+                        p Active : <b>#{statistics.user.active}</b>
+                        p Inactive : <b>#{statistics.user.inactive}</b>
 
             
