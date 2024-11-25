@@ -68,6 +68,12 @@ route(app);
 // Route Admin
 routeAdmin(app);
 
+app.get("*",(req, res) => {
+  res.render("client/pages/errors/404",{
+    title: "Page not found",
+ 
+  })
+});
 app.listen(port, () => {
   console.log(`Example app Ongoing on port ${port}`);
 });

@@ -1,0 +1,55 @@
+doctype html  
+html(lang="vi")  
+    head  
+        meta(charset="UTF-8")  
+        title 404 - Not Found Page  
+        style.  
+            body {  
+                font-family: 'Arial', sans-serif;  
+                background: linear-gradient(45deg, #3494E6, #EC6EAD);  
+                display: flex;  
+                justify-content: center;  
+                align-items: center;  
+                height: 100vh;  
+                margin: 0;  
+                color: white;  
+                text-align: center;  
+            }  
+            .container {  
+                background: rgba(255, 255, 255, 0.1);  
+                border-radius: 20px;  
+                padding: 50px;  
+                box-shadow: 0 15px 25px rgba(0,0,0,0.1);  
+                backdrop-filter: blur(10px);  
+            }  
+            .error-code {  
+                font-size: 120px;  
+                font-weight: bold;  
+                margin-bottom: 20px;  
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.3);  
+            }  
+            .error-message {  
+                font-size: 24px;  
+                margin-bottom: 30px;  
+            }  
+            .back-btn {  
+                background-color: white;  
+                color: #3494E6;  
+                border: none;  
+                padding: 12px 30px;  
+                border-radius: 50px;  
+                text-decoration: none;  
+                font-weight: bold;  
+                transition: all 0.3s ease;  
+                cursor: pointer;  
+            }  
+            .back-btn:hover{  
+                transform: scale(1.05);  
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);  
+            }  
+
+    body  
+        .container  
+            .error-code 404  
+            .error-message Sorry Your page was not found
+            button.back-btn(onclick="history.back()") Back
