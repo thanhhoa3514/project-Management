@@ -2,15 +2,25 @@ const mongoose = require("mongoose");
 
 const chatSchema = new mongoose.Schema(
   {
-    // user_id:String,
-    cart_id: String,
+    // User who sent the message
+    user_id: String,
     room_chat_id: String,
-    content: String,
+    content: {
+      type: String,
+      trim: true,
+      maxLength: 1000, // Prevent extremely long messages
+    },
     images: Array,
     deleted: {
       type: Boolean,
       default: false,
     },
+    deletedAt: Date,
+    type: {
+        type: String,
+        enum: ['text', 'image', 'system'],
+        default: 'text'
+    }
   },
   {
     timestamps: true,
