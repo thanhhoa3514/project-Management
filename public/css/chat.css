@@ -1,34 +1,76 @@
-.chat-wrapper {  
-    border-radius: 10px;  
+.chat {  
+    background-color: #fff0f5; /* Light pink background */  
+    border-radius: 12px;  
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);  
-    background: #f8f9fa;  
 }  
 
-.message {  
+.inner-body {  
+    padding: 15px;  
+    max-height: 400px;  
+    overflow-y: auto;  
+}  
+
+.inner-incoming, .inner-outgoing {  
+    margin-bottom: 10px;  
     display: flex;  
-    margin-bottom: 15px;  
-    align-items: flex-start;  
+    flex-direction: column;  
 }  
 
-.message-avatar img {  
-    width: 40px;  
-    height: 40px;  
-    border-radius: 50%;  
+.inner-incoming .inner-name {  
+    color: #ff1493; /* Deep pink for incoming name */  
+    font-weight: bold;  
+    margin-bottom: 5px;  
+}  
+
+.inner-incoming .inner-content {  
+    background-color: #ffc0cb; /* Pink for incoming messages */  
+    color: #333;  
+    padding: 10px;  
+    border-radius: 12px;  
+    max-width: 70%;  
+    align-self: flex-start;  
+}  
+
+.inner-outgoing .inner-content {  
+    background-color: #ff69b4; /* Hot pink for outgoing messages */  
+    color: white;  
+    padding: 10px;  
+    border-radius: 12px;  
+    max-width: 70%;  
+    align-self: flex-end;  
+    margin-left: auto;  
+}  
+
+.inner-foot {  
+    background-color: #ffb6c1; /* Light pink for input area */  
+    padding: 10px;  
+    border-bottom-left-radius: 12px;  
+    border-bottom-right-radius: 12px;  
+}  
+
+.inner-form {  
+    display: flex;  
+}  
+
+.inner-input {  
+    flex-grow: 1;  
+    padding: 10px;  
+    border: 2px solid #ff69b4;  
+    border-radius: 20px;  
     margin-right: 10px;  
 }  
 
-.message-content {  
-    max-width: 70%;  
-    padding: 10px;  
-    border-radius: 12px;  
-}  
-
-.message.incoming .message-content {  
-    background-color: #e9ecef;  
-}  
-
-.message.outgoing .message-content {  
-    background-color: #007bff;  
+.inner-btn {  
+    background-color: #ff1493; /* Deep pink button */  
     color: white;  
-    align-self: flex-end;  
+    border: none;  
+    padding: 10px 15px;  
+    border-radius: 50%;  
+    display: flex;  
+    align-items: center;  
+    justify-content: center;  
 }  
+
+.inner-btn:hover {  
+    background-color: #ff69b4; /* Lighter pink on hover */  
+}

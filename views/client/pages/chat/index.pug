@@ -6,31 +6,43 @@ block main
         .row
             .col-12
                 +box-head("Chat")
-        .row   
-            .col-12   
-                .chat-wrapper  
-                    .chat-body  
-                        .message-list  
-                            .message.incoming  
-                                .message-avatar  
-                                    img(src="/path/to/avatar.jpg" alt="Baby")  
-                                .message-content  
-                                    .message-text Are you serious?  
-                                    .message-time 2:35 PM  
+        .row 
+            .col-12 
+                .chat 
+                    .inner-body 
+                        each chat in chats
+                            .inner-incoming 
+                                .inner-name #{chat.infoUser.fullName}
+                                .inner-content
+                                    | #{chat.content}
+                        //-     .inner-outgoing 
+                        //-         .inner-name 
+                        //-         .inner-content
+                        //-             | Yes i'm crazy
+                        //-     .inner-incoming 
+                        //-         .inner-name Baby
+                        //-         .inner-content
+                        //-             | Are you fucking serious
+                        //-     .inner-outgoing 
+                        //-         .inner-name 
+                        //-         .inner-content
+                        //-             | Yes i'm crazy
 
-                            .message.outgoing  
-                                .message-content  
-                                    .message-text Yes, I'm crazy  
-                                    .message-time 2:36 PM  
-
-                    .chat-footer  
-                        form.chat-form  
-                            .input-group  
-                                input.form-control(  
-                                    type="text"   
-                                    placeholder="Type your message..."   
-                                    name="content"  
-                                )  
-                                button.btn.btn-primary(type="submit")   
-                                    i.fas.fa-paper-plane  
+                        //-     .inner-incoming 
+                        //-         .inner-name Baby
+                        //-         .inner-content
+                        //-             | Are you fucking serious
+                        //-     .inner-outgoing 
+                        //-         .inner-name Baby
+                        //-         .inner-content
+                        //-             | Yes i'm crazy
+                        //- .inner-foot 
+                        //-     form(
+                        //-         class="inner-form"
+                        //-     )
+                        //-         input(type="text" placeholder="Type your message..." class="inner-input"
+                        //-             name="content"
+                        //-         )
+                        //-         button(type="submit" class="inner-btn")  
+                        //-             i.fas.fa-paper-plane  
         
