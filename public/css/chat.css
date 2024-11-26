@@ -74,3 +74,17 @@
 .inner-btn:hover {  
     background-color: #ff69b4; /* Lighter pink on hover */  
 }
+
+/* End chat */
+/* Emoji icon */
+
+.tooltip{
+    visibility: hidden;
+}
+
+
+.tooltip.shown{
+    visibility: visible;
+    opacity: 1;
+}
+/*End  Emoji icon */
