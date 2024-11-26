@@ -8,7 +8,7 @@ block main
                 +box-head("Chat")
         .row 
             .col-12 
-                .chat 
+                .chat(my-id=user.id)
                     .inner-body 
                         each chat in chats
                             div(class=(chat.user_id==user.id?"inner-outgoing":"inner-incoming"))
@@ -37,13 +37,13 @@ block main
                         //-         .inner-name Baby
                         //-         .inner-content
                         //-             | Yes i'm crazy
-                        //- .inner-foot 
-                        //-     form(
-                        //-         class="inner-form"
-                        //-     )
-                        //-         input(type="text" placeholder="Type your message..." class="inner-input"
-                        //-             name="content"
-                        //-         )
-                        //-         button(type="submit" class="inner-btn")  
-                        //-             i.fas.fa-paper-plane  
+                    .inner-foot 
+                        form(
+                            class="inner-form"
+                        )
+                            input(type="text" placeholder="Type your message..." class="inner-input"
+                                name="content"
+                            )
+                            button(type="submit" class="inner-btn")  
+                                i.fas.fa-paper-plane  
         

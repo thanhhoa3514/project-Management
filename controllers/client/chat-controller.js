@@ -5,18 +5,20 @@ const User = require("../../models/user-model");
 module.exports.index= async (req, res) => {
     try {
         const userId= res.locals.user.id;
+        const fullName= res.locals.user.fullName;
         _io.once('connection', (socket) => {
             
-            socket.on("CLIENT_SEND_MESSAGE", async (message) => {
+            socket.on("CLIENT_SEND_MESSAGE", async (content) => {
                 const chat=new Chat({
                     user_id: userId,
-                    message: message
+                    content: content
                 });
                 await chat.save();
-                // io.emit("SERVER_SEND_MESSAGE", {
-                //     user_id: userId,
-                //     message: message
-                // });
+                _io.emit("SERVER_RETURN_MESSAGE", {
+                    userId: userId,
+                    fullName:fullName,
+                    content: content
+                });
             })
         });
 
@@ -27,7 +29,7 @@ module.exports.index= async (req, res) => {
         for (const chat of chats) {
             const infoUser = await User.find({
                 _id: chat.user_id
-            }).select("fullName avatar")
+            }).select("fullName")
             chat.infoUser=infoUser
         }
         res.render("client/pages/chat/index",{
