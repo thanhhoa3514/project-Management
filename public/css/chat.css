@@ -88,3 +88,73 @@
     opacity: 1;
 }
 /*End  Emoji icon */
+
+/* Emoji Picker Styling */  
+.button-icon {  
+    display: flex;  
+    align-items: center;  
+    justify-content: center;  
+    cursor: pointer;  
+    transition: all 0.3s ease;  
+    border-radius: 50%;  
+    width: 40px;  
+    height: 40px;  
+}  
+
+.button-icon:hover {  
+    background-color: #f0f0f0;  
+}  
+
+.button-icon i {  
+    font-size: 1.2rem;  
+    color: #666;  
+}  
+
+/* Typing Animation */  
+.inner-list-typing {  
+    display: flex;  
+    align-items: center;  
+    margin-bottom: 10px;  
+}  
+
+.box-typing {  
+    display: flex;  
+    align-items: center;  
+    margin-right: 15px;  
+}  
+
+.inner-name {  
+    margin-right: 10px;  
+    color: #666;  
+    font-size: 0.8rem;  
+}  
+
+.inner-dots {  
+    display: flex;  
+    align-items: center;  
+}  
+
+.inner-dots span {  
+    width: 6px;  
+    height: 6px;  
+    background-color: #999;  
+    border-radius: 50%;  
+    margin: 0 2px;  
+    animation: typing 1.4s infinite;  
+}  
+
+.inner-dots span:nth-child(2) {  
+    animation-delay: 0.2s;  
+}  
+
+.inner-dots span:nth-child(3) {  
+    animation-delay: 0.4s;  
+}  
+
+@keyframes typing {  
+    0%, 100% { opacity: 0.4; transform: translateY(0); }  
+    50% {   
+        opacity: 1;   
+        transform: translateY(-4px);  
+    }  
+} 

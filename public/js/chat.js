@@ -80,3 +80,22 @@ if(emojiPicker){
 }
 //  End insert icon chat
 // End show icon chat
+
+// Input keyup
+
+const inputChat=document.querySelector(".chat .inner-form input[name='content']");
+if(inputChat){
+    inputChat.addEventListener("keyup",(e)=>{
+        if(e.key=="Enter" && e.target.value.trim()!=""){
+            e.preventDefault();
+            socket.emit("CLIENT_SEND_TYPING","show");
+            // e.target.value="";
+        }
+    })
+}
+// End input keyup
+
+// SERVER_RETURN_TYPING
+socket.on("SERVER_RETURN_TYPING",(data)=>{
+    console.log(data);
+});
