@@ -1,0 +1,36 @@
+extends ../../layout/chat.pug 
+
+include ../../mixins/box-head.pug
+block main 
+    .container.my-3
+        .row
+            .col-12
+                +box-head("Chat")
+        .row   
+            .col-12   
+                .chat-wrapper  
+                    .chat-body  
+                        .message-list  
+                            .message.incoming  
+                                .message-avatar  
+                                    img(src="/path/to/avatar.jpg" alt="Baby")  
+                                .message-content  
+                                    .message-text Are you serious?  
+                                    .message-time 2:35 PM  
+
+                            .message.outgoing  
+                                .message-content  
+                                    .message-text Yes, I'm crazy  
+                                    .message-time 2:36 PM  
+
+                    .chat-footer  
+                        form.chat-form  
+                            .input-group  
+                                input.form-control(  
+                                    type="text"   
+                                    placeholder="Type your message..."   
+                                    name="content"  
+                                )  
+                                button.btn.btn-primary(type="submit")   
+                                    i.fas.fa-paper-plane  
+        

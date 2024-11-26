@@ -1,0 +1,34 @@
+.chat-wrapper {  
+    border-radius: 10px;  
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);  
+    background: #f8f9fa;  
+}  
+
+.message {  
+    display: flex;  
+    margin-bottom: 15px;  
+    align-items: flex-start;  
+}  
+
+.message-avatar img {  
+    width: 40px;  
+    height: 40px;  
+    border-radius: 50%;  
+    margin-right: 10px;  
+}  
+
+.message-content {  
+    max-width: 70%;  
+    padding: 10px;  
+    border-radius: 12px;  
+}  
+
+.message.incoming .message-content {  
+    background-color: #e9ecef;  
+}  
+
+.message.outgoing .message-content {  
+    background-color: #007bff;  
+    color: white;  
+    align-self: flex-end;  
+}  
