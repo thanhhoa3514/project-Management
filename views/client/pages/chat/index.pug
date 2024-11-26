@@ -11,8 +11,9 @@ block main
                 .chat 
                     .inner-body 
                         each chat in chats
-                            .inner-incoming 
-                                .inner-name #{chat.infoUser.fullName}
+                            div(class=(chat.user_id==user.id?"inner-outgoing":"inner-incoming"))
+                                if(chat.user_id!=user.id)
+                                    .inner-name #{chat.infoUser.fullName}
                                 .inner-content
                                     | #{chat.content}
                         //-     .inner-outgoing 
