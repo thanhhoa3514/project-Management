@@ -7,6 +7,9 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const moment = require("moment");
+const { createServer } = require('node:http');
+
+const { Server } = require('socket.io');
 
 
 // const mongoose = require("mongoose");
@@ -25,6 +28,16 @@ const route=require("./routers/client/index-router");
 database.connect();
 
 const app = express();
+// Socket IO Server
+const server = createServer(app);
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+  console.log('a user connected', socket.id);
+});
+
+//End Socket IO Server
+
 app.use(methodOverride("_method"));
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -74,7 +87,7 @@ app.get("*",(req, res) => {
  
   })
 });
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Example app Ongoing on port ${port}`);
 });
 
