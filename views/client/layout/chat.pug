@@ -12,7 +12,9 @@ html
 
         link(rel="stylesheet", href="/css/alert.css")
 
+        link(rel="stylesheet", href="https://unpkg.com/file-upload-with-preview/dist/style.css")
         link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet")
+
 
     body 
         include ../partials/header.pug
@@ -32,8 +34,11 @@ html
 
         script(src="/js/socket.js") 
 
-        script(type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js") 
+        script(type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js")
+        script(src="https://unpkg.com/file-upload-with-preview/dist/index.js")  
 
-        script(src="/js/script.js") 
+        //- file-upload-with-preview
+
         script(type="module" src="/js/chat.js") 
+        script(src="/js/script.js") 
 
