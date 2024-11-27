@@ -3,6 +3,7 @@ module.exports.cartId = async (req, res, next) => {
   // console.log("Always go through here");
   // console.log(req.cookies.cartId);
   try {
+    const expiresCookie = 7 * 24 * 60 * 60 * 1000;
     if (!req.cookies.cartId || req.cookies.cartId === "undefined") {
       // Check if there's an existing empty guest cart
       const existingEmptyCart = await Cart.findOne({

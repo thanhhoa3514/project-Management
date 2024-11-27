@@ -21,14 +21,13 @@ module.exports.index= async (req, res) => {
                 });
             })
 
-            socket.on("CLIENT_SEND_TYPING"),async (type) => {
-                socket.broadcast.emit("SERVER_RETURN_TYPING",{
+            socket.on("CLIENT_SEND_TYPING", async (type) => {
+                socket.broadcast.emit("SERVER_RETURN_TYPING", {
                     userId: userId,
-                    fullName:fullName,
+                    fullName: fullName,
                     type: type
                 });
-
-            };
+            });
         });
 
         const chats= await Chat.find({
