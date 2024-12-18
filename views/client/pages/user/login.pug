@@ -1,37 +1,58 @@
 extends ../../layout/login.pug 
 
 block main 
-     .container.my-5 
-        .row.justify-content-center 
-            .col-8 
-                h1(class="text-center") Login 
-                form(
-                    action="/user/login"
-                    method="POST"
-                )
-                    
-                    div(class="form-group")
-                        label(for="email") Email 
-                        input(
-                            type="email"
-                            id="email"
-                            name="email"
-                            class="form-control"
-                            required
-                        )
-
-                    div(class="form-group")
-                        label(for="password") Password 
-                        input(
-                            type="password"
-                            id="password"
-                            name="password"
-                            class="form-control"
-                            required
-                        )
-                    div(class="form-group")
-                        button(
-                            type="submit"
-                            class="btn btn-primary btn-block"
-                        ) Login
-                a(href="/user/password/forgot") Forgot Password ?
+    .container#container
+        .form-container.sign-in
+            form(action="/user/login"
+                    method="POST")
+                h1 Sign In
+                .social-icons
+                    a(href="#", class="icon")
+                        i.fa-brands.fa-google-plus-g
+                    a(href="#", class="icon")
+                        i.fa-brands.fa-facebook-f
+                    a(href="#", class="icon")
+                        i.fa-brands.fa-github
+                    a(href="#", class="icon")
+                        i.fa-brands.fa-linkedin-in
+                span or use your email password
+                input(type="email"  id="email"
+                            name="email", placeholder="Email")
+                input(type="password" id="password"
+                        name="password", placeholder="Password")
+                a(href="/user/password/forgot") Forget Your Password?
+                button(type="submit") Sign In
+        .form-container.sign-up
+            form(
+                action="/user/register"
+                method="POST"
+            )
+                h1 Create Account
+                .social-icons
+                    a(href="#", class="icon")
+                        i.fa-brands.fa-google-plus-g
+                    a(href="#", class="icon")
+                        i.fa-brands.fa-facebook-f
+                    a(href="#", class="icon")
+                        i.fa-brands.fa-github
+                    a(href="#", class="icon")
+                        i.fa-brands.fa-linkedin-in
+                span or use your email for registration
+                input(type="text" id="fullName"
+                            name="fullName", placeholder="Name")
+                input(type="email" id="email"
+                            name="email", placeholder="Email")
+                input(type="password" id="password"
+                            name="password", placeholder="Password")
+                button(type="submit") Sign Up
+                
+        .toggle-container
+            .toggle
+                .toggle-panel.toggle-left
+                    h1 Welcome Back!
+                    p Enter your personal details to use all of site features
+                    button.hidden#login Sign In
+                .toggle-panel.toggle-right
+                    h1 Hello, Friend!
+                    p Register with your personal details to use all of site features
+                    button.hidden#register Sign Up
